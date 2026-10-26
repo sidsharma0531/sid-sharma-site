@@ -1,3 +1,4 @@
+import DividerStrip from "@/components/DividerStrip";
 import Experience from "@/components/Experience";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
@@ -7,6 +8,7 @@ import Press from "@/components/Press";
 import Recognition from "@/components/Recognition";
 import RevealObserver from "@/components/RevealObserver";
 import { nav, press, site } from "@/data/content";
+import { photosFor } from "@/lib/images";
 
 export default function Home() {
   // The Press icon only shows when there is press to show.
@@ -19,8 +21,10 @@ export default function Home() {
         <Hero />
         <LogoWall />
         <Experience />
+        <DividerStrip photos={photosFor("divider", "before-recognition")} />
         <Recognition />
         <Press />
+        <DividerStrip photos={photosFor("divider", "before-contact")} />
       </main>
       <Footer />
       <RevealObserver />

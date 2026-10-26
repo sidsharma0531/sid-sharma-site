@@ -11,6 +11,8 @@ type Props = {
   ratio?: number | "fill";
   className?: string;
   imgClassName?: string;
+  /** Which part of the photo to keep when cropped, as a CSS object-position like "20% 50%". */
+  position?: string;
   /** Background behind the image while it loads. */
   bg?: string;
   preload?: boolean;
@@ -25,6 +27,7 @@ export default function Photo({
   ratio,
   className = "",
   imgClassName = "",
+  position,
   bg = "bg-ink/[0.06]",
   preload,
   loading,
@@ -47,6 +50,7 @@ export default function Photo({
           loading={preload ? undefined : loading}
           unoptimized={photo.file.endsWith(".svg")}
           className={`object-cover ${imgClassName}`}
+          style={position ? { objectPosition: position } : undefined}
         />
       ) : (
         <Placeholder file={photo.file} hint={hint} />

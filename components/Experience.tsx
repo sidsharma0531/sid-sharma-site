@@ -1,4 +1,5 @@
 import BookMockup from "@/components/BookMockup";
+import MarginPhotos from "@/components/MarginPhotos";
 import PhoneMockup from "@/components/PhoneMockup";
 import Polaroids from "@/components/Polaroids";
 import Chip from "@/components/ui/Chip";
@@ -9,17 +10,27 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import StatBlock from "@/components/ui/StatBlock";
 import ThumbRow from "@/components/ui/ThumbRow";
 import { experience, type Entry, type FeaturedEntry, type LinkChip, type Logo } from "@/data/content";
-import { getImage, resolvePhotos } from "@/lib/images";
+import { getImage, photosFor, resolvePhotos, type ResolvedPhoto } from "@/lib/images";
 import { isLink, isPlaceholder } from "@/lib/text";
 
+type Side = "left" | "right";
+
 export default function Experience() {
+  // Margin photos on the full-width cards alternate sides, starting on the left.
+  let marginCount = 0;
+  const featuredSides = experience.featured.map((entry): Side => {
+    const side = marginCount % 2 === 0 ? "left" : "right";
+    if (photosFor("margin", entry.id).length > 0) marginCount++;
+    return side;
+  });
+
   return (
     <section id="experience" className="container-page py-20 sm:py-28">
       <SectionHeading kicker={experience.kicker} title={experience.title} />
 
       <div className="space-y-8 sm:space-y-10">
-        {experience.featured.map((entry) => (
-          <FeaturedCard key={entry.id} entry={entry} />
+        {experience.featured.map((entry, i) => (
+          <FeaturedCard key={entry.id} entry={entry} side={featuredSides[i]} />
         ))}
       </div>
 
@@ -27,8 +38,9 @@ export default function Experience() {
         {experience.moreLabel}
       </p>
       <ul className="mt-5 grid md:grid-cols-2 md:gap-x-12">
-        {experience.more.map((entry) => (
-          <CompactRow key={entry.id} entry={entry} />
+        {experience.more.map((entry, i) => (
+          // On two-column screens, margin photos sit on the side of their column.
+          <CompactRow key={entry.id} entry={entry} side={i % 2 === 0 ? "left" : "right"} />
         ))}
       </ul>
     </section>
@@ -46,8 +58,9 @@ const layouts = {
   polaroids: "[grid-template-areas:'head'_'stats'_'visual'_'details']",
 };
 
-function FeaturedCard({ entry }: { entry: FeaturedEntry }) {
+function FeaturedCard({ entry, side }: { entry: FeaturedEntry; side: Side }) {
   const { visual } = entry;
+  const margin = photosFor("margin", entry.id);
 
   let visualNode: React.ReactNode;
   if (visual.kind === "phone") {
@@ -56,19 +69,20 @@ function FeaturedCard({ entry }: { entry: FeaturedEntry }) {
     const cover = { ...getImage(visual.cover.src, "photos", [2, 3]), alt: visual.cover.alt };
     visualNode = <BookMockup cover={cover} title={visual.title} subtitle={visual.subtitle} author={visual.author} />;
   } else {
-    visualNode = <Polaroids photos={resolvePhotos(visual.photos, { fallback: [1, 1] })} />;
+    visualNode = <Polaroids photos={photosFor("entry", entry.id)} />;
   }
 
   return (
     <article
       data-reveal
       aria-labelledby={`${entry.id}-title`}
-      className={`grid rounded-[2rem] border border-ink/10 bg-paper p-5 shadow-[0_30px_60px_-44px_rgba(34,28,24,0.5)] sm:p-8 md:gap-x-10 lg:gap-x-14 lg:p-10 ${layouts[visual.kind]}`}
+      className={`relative grid rounded-[2rem] border border-ink/10 bg-paper p-5 shadow-[0_30px_60px_-44px_rgba(34,28,24,0.5)] sm:p-8 md:gap-x-10 lg:gap-x-14 lg:p-10 ${layouts[visual.kind]}`}
     >
       <EntryHead entry={entry} />
       <div className="mt-8 [grid-area:visual] md:mt-0">{visualNode}</div>
       <EntryStats entry={entry} />
-      <EntryDetails entry={entry} />
+      <EntryDetails entry={entry} margin={margin} side={side} />
+      <MarginPhotos photos={margin} side={side} variant="float" />
     </article>
   );
 }
@@ -120,23 +134,26 @@ function EntryStats({ entry }: { entry: FeaturedEntry }) {
   );
 }
 
-function EntryDetails({ entry }: { entry: FeaturedEntry }) {
-  const photos = resolvePhotos(entry.photos, { onlyExisting: true });
+function EntryDetails({ entry, margin, side }: { entry: FeaturedEntry; margin: ResolvedPhoto[]; side: Side }) {
+  // The polaroid table already shows this entry's photos; other cards get thumbnails.
+  const photos = entry.visual.kind === "polaroids" ? [] : photosFor("entry", entry.id);
   return (
     <div className="[grid-area:details]">
       <Bullets items={entry.bullets} />
       <ThumbRow photos={photos} className="mt-6" />
       <LinkRow links={entry.links} className="mt-7 gap-3" />
+      <MarginPhotos photos={margin} side={side} variant="inline" />
     </div>
   );
 }
 
 /* ---------- Compact LinkedIn-style rows ---------- */
 
-function CompactRow({ entry }: { entry: Entry }) {
-  const photos = resolvePhotos(entry.photos, { onlyExisting: true });
+function CompactRow({ entry, side }: { entry: Entry; side: Side }) {
+  const photos = photosFor("entry", entry.id);
+  const margin = photosFor("margin", entry.id);
   return (
-    <li data-reveal className="flex gap-4 border-t border-dashed border-ink/25 py-6 sm:gap-5">
+    <li data-reveal className="relative flex gap-4 border-t border-dashed border-ink/25 py-6 sm:gap-5">
       <OrgMark mark={entry.mark} />
       <div className="min-w-0 flex-1">
         <h4 className="text-[1.05rem] leading-snug font-semibold">{entry.role}</h4>
@@ -155,7 +172,9 @@ function CompactRow({ entry }: { entry: Entry }) {
         <LogoRow logos={entry.logos} />
         <ThumbRow photos={photos} className="mt-4" />
         <LinkRow links={entry.links} size="sm" className="mt-4 gap-2" />
+        <MarginPhotos photos={margin} side={side} variant="inline" />
       </div>
+      <MarginPhotos photos={margin} side={side} variant="float" />
     </li>
   );
 }

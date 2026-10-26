@@ -1,10 +1,11 @@
+import MarginPhotos from "@/components/MarginPhotos";
 import LogoImage from "@/components/ui/LogoImage";
 import Rich from "@/components/ui/Rich";
 import SectionHeading from "@/components/ui/SectionHeading";
 import ShowMore from "@/components/ui/ShowMore";
 import ThumbRow from "@/components/ui/ThumbRow";
 import { recognition, type Award, type Tone } from "@/data/content";
-import { getImage, resolvePhotos } from "@/lib/images";
+import { getImage, photosFor } from "@/lib/images";
 import { isLink, isPlaceholder } from "@/lib/text";
 
 // Highlighter swipe behind each category name.
@@ -39,11 +40,13 @@ export default function Recognition() {
 }
 
 function AwardRow({ award }: { award: Award }) {
-  const photos = resolvePhotos(award.photos, { onlyExisting: true });
+  const photos = photosFor("entry", award.id);
+  // Awards sit in the right-hand column, so their margin photos float on the right.
+  const margin = photosFor("margin", award.id);
   const meta = [award.issuer, award.year].filter((part): part is string => Boolean(part) && !isPlaceholder(part));
 
   return (
-    <div className="flex gap-4 border-t border-dashed border-ink/25 py-4 sm:gap-5">
+    <div className="relative flex gap-4 border-t border-dashed border-ink/25 py-4 sm:gap-5">
       <IssuerTile award={award} />
       <div className="min-w-0">
         <p className="font-serif text-[1.15rem] leading-snug font-semibold sm:text-xl">
@@ -70,7 +73,9 @@ function AwardRow({ award }: { award: Award }) {
           </p>
         )}
         <ThumbRow photos={photos} className="mt-3" />
+        <MarginPhotos photos={margin} side="right" variant="inline" />
       </div>
+      <MarginPhotos photos={margin} side="right" variant="float" />
     </div>
   );
 }

@@ -1,11 +1,11 @@
 import { LoopArrow } from "@/components/doodles";
+import HeroStack from "@/components/HeroStack";
 import ContactLinks from "@/components/ui/ContactLinks";
-import Photo from "@/components/ui/Photo";
 import { hero } from "@/data/content";
-import { getImage } from "@/lib/images";
+import { photosFor } from "@/lib/images";
 
 export default function Hero() {
-  const photo = getImage(hero.photo.src, "photos", [4, 5]);
+  const photos = photosFor("hero");
 
   return (
     <section id="top" className="container-page pt-8 pb-12 sm:pt-14 sm:pb-16">
@@ -20,31 +20,16 @@ export default function Hero() {
           {hero.line}
         </p>
 
-        <div className="relative mt-10 [grid-area:photo] md:mt-2">
-          <figure className="relative w-[58%] max-w-[15rem] -rotate-2 md:w-full md:max-w-none md:rotate-2">
-            <span
-              aria-hidden
-              className="absolute -top-3 left-1/2 z-10 h-7 w-24 -translate-x-1/2 -rotate-3 bg-butter/80 shadow-sm [clip-path:polygon(3%_0,97%_8%,100%_50%,96%_92%,4%_100%,0_50%)]"
-            />
-            <div className="rounded-[1.25rem] bg-paper p-2.5 shadow-[0_28px_44px_-26px_rgba(34,28,24,0.55)] ring-1 ring-ink/10">
-              <Photo
-                photo={photo}
-                alt={hero.photo.alt}
-                ratio={4 / 5}
-                hint="portrait, 4:5"
-                preload
-                sizes="(min-width: 768px) 296px, 58vw"
-                className="rounded-[0.85rem]"
-                imgClassName="object-[50%_30%]"
-              />
-            </div>
-          </figure>
+        {photos.length > 0 && (
+          <div className="relative mt-10 [grid-area:photo] md:mt-2">
+            <HeroStack photos={photos} />
 
-          <p className="absolute top-[40%] left-[63%] flex w-[36%] flex-col items-start md:top-auto md:right-[calc(100%+0.75rem)] md:bottom-1 md:left-auto md:w-32 md:items-end">
-            <span className="-rotate-6 font-hand text-[1.9rem] leading-none text-tomato-deep">{hero.note}</span>
-            <LoopArrow className="mt-1 w-16 text-tomato-deep md:w-20" />
-          </p>
-        </div>
+            <p className="absolute top-[40%] left-[67%] flex w-[33%] flex-col items-start md:top-auto md:right-[calc(100%+0.75rem)] md:bottom-1 md:left-auto md:w-32 md:items-end">
+              <span className="-rotate-6 font-hand text-[1.9rem] leading-none text-tomato-deep">{hero.note}</span>
+              <LoopArrow className="mt-1 w-16 text-tomato-deep md:w-20" />
+            </p>
+          </div>
+        )}
 
         <div className="mt-7 [grid-area:contact] md:mt-8 md:self-end">
           <ContactLinks variant="icons" />

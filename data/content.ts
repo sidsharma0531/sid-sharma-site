@@ -16,8 +16,20 @@
 export type Tone = "tomato" | "butter" | "leaf";
 export type DoodleName = "carrot" | "tomato" | "bread" | "whisk";
 
-/** wide: show the whole photo as a wide polaroid instead of a square crop (for group shots). */
-export type Photo = { src: string; alt: string; caption?: string; wide?: boolean };
+/**
+ * wide: show the whole photo as a wide polaroid instead of a square crop (for group shots).
+ * focus: which part to keep when the photo is cropped, like "20% 50%" for the left side.
+ */
+export type Photo = { src: string; alt: string; caption?: string; wide?: boolean; focus?: string };
+
+/** Where a photo shows up. See the photos list below. */
+export type Placement = "hero" | "entry" | "margin" | "divider";
+
+export type SitePhoto = Photo & {
+  placement: Placement;
+  /** Entry or award id for "entry" and "margin"; divider id for "divider". Not needed for "hero". */
+  at?: string;
+};
 
 /** A link button. Set badge to show the official App Store or Google Play badge instead. */
 export type LinkChip = { label: string; href: string; badge?: "app-store" | "google-play" };
@@ -45,8 +57,6 @@ export type Entry = {
   summary: string;
   bullets?: string[];
   links?: LinkChip[];
-  /** Optional thumbnails. Only photos whose files exist are shown. */
-  photos?: Photo[];
   /** Optional row of small organization logos. */
   logos?: Logo[];
 };
@@ -56,11 +66,14 @@ export type FeaturedEntry = Entry & {
   stats?: Stat[];
   visual:
     | { kind: "phone"; screens: Photo[] }
-    | { kind: "polaroids"; photos: Photo[] }
+    // The polaroid table uses the photos placed as "entry" at this entry's id.
+    | { kind: "polaroids" }
     | { kind: "book"; cover: Photo; title: string; subtitle: string; author: string };
 };
 
 export type Award = {
+  /** Used to attach photos to this award. */
+  id: string;
   name: string;
   /** Link to a page that names Sid, Waste2Taste, RescueLog, or Still Good. */
   href?: string;
@@ -70,7 +83,6 @@ export type Award = {
   context?: string;
   /** Issuer logo in /public/logos. Without one, the issuer's initials show. */
   logo?: string;
-  photos?: Photo[];
 };
 
 export type AwardCategory = { name: string; tone: Tone; awards: Award[] };
@@ -124,8 +136,6 @@ export const nav: NavItem[] = [
 export const hero = {
   name: "Sid Sharma",
   line: "Hi, I'm Sid, a founder, debater, and author building ways to get good food to people instead of landfills.",
-  // Cropped from photo-05.jpg for now.
-  photo: { src: "photo-hero.jpg", alt: "Sid Sharma" } as Photo,
   note: "say hi!",
   // Not shown on the page; only the link-preview image (app/opengraph-image.tsx) uses these.
   stats: [
@@ -134,6 +144,98 @@ export const hero = {
     { value: "30+", unit: "partners", label: "Waste2Taste grocers and community orgs" },
   ] as Stat[],
 };
+
+/* ---------- Photos ---------- */
+
+// Every photo on the site lives in this one list. Change `placement` to move a photo:
+//   "hero"     the stack of polaroids beside your name. The first one sits on top; 3 at most.
+//   "entry"    inside the entry or award named by `at`. Waste2Taste shows its photos as the
+//              polaroid table; everything else shows small thumbnails.
+//   "margin"   floating in the page margin beside the entry named by `at` on wide screens, and
+//              a small strip inside that entry on phones. Keep these about a screen apart.
+//   "divider"  a swipeable strip between sections. `at` is "before-recognition" or "before-contact".
+//
+// Entry ids for `at`: rescuelog, waste2taste, still-good, uh-research, remax, debate, deca,
+// research-club, volunteer, guitar. Award ids are on each award below.
+//
+// A photo whose file isn't in /public/photos yet shows a labeled placeholder. Delete a line to
+// remove that photo; a spot with no photos renders nothing.
+export const photos: SitePhoto[] = [
+  // Hero
+  { src: "photo-hero.jpg", alt: "Sid Sharma", focus: "50% 30%", placement: "hero" },
+  {
+    src: "photo-07.jpg",
+    alt: "Sid Sharma and a volunteer taking a Whole Foods bag from a Whole Foods team member in the store",
+    caption: "pickup at Whole Foods",
+    wide: true,
+    focus: "8% 50%",
+    placement: "hero",
+  },
+
+  // Waste2Taste, in order: one banana bread run, from the grocer to the pantry.
+  {
+    src: "photo-01.jpg",
+    alt: "Sid Sharma and a Trader Joe's crew member holding two bags tagged as Waste2Taste donations",
+    caption: "flagged at the grocer",
+    placement: "entry",
+    at: "waste2taste",
+  },
+  {
+    src: "photo-02.jpg",
+    alt: "Twelve loaf pans of banana bread batter lined up on a kitchen counter",
+    caption: "twelve pans at a time",
+    placement: "entry",
+    at: "waste2taste",
+  },
+  {
+    src: "photo-03.jpg",
+    alt: "Loaf pans of banana bread baking in an oven",
+    caption: "into the oven",
+    placement: "entry",
+    at: "waste2taste",
+  },
+  {
+    src: "photo-04.jpg",
+    alt: "Four foil pans of Waste2Taste banana bread with ingredient labels packed in a car trunk",
+    caption: "packed to donate",
+    placement: "entry",
+    at: "waste2taste",
+  },
+  {
+    src: "photo-05.jpg",
+    alt: "Sid Sharma and two volunteers holding labeled Waste2Taste banana bread loaves in a community center lobby",
+    caption: "banana bread, delivered",
+    placement: "entry",
+    at: "waste2taste",
+  },
+  {
+    src: "photo-06.jpg",
+    alt: "Sid Sharma and a volunteer holding Whole Foods bags of rescued groceries in the Fort Bend Family Promise pantry",
+    caption: "at Fort Bend Family Promise",
+    placement: "entry",
+    at: "waste2taste",
+  },
+
+  // Still Good
+  {
+    src: "still-good-banana-bread.jpg",
+    alt: "Banana bread recipe page from Still Good showing ingredients, steps, and a sliced loaf",
+    caption: "banana bread, page 10",
+    placement: "entry",
+    at: "still-good",
+  },
+
+  // Preview placeholders. Add the file to /public/photos, or delete the line. See PHOTOS_NEEDED.md.
+  { src: "photo-rescuelog-01.jpg", alt: "Sid demoing RescueLog", placement: "margin", at: "rescuelog" },
+  { src: "photo-book-01.jpg", alt: "Sid holding a copy of Still Good", placement: "margin", at: "still-good" },
+  { src: "photo-debate-01.jpg", alt: "Elkins Speech & Debate trophies and team", placement: "margin", at: "debate" },
+  { src: "photo-deca-01.jpg", alt: "The DECA slushy machine", placement: "entry", at: "deca" },
+  { src: "photo-guitar-01.jpg", alt: "Sid performing on guitar", placement: "entry", at: "guitar" },
+  { src: "photo-misc-01.jpg", alt: "Photo 1 of the first photo strip", placement: "divider", at: "before-recognition" },
+  { src: "photo-misc-02.jpg", alt: "Photo 2 of the first photo strip", placement: "divider", at: "before-recognition" },
+  { src: "photo-misc-03.jpg", alt: "Photo 1 of the second photo strip", placement: "divider", at: "before-contact" },
+  { src: "photo-misc-04.jpg", alt: "Photo 2 of the second photo strip", placement: "divider", at: "before-contact" },
+];
 
 /* ---------- Logo wall ---------- */
 
@@ -218,49 +320,9 @@ export const experience = {
         { label: "Instagram", href: "https://instagram.com/waste2taste.usa" },
         { label: "Partners", href: W2T_PARTNERS },
       ],
-      // 5 to 7 photos. The caption is handwritten under each polaroid. Photos are cropped
-      // square unless marked wide; the second slot is sized for one wide photo.
-      visual: {
-        kind: "polaroids",
-        photos: [
-          {
-            src: "photo-01.jpg",
-            alt: "Sid Sharma and a Trader Joe's crew member holding two bags tagged as Waste2Taste donations",
-            caption: "flagged at the grocer",
-          },
-          {
-            src: "photo-07.jpg",
-            alt: "Sid Sharma and a volunteer taking a Whole Foods bag from a Whole Foods team member in the store",
-            caption: "pickup at Whole Foods",
-            wide: true,
-          },
-          {
-            src: "photo-02.jpg",
-            alt: "Twelve loaf pans of banana bread batter lined up on a kitchen counter",
-            caption: "twelve pans at a time",
-          },
-          {
-            src: "photo-03.jpg",
-            alt: "Loaf pans of banana bread baking in an oven",
-            caption: "into the oven",
-          },
-          {
-            src: "photo-04.jpg",
-            alt: "Four foil pans of Waste2Taste banana bread with ingredient labels packed in a car trunk",
-            caption: "packed to donate",
-          },
-          {
-            src: "photo-05.jpg",
-            alt: "Sid Sharma and two volunteers holding labeled Waste2Taste banana bread loaves in a community center lobby",
-            caption: "banana bread, delivered",
-          },
-          {
-            src: "photo-06.jpg",
-            alt: "Sid Sharma and a volunteer holding Whole Foods bags of rescued groceries in the Fort Bend Family Promise pantry",
-            caption: "at Fort Bend Family Promise",
-          },
-        ],
-      },
+      // The polaroid table shows the photos placed as "entry" at "waste2taste" (5 to 7, cropped
+      // square unless marked wide). See the photos list near the top.
+      visual: { kind: "polaroids" },
     },
     {
       id: "still-good",
@@ -278,13 +340,6 @@ export const experience = {
       links: [
         { label: "Get the book", href: "https://www.amazon.com/dp/B0H6S6H6C7" },
         { label: "About the book", href: "https://waste-2-taste.org/cookbook.html" },
-      ],
-      photos: [
-        {
-          src: "still-good-banana-bread.jpg",
-          alt: "Banana bread recipe page from Still Good showing ingredients, steps, and a sliced loaf",
-          caption: "banana bread, page 10",
-        },
       ],
       visual: {
         kind: "book",
@@ -401,6 +456,7 @@ export const recognition = {
       tone: "tomato",
       awards: [
         {
+          id: "anthem",
           name: "Anthem Award Finalist",
           issuer: "The Anthem Awards",
           year: "2026",
@@ -408,6 +464,7 @@ export const recognition = {
           logo: "anthem.png",
         },
         {
+          id: "points-of-light",
           name: "Daily Point of Light Award",
           issuer: "Points of Light",
           year: "2026",
@@ -415,6 +472,7 @@ export const recognition = {
           logo: "points-of-light-mark.svg",
         },
         {
+          id: "literary-titan",
           name: "Literary Titan Silver Book Award",
           href: "https://literarytitan.com/2026/08/23/still-good-a-cookbook-for-forgotten-food/",
           issuer: "Literary Titan",
@@ -423,6 +481,7 @@ export const recognition = {
           logo: "literary-titan.png",
         },
         {
+          id: "disha-usa",
           name: "Young Achiever Award, Runner-Up",
           issuer: "Disha USA",
           year: "2026",
@@ -435,15 +494,17 @@ export const recognition = {
       tone: "leaf",
       awards: [
         {
+          id: "nsda-academic-all-american",
           name: "Academic All American",
           issuer: "National Speech & Debate Association",
           year: "2026",
           context: "Top 1% of debaters",
           logo: "nsda-mark.png",
         },
-        { name: "AP Scholar with Distinction", issuer: "College Board", year: "2026", logo: "college-board-mark.svg" },
-        { name: "National Recognition Program", issuer: "College Board", year: "2026", logo: "college-board-mark.svg" },
+        { id: "ap-scholar", name: "AP Scholar with Distinction", issuer: "College Board", year: "2026", logo: "college-board-mark.svg" },
+        { id: "national-recognition", name: "National Recognition Program", issuer: "College Board", year: "2026", logo: "college-board-mark.svg" },
         {
+          id: "nyt-summer-reading",
           name: "Summer Reading Contest, Honorable Mention",
           issuer: "The New York Times",
           year: "2026",

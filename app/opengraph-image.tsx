@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { ImageResponse } from "next/og";
-import { hero, site } from "@/data/content";
+import { hero, photos, site } from "@/data/content";
 
 // The preview card shown when the site link is shared. Built once at build time.
 
@@ -24,9 +24,12 @@ async function googleFont(family: string, text: string) {
   }
 }
 
+// The top photo of the hero stack.
 async function heroPhoto() {
+  const top = photos.find((photo) => photo.placement === "hero");
+  if (!top) return null;
   try {
-    const file = await fs.readFile(path.join(process.cwd(), "public", "photos", hero.photo.src));
+    const file = await fs.readFile(path.join(process.cwd(), "public", "photos", top.src));
     return `data:image/jpeg;base64,${file.toString("base64")}`;
   } catch {
     return null;
