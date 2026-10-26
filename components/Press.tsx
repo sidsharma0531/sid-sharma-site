@@ -1,3 +1,4 @@
+import LogoImage from "@/components/ui/LogoImage";
 import Photo from "@/components/ui/Photo";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { press, type PressItem } from "@/data/content";
@@ -26,10 +27,19 @@ export default function Press() {
 
 function PressCard({ item }: { item: PressItem }) {
   const thumb = item.thumbnail ? { ...getImage(item.thumbnail.src, "photos", [4, 3]), alt: item.thumbnail.alt } : null;
+  const logo = item.logo ? getImage(item.logo, "logos", [5, 4]) : null;
+  const cover = item.logoFit === "cover";
   const linked = isLink(item.href);
 
   const body = (
     <>
+      {logo?.exists && (
+        <span aria-hidden className="relative block h-16 w-20 shrink-0 overflow-hidden rounded-xl bg-white ring-1 ring-ink/10">
+          <span className={`absolute ${cover ? "inset-0" : "inset-[10%]"}`}>
+            <LogoImage image={logo} alt="" sizes="80px" fit={cover ? "cover" : "contain"} />
+          </span>
+        </span>
+      )}
       <div className="min-w-0 flex-1">
         <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-semibold tracking-[0.14em] text-tomato-deep uppercase">
           <span>{item.outlet}</span>
@@ -57,7 +67,8 @@ function PressCard({ item }: { item: PressItem }) {
     </>
   );
 
-  const card = "flex h-full gap-5 rounded-[1.5rem] border border-ink/10 bg-paper p-6";
+  // Logo above the text on phones, beside it on wider screens.
+  const card = "flex h-full flex-col gap-4 rounded-[1.5rem] border border-ink/10 bg-paper p-6 sm:flex-row sm:gap-5";
 
   if (!linked) return <div className={card}>{body}</div>;
 

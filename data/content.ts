@@ -82,6 +82,9 @@ export type PressItem = {
   headline: string;
   href?: string;
   date?: string;
+  /** Outlet logo in /public/logos. Set logoFit to "cover" for square show art that fills the tile. */
+  logo?: string;
+  logoFit?: "cover";
   thumbnail?: Photo;
 };
 
@@ -465,6 +468,7 @@ export const press = {
         "2 Helps You: 17-year-old Sugar Land teen making a positive impact by recycling food from local grocery stores",
       href: "https://www.click2houston.com/news/local/2026/08/29/2-helps-you-17-year-old-sugar-land-teen-making-a-positive-impact-by-recycling-food-from-local-grocery-stores/",
       date: "Aug 2026",
+      logo: "kprc2.svg",
     },
     {
       outlet: "Simple Acts, Big Impact",
@@ -472,6 +476,9 @@ export const press = {
       headline: "Food Waste to Food Recovery: Sid's Waste2Taste Story",
       href: "https://podcasts.apple.com/us/podcast/food-waste-to-food-recovery-sids-waste2taste-story/id1641520893?i=1000790005401",
       date: "Sep 2026",
+      // Show art from Apple Podcasts, cropped above its tagline.
+      logo: "simple-acts-big-impact.jpg",
+      logoFit: "cover",
     },
   ] as PressItem[],
 };
