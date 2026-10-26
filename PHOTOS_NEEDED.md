@@ -3,7 +3,37 @@
 sidsharma.xyz/v2 is an experimental layout that puts photos across the whole page. It is hidden
 from search engines, and the homepage at sidsharma.xyz is unchanged.
 
-Every photo on /v2 lives in one list: `photosV2` in `data/photos-v2.ts`. Each line has a
+## Camera roll wall
+
+Right under the logo wall, /v2 shows every photo in `/public/photos/wall/` as one dense grid under
+a handwritten "from the camera roll". To add photos, drop the files in that folder and run
+`npm run photos`. No code changes. Then commit and push.
+
+- Photos are sorted by file name (IMG_2 before IMG_10), so rename files to reorder them.
+- The section stays hidden until the folder has 8 photos.
+- Laptops show the first 24 and phones the first 12, then a "See all N photos" button. With only a
+  few more than that, all of them show instead.
+- Tile sizes are picked for you: some photos get a 2x tile, landscape photos sometimes a wide one,
+  portraits sometimes a tall one, and a few become tilted polaroids. Every row comes out full.
+- Crops keep more of the top of each photo than the bottom, where faces usually are.
+- Every photo opens in the lightbox. There are no captions.
+
+## Shrink photos before committing
+
+```bash
+npm run photos
+```
+
+This resizes every photo in `/public/photos` and `/public/photos/wall` to at most 1600px wide,
+saves it as WebP at quality 80, and strips its metadata, including the GPS location phones save.
+A photo straight off a phone drops from several MB to about 200 KB. Each file is replaced by a
+.webp with the same name (`IMG_4876.jpg` becomes `IMG_4876.webp`), so keep your originals
+somewhere else. Photos already done are skipped, and iPhone `.heic` files work on a Mac. If you
+forget, `npm run dev` and `npm run build` print a warning about wall photos that haven't been shrunk.
+
+## Photo slots
+
+Every other photo on /v2 lives in one list: `photosV2` in `data/photos-v2.ts`. Each line has a
 `placement` that decides where it shows up:
 
 | Placement | Where it shows |
@@ -21,8 +51,10 @@ Every photo on /v2 lives in one list: `photosV2` in `data/photos-v2.ts`. Each li
 - **Awards:** `anthem`, `points-of-light`, `literary-titan`, `disha-usa`,
   `nsda-academic-all-american`, `ap-scholar`, `national-recognition`, `nyt-summer-reading`.
 
-**To add a photo**, drop the file into `/public/photos` with the file name below. Its labeled
-placeholder turns into the real photo on the next build.
+**To add a photo**, drop the file into `/public/photos` with the file name below and run
+`npm run photos`. It appears on the next build. Until its file is there, a slot is simply left
+out, with no placeholder. The extension doesn't need to match: `photo-deca-01.jpg` also finds
+`photo-deca-01.webp`.
 
 **To remove a slot**, delete its line. A spot with no photos renders nothing.
 
@@ -51,18 +83,18 @@ for now, so update it to describe the real photo.
   middle.
 - **Hero polaroids** are cropped 4:5. Use `focus` (like `"20% 50%"`) to choose which part stays in
   view.
-- Around 1200px on the long side is plenty.
+- `npm run photos` takes care of file size.
 
 ## Already filled
 
 | File | Placement | Shows |
 | --- | --- | --- |
-| `photo-hero.jpg` | `hero` (top) | You, cropped from `photo-05.jpg` |
-| `photo-07.jpg` | `margin`, `waste2taste` | Pickup at Whole Foods, beside the Waste2Taste card |
-| `photo-01.jpg` to `photo-06.jpg` | `entry`, `waste2taste` | The banana bread run, in order: grocer, 12 pans, oven, packed, delivered, Fort Bend Family Promise |
-| `still-good-banana-bread.jpg` | `entry`, `still-good` | Banana bread recipe, page 10 |
+| `photo-hero.webp` | `hero` (top) | You, cropped from `photo-05` |
+| `photo-07.webp` | `margin`, `waste2taste` | Pickup at Whole Foods, beside the Waste2Taste card |
+| `photo-01.webp` to `photo-06.webp` | `entry`, `waste2taste` | The banana bread run, in order: grocer, 12 pans, oven, packed, delivered, Fort Bend Family Promise |
+| `still-good-banana-bread.webp` | `entry`, `still-good` | Banana bread recipe, page 10 |
 
 ## If you pick v2 for the homepage
 
-Swap the homepage to the v2 components, then delete `app/v2` and the old versions. Before that,
-add the real files or delete the placeholder lines, so no placeholder reaches the main page.
+Swap the homepage to the v2 components, then delete `app/v2` and the old versions. Slots without a
+file are skipped, so nothing empty can reach the main page.

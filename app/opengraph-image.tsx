@@ -1,7 +1,8 @@
-import fs from "node:fs/promises";
 import path from "node:path";
 import { ImageResponse } from "next/og";
+import sharp from "sharp";
 import { hero, site } from "@/data/content";
+import { getImage } from "@/lib/images";
 
 // The preview card shown when the site link is shared. Built once at build time.
 
@@ -24,10 +25,15 @@ async function googleFont(family: string, text: string) {
   }
 }
 
+// The hero photo as a JPEG. `npm run photos` makes WebP, which the card renderer isn't sure to
+// read, so sharp converts it. Returns null (no photo on the card) if that fails.
 async function heroPhoto() {
+  const image = getImage(hero.photo.src);
+  if (!image.exists) return null;
   try {
-    const file = await fs.readFile(path.join(process.cwd(), "public", "photos", hero.photo.src));
-    return `data:image/jpeg;base64,${file.toString("base64")}`;
+    const file = path.join(process.cwd(), "public", "photos", image.file);
+    const jpeg = await sharp(file).autoOrient().jpeg({ quality: 90 }).toBuffer();
+    return `data:image/jpeg;base64,${jpeg.toString("base64")}`;
   } catch {
     return null;
   }

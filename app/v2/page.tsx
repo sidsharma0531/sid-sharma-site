@@ -7,6 +7,7 @@ import Press from "@/components/Press";
 import RevealObserver from "@/components/RevealObserver";
 import Experience from "@/components/v2/Experience";
 import Hero from "@/components/v2/Hero";
+import PhotoWall from "@/components/v2/PhotoWall";
 import Recognition from "@/components/v2/Recognition";
 import { nav, press, site } from "@/data/content";
 import { photosFor } from "@/lib/images";
@@ -28,6 +29,7 @@ export default function V2() {
       <main id="main">
         <Hero />
         <LogoWall />
+        <PhotoWall />
         <Experience />
         <DividerStrip photos={photosFor("divider", "before-recognition")} />
         <Recognition />

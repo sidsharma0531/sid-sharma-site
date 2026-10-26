@@ -24,10 +24,25 @@ names. Components only render from it.
 
 ## Add photos and logos
 
-Drop files into `public/photos/` or `public/logos/` using the names in `data/content.ts`. The site
-picks them up on the next build, with their real sizes. Nothing ever renders as an empty slot: a
-missing logo shows as a wordmark or initials, a missing app screenshot shows a name screen, and
-thumbnails only appear for files that exist.
+Drop files into `public/photos/` or `public/logos/` using the names in `data/content.ts`, then
+shrink the photos:
+
+```bash
+npm run photos
+```
+
+That resizes every photo in `public/photos/` and `public/photos/wall/` to at most 1600px wide,
+saves it as WebP at quality 80, and strips its metadata, including the GPS location phones save.
+A photo straight off a phone drops from several MB to about 200 KB. Each file is replaced by a
+.webp with the same name, and the extension in `data/content.ts` doesn't need to change:
+`photo-01.jpg` finds `photo-01.webp`. Photos already done are skipped; iPhone `.heic` works on a Mac.
+
+The site picks files up on the next build, with their real sizes. Nothing ever renders as an empty
+slot: a missing logo shows as a wordmark or initials, a missing app screenshot shows a name screen,
+and thumbnails only appear for files that exist.
+
+The camera roll wall on `/v2` shows every photo in `public/photos/wall/`, sorted by file name, once
+there are at least 8. Adding photos is just dropping files there. See `PHOTOS_NEEDED.md`.
 
 ## Deploy
 
@@ -41,3 +56,6 @@ preview URL.
   `Press`, `Footer`, plus `PhoneMockup`, `Polaroids`, `BookMockup`, `Lightbox`, and `doodles`
 - `components/ui/` has the small shared pieces (photo, chips, badges, stats, headings)
 - `app/globals.css` holds the color and font tokens
+- `app/v2/page.tsx` is the experimental photo layout at `/v2`; its photo slots are in
+  `data/photos-v2.ts`
+- `scripts/photos.mjs` is `npm run photos`

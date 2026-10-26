@@ -164,9 +164,8 @@ export const logoWall = {
       href: "https://podcasts.apple.com/us/podcast/food-waste-to-food-recovery-sids-waste2taste-story/id1641520893?i=1000790005401",
       logo: "simple-acts-big-impact.jpg",
     },
-    { name: "University of Houston", href: "https://www.uh.edu", logo: "uh.svg" },
     { name: "Anthem Awards", logo: "anthem-awards.svg" },
-    { name: "Keemat Grocers", href: W2T_PARTNERS, logo: "keemat.png" },
+    { name: "University of Houston", href: "https://www.uh.edu", logo: "uh.svg" },
     { name: "National Speech & Debate Association", logo: "nsda.png" },
     { name: "RE/MAX Commercial", href: "https://www.remaxcommercial.com", logo: "remax-commercial.png" },
     {

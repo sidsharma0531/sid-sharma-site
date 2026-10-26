@@ -12,8 +12,10 @@
 // Entry ids for `at`: rescuelog, waste2taste, still-good, uh-research, remax, debate, deca,
 // research-club, volunteer, guitar. Award ids are on each award in data/content.ts.
 //
-// A photo whose file isn't in /public/photos yet shows a labeled placeholder. Delete a line to
-// remove that photo; a spot with no photos renders nothing. See PHOTOS_NEEDED.md.
+// A photo whose file isn't in /public/photos yet is skipped, and it appears on its own once the
+// file is there. The extension can differ: photo-deca-01.jpg also finds photo-deca-01.webp from
+// `npm run photos`. Delete a line to drop that slot; a spot with no photos renders nothing.
+// See PHOTOS_NEEDED.md.
 
 import type { Photo } from "@/data/content";
 
@@ -93,7 +95,7 @@ export const photosV2: SitePhoto[] = [
     at: "still-good",
   },
 
-  // Placeholders for the preview. Add the file to /public/photos, or delete the line.
+  // Waiting for a photo. Each appears once its file is in /public/photos; until then it's skipped.
   { src: "photo-rescuelog-01.jpg", alt: "Sid demoing RescueLog", placement: "margin", at: "rescuelog" },
   { src: "photo-book-01.jpg", alt: "Sid holding a copy of Still Good", placement: "margin", at: "still-good" },
   { src: "photo-debate-01.jpg", alt: "Elkins Speech & Debate trophies and team", placement: "margin", at: "debate" },
