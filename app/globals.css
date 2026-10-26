@@ -108,8 +108,9 @@
   }
 }
 
+/* LogoWall sets --marquee-duration from the logo count, so the speed stays the same. */
 .marquee-track {
-  animation: marquee 48s linear infinite;
+  animation: marquee var(--marquee-duration, 48s) linear infinite;
 }
 
 .marquee:hover .marquee-track,

@@ -144,23 +144,39 @@ export const hero = {
 
 const W2T_PARTNERS = "https://waste-2-taste.org/partners.html";
 
-// Only real working relationships and press. Each logo links to proof.
+// Real working relationships, press, and the organizations behind your awards, mixed so no two
+// of a kind sit together. A logo links when there's a page that proves the connection.
 export const logoWall = {
   label: "worked with & featured by",
   logos: [
-    { name: "Trader Joe's", href: W2T_PARTNERS, logo: "trader-joes.png" },
-    { name: "H-E-B", href: W2T_PARTNERS, logo: "heb.png" },
-    { name: "Whole Foods Market", href: W2T_PARTNERS, logo: "whole-foods.png" },
     {
       name: "KPRC 2 Houston",
       href: "https://www.click2houston.com/news/local/2026/08/29/2-helps-you-17-year-old-sugar-land-teen-making-a-positive-impact-by-recycling-food-from-local-grocery-stores/",
       logo: "kprc2.svg",
     },
-    { name: "Keemat Grocers", href: W2T_PARTNERS, logo: "keemat.png" },
+    { name: "Trader Joe's", href: W2T_PARTNERS, logo: "trader-joes.png" },
+    { name: "The New York Times", logo: "nyt-wordmark.svg" },
+    { name: "Whole Foods Market", href: W2T_PARTNERS, logo: "whole-foods.png" },
+    { name: "Points of Light", logo: "points-of-light.svg" },
+    { name: "H-E-B", href: W2T_PARTNERS, logo: "heb.png" },
+    {
+      name: "Simple Acts, Big Impact",
+      href: "https://podcasts.apple.com/us/podcast/food-waste-to-food-recovery-sids-waste2taste-story/id1641520893?i=1000790005401",
+      logo: "simple-acts-big-impact.jpg",
+    },
     { name: "University of Houston", href: "https://www.uh.edu", logo: "uh.svg" },
-    { name: "Fort Bend Family Promise", href: W2T_PARTNERS, logo: "fort-bend-family-promise.jpg" },
-    { name: "National Food Recovery Association", href: "https://www.nationalfoodrecoveryassociation.org/", logo: "nfra.jpg" },
+    { name: "Anthem Awards", logo: "anthem-awards.svg" },
+    { name: "Keemat Grocers", href: W2T_PARTNERS, logo: "keemat.png" },
+    { name: "National Speech & Debate Association", logo: "nsda.png" },
     { name: "RE/MAX Commercial", href: "https://www.remaxcommercial.com", logo: "remax-commercial.png" },
+    {
+      name: "Literary Titan",
+      href: "https://literarytitan.com/2026/08/23/still-good-a-cookbook-for-forgotten-food/",
+      logo: "literary-titan.png",
+    },
+    { name: "Fort Bend Family Promise", href: W2T_PARTNERS, logo: "fort-bend-family-promise.jpg" },
+    { name: "Disha USA", logo: "disha-usa.png" },
+    { name: "National Food Recovery Association", href: "https://www.nationalfoodrecoveryassociation.org/", logo: "nfra.jpg" },
   ] as Logo[],
 };
 
@@ -436,6 +452,7 @@ export const recognition = {
           issuer: "Disha USA",
           year: "2026",
           context: "Social Impact and Community Service",
+          logo: "disha-usa.png",
         },
       ],
     },

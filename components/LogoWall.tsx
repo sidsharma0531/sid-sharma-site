@@ -28,7 +28,10 @@ export default function LogoWall() {
     <section aria-label={logoWall.label} className="border-y border-dashed border-ink/20 bg-paper py-7 sm:py-9">
       <p className="container-page text-center font-hand text-[1.6rem] leading-none text-tomato-deep">{logoWall.label}</p>
       <div className="marquee mt-3 overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_7%,#000_93%,transparent)]">
-        <div className="marquee-track flex w-max">
+        <div
+          className="marquee-track flex w-max"
+          style={{ "--marquee-duration": `${items.length * 5.5}s` } as React.CSSProperties}
+        >
           {row(0)}
           {row(1)}
         </div>
