@@ -81,7 +81,8 @@ example "Points of Light · 2026"), to make room for the logo tiles on phones.
   - **College Board awards:** they have no public pages.
   - Only Literary Titan is linked (see below).
 - **UH published model:** that field was blank, so it's hidden.
-- **RescueLog website:** none found; the store badges serve as proof.
+- **RescueLog website:** added later from you. The RescueLog title now links to
+  https://rescuelog-mu.vercel.app/.
 
 ## Please verify
 

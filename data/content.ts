@@ -165,6 +165,7 @@ export const experience = {
       id: "rescuelog",
       role: "Founder & Developer",
       org: "RescueLog",
+      orgHref: "https://rescuelog-mu.vercel.app/",
       type: "App",
       mark: { logo: "rescuelog.png", fit: "cover", doodle: "carrot", tone: "leaf" },
       summary:
