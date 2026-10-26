@@ -1,5 +1,8 @@
 # Redesign report
 
+> Superseded for current content by `CONTENT_FIX_REPORT.md`. The placeholder checklist below is
+> from the first redesign pass and is now done or removed.
+
 Branch: `redesign`. Nothing was committed to `main`, and no Vercel settings, DNS, or environment
 variables were touched.
 
@@ -107,8 +110,8 @@ block the clipboard; if copying fails, the button opens the mail app instead.
 ## Checklist: placeholders to fill (all in `data/content.ts`)
 
 **Contact**
-- [ ] `contact.email`, `contact.linkedin`, `contact.instagram` (your personal ones; I didn't use the
-      Waste2Taste email)
+- [x] Email and LinkedIn added. The personal Instagram button was removed; Waste2Taste's Instagram
+      stays linked in its section
 
 **RescueLog**
 - [ ] Dates and website link
@@ -150,7 +153,7 @@ block the clipboard; if copying fails, the button opens the mail app instead.
 - [ ] Club page link
 
 **Awards**
-- [ ] Years for every award except Anthem
+- [x] Years (all 2026)
 - [ ] Proof links for Anthem, Daily Point of Light, Literary Titan, Disha USA, NSDA, and NYT
 - [ ] Which College Board National Recognition Program award it is (optional detail)
 - [ ] Fill or delete the two "Just for Fun" slots

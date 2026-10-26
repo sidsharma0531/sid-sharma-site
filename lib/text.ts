@@ -1,4 +1,4 @@
-/** True for unfilled values written like "[X]" or "[link]". */
+/** True for empty values, or values still wrapped in square brackets. */
 export function isPlaceholder(value?: string) {
   return !value || /^\[[^\]]+\]$/.test(value.trim());
 }

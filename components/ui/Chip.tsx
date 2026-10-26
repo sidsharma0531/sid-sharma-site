@@ -2,22 +2,14 @@ import type { LinkChip } from "@/data/content";
 import { isLink } from "@/lib/text";
 import StoreBadge from "./StoreBadge";
 
-// A link that proves a claim. Unfilled links stay visible as dashed chips with a [link] tag.
+// A link that proves a claim. Renders nothing without a real URL.
 export default function Chip({ size = "md", ...link }: LinkChip & { size?: "sm" | "md" }) {
+  if (!isLink(link.href)) return null;
   if (link.badge) return <StoreBadge {...link} />;
 
   const base = `inline-flex items-center gap-1.5 rounded-full border-[1.5px] font-medium ${
     size === "sm" ? "h-9 px-3.5 text-[13px]" : "h-10 px-4 text-sm"
   }`;
-
-  if (!isLink(link.href)) {
-    return (
-      <span className={`${base} border-dashed border-ink/35 text-ink/70`}>
-        {link.label}
-        <span className="fill-me font-mono text-[11px]">{link.href}</span>
-      </span>
-    );
-  }
 
   return (
     <a

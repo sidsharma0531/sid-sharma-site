@@ -1,9 +1,8 @@
 import Photo from "@/components/ui/Photo";
-import Rich from "@/components/ui/Rich";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { press, type PressItem } from "@/data/content";
 import { getImage } from "@/lib/images";
-import { isLink } from "@/lib/text";
+import { isLink, isPlaceholder } from "@/lib/text";
 
 const action: Record<string, string> = { TV: "Watch the story", Podcast: "Listen" };
 
@@ -14,7 +13,7 @@ export default function Press() {
   return (
     <section id="press" className="container-page py-20 sm:py-28">
       <SectionHeading kicker={press.kicker} title={press.title} />
-      <ul className="grid gap-5 md:grid-cols-2">
+      <ul className={`grid gap-5 ${press.items.length > 1 ? "md:grid-cols-2" : "max-w-2xl"}`}>
         {press.items.map((item) => (
           <li key={item.headline + item.outlet} data-reveal>
             <PressCard item={item} />
@@ -35,24 +34,16 @@ function PressCard({ item }: { item: PressItem }) {
         <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-semibold tracking-[0.14em] text-tomato-deep uppercase">
           <span>{item.outlet}</span>
           <span className="rounded-full bg-butter/60 px-2 py-0.5 tracking-[0.1em] text-ink">{item.kind}</span>
-          {item.date && (
-            <span className="font-medium tracking-normal text-ink/55 normal-case">
-              <Rich text={item.date} />
-            </span>
+          {item.date && !isPlaceholder(item.date) && (
+            <span className="font-medium tracking-normal text-ink/55 normal-case">{item.date}</span>
           )}
         </p>
-        <p className="mt-3 font-serif text-xl leading-snug font-semibold tracking-[-0.01em] text-balance">
-          <Rich text={item.headline} />
-        </p>
-        <p className="mt-4 text-sm font-semibold text-ink/80">
-          {linked ? (
-            <>
-              {action[item.kind] ?? "Read the story"} <span aria-hidden>↗</span>
-            </>
-          ) : (
-            <span className="fill-me font-mono text-[11px] font-normal">{item.href}</span>
-          )}
-        </p>
+        <p className="mt-3 font-serif text-xl leading-snug font-semibold tracking-[-0.01em] text-balance">{item.headline}</p>
+        {linked && (
+          <p className="mt-4 text-sm font-semibold text-ink/80">
+            {action[item.kind] ?? "Read the story"} <span aria-hidden>↗</span>
+          </p>
+        )}
       </div>
       {thumb?.exists && (
         <Photo

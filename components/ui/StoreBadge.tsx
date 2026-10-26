@@ -21,21 +21,10 @@ const badges = {
   },
 };
 
+// Renders nothing without a real store URL.
 export default function StoreBadge({ href, badge }: LinkChip) {
-  if (!badge) return null;
+  if (!badge || !isLink(href)) return null;
   const b = badges[badge];
-  const img = (
-    <img src={b.src} alt={b.alt} width={b.width} height={b.height} loading="lazy" decoding="async" className={b.className} />
-  );
-
-  if (!isLink(href)) {
-    return (
-      <span className="inline-flex items-center gap-2 opacity-90">
-        {img}
-        <span className="fill-me font-mono text-[11px]">{href}</span>
-      </span>
-    );
-  }
 
   return (
     <a
@@ -44,7 +33,7 @@ export default function StoreBadge({ href, badge }: LinkChip) {
       rel="noopener noreferrer"
       className="inline-flex rounded-[9px] transition-transform hover:-translate-y-0.5"
     >
-      {img}
+      <img src={b.src} alt={b.alt} width={b.width} height={b.height} loading="lazy" decoding="async" className={b.className} />
     </a>
   );
 }

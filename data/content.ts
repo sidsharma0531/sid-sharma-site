@@ -1,14 +1,15 @@
 // Everything the site says lives in this file. Components only render what is here.
 //
-// Inside any text:
-//   **like this**  makes it bold (use it for numbers)
-//   [like this]    marks something unfinished; it shows as a highlighted tag on the page
+// Inside any text, **like this** makes it bold (use it for numbers).
+//
+// Every optional field hides itself when left out: dates, years, links, stats, badges, and
+// contact buttons simply don't render. Never fill a field with a guess.
 //
 // Images: photos go in /public/photos, logos in /public/logos. Write just the file name.
-// A missing file never leaves a blank slot. The hero photo and the polaroids show a labeled
-// placeholder; everything else falls back to a designed version (wordmark, app splash, cover).
+// A missing photo or logo never leaves a blank slot.
 //
-// Sources: numbers, captions, partners, and links marked "waste-2-taste.org" come from that site.
+// Sources: the Common App activity list, waste-2-taste.org, the RescueLog store listings,
+// and each organization's own site or Wikimedia Commons for logos.
 
 /* ---------- Types ---------- */
 
@@ -22,26 +23,35 @@ export type LinkChip = { label: string; href: string; badge?: "app-store" | "goo
 
 export type Stat = { value: string; unit?: string; label: string };
 
-/** Square tile beside an entry: the logo file if it exists, otherwise the doodle or initials. */
-export type Mark = { logo?: string; doodle?: DoodleName; initials?: string; tone: Tone };
+/**
+ * Square tile beside an entry: the logo file if it exists, otherwise the doodle or initials.
+ * Logos sit on white with a little padding; set fit to "cover" for square app icons.
+ */
+export type Mark = { logo?: string; fit?: "cover"; doodle?: DoodleName; initials?: string; tone: Tone };
+
+/** An organization shown as a logo, with its name as the fallback. */
+export type Logo = { name: string; href?: string; logo?: string };
 
 export type Entry = {
   id: string;
   role: string;
-  org: string;
+  org?: string;
   orgHref?: string;
-  type: string;
-  dates: string;
+  type?: string;
+  dates?: string;
   location?: string;
   mark: Mark;
   summary: string;
   bullets?: string[];
-  links: LinkChip[];
+  links?: LinkChip[];
   /** Optional thumbnails. Only photos whose files exist are shown. */
   photos?: Photo[];
+  /** Optional row of small organization logos. */
+  logos?: Logo[];
 };
 
 export type FeaturedEntry = Entry & {
+  org: string;
   stats?: Stat[];
   visual:
     | { kind: "phone"; screens: Photo[] }
@@ -51,12 +61,14 @@ export type FeaturedEntry = Entry & {
 
 export type Award = {
   name: string;
-  /** Link to proof. Leave out when there is no public page. */
+  /** Link to a page that names Sid, Waste2Taste, RescueLog, or Still Good. */
   href?: string;
   issuer: string;
-  year: string;
+  year?: string;
   /** One line of context, like "Of 8,000+ entries". */
   context?: string;
+  /** Issuer logo in /public/logos. Without one, the issuer's initials show. */
+  logo?: string;
   photos?: Photo[];
 };
 
@@ -67,12 +79,10 @@ export type PressItem = {
   /** "TV", "Podcast", "Article", and so on. */
   kind: string;
   headline: string;
-  href: string;
+  href?: string;
   date?: string;
   thumbnail?: Photo;
 };
-
-export type Logo = { name: string; href: string; logo?: string };
 
 export type NavItem = { label: string; href: string; icon: DoodleName };
 
@@ -91,9 +101,10 @@ export const site = {
 
 export const contact = {
   // Shown as "name at domain dot com" and copied on click, so bots can't scrape it.
-  email: "[email]",
-  linkedin: "[link]",
-  instagram: "[link]",
+  email: "sidsharma2027@gmail.com",
+  linkedin: "https://www.linkedin.com/in/sid-sharma-8192a0264/",
+  // Add a link here to show an Instagram button next to LinkedIn.
+  instagram: undefined as string | undefined,
 };
 
 // Press hides itself here too whenever the press list is empty.
@@ -113,9 +124,9 @@ export const hero = {
   photo: { src: "photo-hero.jpg", alt: "Sid Sharma" } as Photo,
   note: "say hi!",
   stats: [
-    { value: "5,100+", unit: "lbs", label: "of food rescued by Waste2Taste" },
-    { value: "3", unit: "cities", label: "with Waste2Taste chapters" },
-    { value: "#1", unit: "new release", label: "Still Good, in Indian Cooking" },
+    { value: "2M", unit: "lbs/yr", label: "tracked through RescueLog" },
+    { value: "12", unit: "branches", label: "of Waste2Taste, across 7 states + UAE" },
+    { value: "30+", unit: "partners", label: "Waste2Taste grocers and community orgs" },
   ] as Stat[],
 };
 
@@ -123,9 +134,9 @@ export const hero = {
 
 const W2T_PARTNERS = "https://waste-2-taste.org/partners.html";
 
+// Only real working relationships and press. Each logo links to proof.
 export const logoWall = {
   label: "worked with & featured by",
-  // Each logo links to proof. Without a logo file, the name shows as a wordmark.
   logos: [
     { name: "Trader Joe's", href: W2T_PARTNERS, logo: "trader-joes.png" },
     { name: "H-E-B", href: W2T_PARTNERS, logo: "heb.png" },
@@ -133,12 +144,13 @@ export const logoWall = {
     {
       name: "KPRC 2 Houston",
       href: "https://www.click2houston.com/news/local/2026/08/29/2-helps-you-17-year-old-sugar-land-teen-making-a-positive-impact-by-recycling-food-from-local-grocery-stores/",
+      logo: "kprc2.svg",
     },
     { name: "Keemat Grocers", href: W2T_PARTNERS, logo: "keemat.png" },
-    { name: "University of Houston", href: "https://www.uh.edu" },
+    { name: "University of Houston", href: "https://www.uh.edu", logo: "uh.svg" },
     { name: "Fort Bend Family Promise", href: W2T_PARTNERS, logo: "fort-bend-family-promise.jpg" },
     { name: "National Food Recovery Association", href: "https://www.nationalfoodrecoveryassociation.org/", logo: "nfra.jpg" },
-    { name: "RE/MAX Commercial", href: "[link]" },
+    { name: "RE/MAX Commercial", href: "https://www.remaxcommercial.com", logo: "remax-commercial.png" },
   ] as Logo[],
 };
 
@@ -151,48 +163,48 @@ export const experience = {
   featured: [
     {
       id: "rescuelog",
-      role: "Founder",
+      role: "Founder & Developer",
       org: "RescueLog",
-      orgHref: "[link]",
       type: "App",
-      dates: "[dates]",
-      mark: { logo: "rescuelog.png", doodle: "carrot", tone: "leaf" },
-      summary: "An AI-powered food logging app for food-rescue organizations, live on iOS and Android.",
+      mark: { logo: "rescuelog.png", fit: "cover", doodle: "carrot", tone: "leaf" },
+      summary:
+        "AI food logging for nonprofits, live on iOS and Android: food banks snap photos and AI estimates the amount of food, replacing manual estimates.",
       stats: [
-        { value: "[X]", unit: "orgs", label: "using it" },
-        { value: "[X]", unit: "lbs", label: "of food logged" },
+        { value: "2M", unit: "lbs/yr", label: "of food tracked" },
+        { value: "1.7M", unit: "meals", label: "about, each year" },
+        { value: "3", unit: "states", label: "where food is tracked" },
       ],
-      bullets: ["Used by [partner orgs]"],
+      bullets: ["Generates reports that help orgs cut food waste and win grants", "Partnered with multiple nonprofits"],
       links: [
-        { label: "App Store", href: "[link]", badge: "app-store" },
-        { label: "Google Play", href: "[link]", badge: "google-play" },
+        { label: "App Store", href: "https://apps.apple.com/us/app/rescuelog/id6770613024", badge: "app-store" },
+        { label: "Google Play", href: "https://play.google.com/store/apps/details?id=com.rescuelog.app", badge: "google-play" },
       ],
+      // Screens cropped from the App Store listing's screenshots.
       visual: {
         kind: "phone",
         screens: [
-          { src: "rescuelog.png", alt: "RescueLog app screenshot" },
-          { src: "rescuelog-2.png", alt: "Second RescueLog app screenshot" },
+          { src: "rescuelog.png", alt: "RescueLog screen for logging a pop-up: take a photo of the food and submit" },
+          { src: "rescuelog-2.png", alt: "RescueLog home screen with a new pop-up log button and recent logs" },
         ],
       },
     },
     {
       id: "waste2taste",
-      role: "Founder",
+      role: "Founder & President",
       org: "Waste2Taste",
       orgHref: "https://waste-2-taste.org",
       type: "501(c)(3) nonprofit",
-      dates: "[dates]",
-      location: "Houston, Baltimore, and the SF Bay Area",
-      mark: { logo: "waste2taste.png", doodle: "tomato", tone: "tomato" },
+      location: "12 branches across 7 states and the UAE",
+      mark: { logo: "waste2taste.png", fit: "cover", doodle: "tomato", tone: "tomato" },
       summary:
-        "A 501(c)(3) youth nonprofit that rescues surplus food from grocers and cooks it into fresh meals for shelters and community centers, with chapters in Houston, Baltimore, and the San Francisco Bay Area.",
+        "Recovers near-expired food from local grocers and cooks it into meals that safely repurpose it, distributed to people experiencing homelessness.",
       stats: [
         { value: "5,100+", unit: "lbs", label: "of food rescued" },
+        { value: "12", unit: "branches", label: "across 7 states and the UAE" },
         { value: "30+", unit: "partners", label: "grocers and community orgs" },
-        { value: "[X]", unit: "volunteers", label: "across all chapters" },
       ],
       bullets: [
-        "Partners flag surplus, the team picks it up and cooks it into fresh meals, like **12 pans** of banana bread at a time",
+        "Partners include Whole Foods, Trader Joe's, and ethnic grocers",
         "Member of the National Food Recovery Association",
       ],
       links: [
@@ -243,18 +255,13 @@ export const experience = {
       org: "Still Good: A Cookbook for Forgotten Food",
       orgHref: "https://waste-2-taste.org/cookbook.html",
       type: "Self-published book",
-      dates: "[date]",
       mark: { doodle: "bread", tone: "butter" },
-      summary:
-        "A self-published cookbook on turning food people throw away into real meals: black bananas, stale bread, the leftovers at the back of the fridge.",
+      summary: "Recipes that use expiring food, built from my mom's homemade Indian recipes and my Waste2Taste work.",
       stats: [
-        { value: "#1", unit: "new release", label: "in Indian Cooking" },
-        { value: "#3", unit: "bestseller", label: "in Indian Cookbooks" },
+        { value: "#1", unit: "new release", label: "in Indian Cookbooks on Amazon" },
+        { value: "#3", unit: "best seller", label: "in Indian Cookbooks on Amazon" },
       ],
-      bullets: [
-        "Won the **Literary Titan Silver Book Award**",
-        "**79 pages**; net proceeds fund Waste2Taste's food rescue and meal donations",
-      ],
+      bullets: ["Won the **Literary Titan Silver Book Award**", "**79 pages**. Proceeds fund food rescue"],
       links: [
         { label: "Get the book", href: "https://www.amazon.com/dp/B0H6S6H6C7" },
         { label: "About the book", href: "https://waste-2-taste.org/cookbook.html" },
@@ -281,61 +288,89 @@ export const experience = {
   more: [
     {
       id: "uh-research",
-      role: "Research Assistant",
+      role: "Quantitative Research Assistant",
       org: "University of Houston",
       orgHref: "https://www.uh.edu",
-      type: "Research",
-      dates: "[dates]",
-      mark: { logo: "uh.png", initials: "UH", tone: "tomato" },
-      summary: "Translating a CBO economic model from EViews to Python under [Professor].",
-      links: [{ label: "Project", href: "[link]" }],
-      photos: [],
+      type: "Department of Economics",
+      mark: { logo: "uh.svg", initials: "UH", tone: "tomato" },
+      summary:
+        "Under Professor Vollrath, translated the Congressional Budget Office's potential-GDP model from EViews to Python, built a custom forecasting framework, and published the model online with explanations for use in UH undergraduate courses.",
     },
     {
       id: "remax",
-      role: "Intern",
+      role: "Summer Intern",
       org: "RE/MAX Commercial Real Estate",
-      orgHref: "[link]",
+      orgHref: "https://www.remaxcommercial.com",
       type: "Internship",
-      dates: "[dates]",
       mark: { logo: "remax-commercial.png", initials: "RE", tone: "butter" },
-      summary: "[what I did]",
-      links: [{ label: "Website", href: "[link]" }],
-      photos: [],
+      summary: "Sourced commercial properties, cold-called sellers, and ran market reports.",
+      bullets: [
+        "Worked on software for securely taking notes in internal meetings",
+        "Completed real estate license coursework",
+      ],
     },
     {
       id: "debate",
-      role: "Captain",
-      org: "Lincoln-Douglas Debate",
+      role: "LD Captain (grades 11 to 12) and Policy Team Manager (grade 12)",
+      org: "Elkins Speech & Debate",
       type: "Debate",
-      dates: "[dates]",
-      mark: { initials: "LD", tone: "leaf" },
-      summary: "NSDA Academic All American (top 1% of debaters). [record]",
-      links: [{ label: "Results", href: "[link]" }],
-      photos: [],
+      mark: { logo: "nsda-mark.png", initials: "LD", tone: "leaf" },
+      summary: "National Lincoln-Douglas competitor.",
+      bullets: [
+        "District Champion and **2x** State Qualifier",
+        "NSDA Student of Premier Distinction",
+        "Attended the **3-week** NSD summer camp",
+        "Coached **15** novices to place at tournaments",
+        "Ran the yearly school tournament with **400+** attendees",
+      ],
     },
     {
       id: "deca",
-      role: "Competitor",
-      org: "DECA",
-      orgHref: "https://www.deca.org",
+      role: "Competitor & Mentor",
+      org: "Elkins DECA",
       type: "Competition",
-      dates: "[dates]",
-      mark: { logo: "deca.png", initials: "DECA", tone: "tomato" },
-      summary: "[results]",
-      links: [{ label: "Results", href: "[link]" }],
-      photos: [],
+      mark: { logo: "deca-mark.svg", initials: "DECA", tone: "tomato" },
+      summary: "International Qualifier in Personal Financial Literacy and **2x** State Qualifier.",
+      bullets: [
+        "Mentored **9** students to state qualification",
+        "Bought a commercial slushy machine and sold slushies, cookies, and coffee weekly to fund the club",
+      ],
     },
     {
       id: "research-club",
-      role: "Program Director",
-      org: "Research Club",
+      role: "Program Director & Member",
+      org: "Elkins Research & Meta-Analysis Club",
       type: "Club",
-      dates: "[dates]",
       mark: { initials: "RC", tone: "butter" },
-      summary: "[what I did]",
-      links: [{ label: "Club page", href: "[link]" }],
-      photos: [],
+      summary:
+        "Matched students to research topics by interest and gave them projects, connected them with expert mentors, and personally worked in the econ group.",
+    },
+    {
+      id: "volunteer",
+      role: "Volunteer",
+      org: "7 Houston hunger-relief orgs",
+      type: "Volunteering",
+      dates: "4 years",
+      mark: { doodle: "tomato", tone: "tomato" },
+      summary: "Sort, pack, and distribute food. What I saw here inspired RescueLog.",
+      logos: [
+        { name: "Second Servings", href: "https://secondservingshouston.org", logo: "second-servings.jpg" },
+        { name: "Target Hunger", href: "https://www.targethunger.org", logo: "target-hunger.png" },
+        { name: "Second Mile" },
+        { name: "Urban Harvest", href: "https://www.urbanharvest.org", logo: "urban-harvest.png" },
+        { name: "Kids' Meals", href: "https://kidsmealsinc.org", logo: "kids-meals.png" },
+        { name: "WOW Project" },
+        { name: "County Care Center" },
+      ],
+    },
+    {
+      id: "guitar",
+      role: "Guitarist",
+      type: "Music",
+      dates: "Since age 12",
+      mark: { initials: "♪", tone: "leaf" },
+      summary:
+        "Trained weekly with a teacher in India in traditional music. Performed with groups at **30+** community events, celebrations, and religious gatherings.",
     },
   ] as Entry[],
 };
@@ -354,30 +389,30 @@ export const recognition = {
       awards: [
         {
           name: "Anthem Award Finalist",
-          href: "[link]",
           issuer: "The Anthem Awards",
           year: "2026",
           context: "Young Leader in Humanitarian Action & Services · 2,500+ entries · results Nov 5",
+          logo: "anthem.png",
         },
         {
           name: "Daily Point of Light Award",
-          href: "[link]",
           issuer: "Points of Light",
-          year: "[year]",
+          year: "2026",
           context: "For service work with Waste2Taste",
+          logo: "points-of-light-mark.svg",
         },
         {
           name: "Literary Titan Silver Book Award",
-          href: "[link]",
+          href: "https://literarytitan.com/2026/08/23/still-good-a-cookbook-for-forgotten-food/",
           issuer: "Literary Titan",
-          year: "[year]",
+          year: "2026",
           context: "For Still Good: A Cookbook for Forgotten Food",
+          logo: "literary-titan.png",
         },
         {
           name: "Young Achiever Award, Runner-Up",
-          href: "[link]",
           issuer: "Disha USA",
-          year: "[year]",
+          year: "2026",
           context: "Social Impact and Community Service",
         },
       ],
@@ -388,28 +423,20 @@ export const recognition = {
       awards: [
         {
           name: "Academic All American",
-          href: "[link]",
           issuer: "National Speech & Debate Association",
-          year: "[year]",
+          year: "2026",
           context: "Top 1% of debaters",
+          logo: "nsda-mark.png",
         },
-        { name: "AP Scholar with Distinction", issuer: "College Board", year: "[year]" },
-        { name: "National Recognition Program", issuer: "College Board", year: "[year]" },
+        { name: "AP Scholar with Distinction", issuer: "College Board", year: "2026", logo: "college-board-mark.svg" },
+        { name: "National Recognition Program", issuer: "College Board", year: "2026", logo: "college-board-mark.svg" },
         {
           name: "Summer Reading Contest, Honorable Mention",
-          href: "[link]",
           issuer: "The New York Times",
-          year: "[year]",
+          year: "2026",
           context: "Of 8,000+ entries",
+          logo: "nyt.svg",
         },
-      ],
-    },
-    {
-      name: "Just for Fun",
-      tone: "butter",
-      awards: [
-        { name: "[Award name]", href: "[link]", issuer: "[Issuer]", year: "[year]" },
-        { name: "[Award name]", href: "[link]", issuer: "[Issuer]", year: "[year]" },
       ],
     },
   ] as AwardCategory[],
@@ -429,13 +456,6 @@ export const press = {
         "2 Helps You: 17-year-old Sugar Land teen making a positive impact by recycling food from local grocery stores",
       href: "https://www.click2houston.com/news/local/2026/08/29/2-helps-you-17-year-old-sugar-land-teen-making-a-positive-impact-by-recycling-food-from-local-grocery-stores/",
       date: "Aug 2026",
-    },
-    {
-      outlet: "Simple Acts, Big Impact",
-      kind: "Podcast",
-      headline: "[Episode title]",
-      href: "[link]",
-      date: "[date]",
     },
   ] as PressItem[],
 };

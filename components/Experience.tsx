@@ -2,14 +2,15 @@ import BookMockup from "@/components/BookMockup";
 import PhoneMockup from "@/components/PhoneMockup";
 import Polaroids from "@/components/Polaroids";
 import Chip from "@/components/ui/Chip";
+import LogoImage from "@/components/ui/LogoImage";
 import OrgMark from "@/components/ui/OrgMark";
 import Rich from "@/components/ui/Rich";
 import SectionHeading from "@/components/ui/SectionHeading";
 import StatBlock from "@/components/ui/StatBlock";
 import ThumbRow from "@/components/ui/ThumbRow";
-import { experience, type Entry, type FeaturedEntry } from "@/data/content";
+import { experience, type Entry, type FeaturedEntry, type LinkChip, type Logo } from "@/data/content";
 import { getImage, resolvePhotos } from "@/lib/images";
-import { isLink } from "@/lib/text";
+import { isLink, isPlaceholder } from "@/lib/text";
 
 export default function Experience() {
   return (
@@ -85,18 +86,14 @@ function EntryHead({ entry }: { entry: FeaturedEntry }) {
           {subtitle && <p className="mt-1 font-serif text-lg leading-snug text-ink/70 italic">{subtitle}</p>}
           <p className="mt-1.5 text-[15px]">
             <span className="font-semibold">{entry.role}</span>
-            <Dot />
-            <span className="text-ink/70">{entry.type}</span>
-          </p>
-          <p className="text-sm text-ink/55">
-            <Rich text={entry.dates} />
-            {entry.location && (
+            {entry.type && (
               <>
                 <Dot />
-                {entry.location}
+                <span className="text-ink/70">{entry.type}</span>
               </>
             )}
           </p>
+          <MetaLine parts={[entry.dates, entry.location]} />
         </div>
       </div>
       <p className="mt-6 max-w-[62ch] text-[1.05rem] leading-relaxed text-ink/80 sm:text-lg">
@@ -107,15 +104,14 @@ function EntryHead({ entry }: { entry: FeaturedEntry }) {
 }
 
 function EntryStats({ entry }: { entry: FeaturedEntry }) {
-  if (!entry.stats?.length) return null;
+  // A stat without a real number never renders.
+  const stats = (entry.stats ?? []).filter((stat) => !isPlaceholder(stat.value));
+  if (stats.length === 0) return null;
   const wide = entry.visual.kind === "polaroids";
+  const columns = stats.length >= 3 ? (wide ? "sm:grid-cols-3" : "lg:grid-cols-3") : "";
   return (
-    <ul
-      className={`mt-8 grid grid-cols-2 gap-x-6 gap-y-6 border-t border-dashed border-ink/25 pt-6 [grid-area:stats] ${
-        wide ? "sm:grid-cols-3" : ""
-      }`}
-    >
-      {entry.stats.map((stat) => (
+    <ul className={`mt-8 grid grid-cols-2 gap-x-6 gap-y-6 border-t border-dashed border-ink/25 pt-6 [grid-area:stats] ${columns}`}>
+      {stats.map((stat) => (
         <li key={stat.label}>
           <StatBlock stat={stat} tone={entry.mark.tone} size={wide ? "lg" : "md"} />
         </li>
@@ -130,11 +126,7 @@ function EntryDetails({ entry }: { entry: FeaturedEntry }) {
     <div className="[grid-area:details]">
       <Bullets items={entry.bullets} />
       <ThumbRow photos={photos} className="mt-6" />
-      <div className="mt-7 flex flex-wrap items-center gap-3">
-        {entry.links.map((link) => (
-          <Chip key={link.label} {...link} />
-        ))}
-      </div>
+      <LinkRow links={entry.links} className="mt-7 gap-3" />
     </div>
   );
 }
@@ -148,36 +140,87 @@ function CompactRow({ entry }: { entry: Entry }) {
       <OrgMark mark={entry.mark} />
       <div className="min-w-0 flex-1">
         <h4 className="text-[1.05rem] leading-snug font-semibold">{entry.role}</h4>
-        <p className="text-[15px]">
-          <OrgName name={entry.org} href={entry.orgHref} />
-          <Dot />
-          <span className="text-ink/65">{entry.type}</span>
-        </p>
-        <p className="text-sm text-ink/55">
-          <Rich text={entry.dates} />
-          {entry.location && (
-            <>
-              <Dot />
-              {entry.location}
-            </>
-          )}
-        </p>
+        {(entry.org || entry.type) && (
+          <p className="text-[15px]">
+            {entry.org && <OrgName name={entry.org} href={entry.orgHref} />}
+            {entry.org && entry.type && <Dot />}
+            {entry.type && <span className="text-ink/65">{entry.type}</span>}
+          </p>
+        )}
+        <MetaLine parts={[entry.dates, entry.location]} />
         <p className="mt-2.5 text-[15px] leading-relaxed text-ink/80">
           <Rich text={entry.summary} />
         </p>
-        <Bullets items={entry.bullets} />
+        <Bullets items={entry.bullets} compact />
+        <LogoRow logos={entry.logos} />
         <ThumbRow photos={photos} className="mt-4" />
-        <div className="mt-4 flex flex-wrap gap-2">
-          {entry.links.map((link) => (
-            <Chip key={link.label} size="sm" {...link} />
-          ))}
-        </div>
+        <LinkRow links={entry.links} size="sm" className="mt-4 gap-2" />
       </div>
     </li>
   );
 }
 
+// Small white cards for a group of organizations. Names stand in for logos not found.
+function LogoRow({ logos }: { logos?: Logo[] }) {
+  if (!logos?.length) return null;
+  return (
+    <ul className="mt-4 flex flex-wrap gap-2">
+      {logos.map((logo) => {
+        const image = logo.logo ? getImage(logo.logo, "logos", [3, 1]) : null;
+        const body = image?.exists ? (
+          <span className="relative block h-7 w-full">
+            <LogoImage image={image} alt={logo.name} sizes="96px" />
+          </span>
+        ) : (
+          <span className="text-center text-[11px] leading-tight font-semibold text-ink/75">{logo.name}</span>
+        );
+        const tile = "flex h-11 w-24 items-center justify-center rounded-lg bg-white px-2 ring-1 ring-ink/10";
+        return (
+          <li key={logo.name}>
+            {isLink(logo.href) ? (
+              <a href={logo.href} target="_blank" rel="noopener noreferrer" className={`${tile} transition-transform hover:-translate-y-0.5`}>
+                {body}
+              </a>
+            ) : (
+              <span className={tile}>{body}</span>
+            )}
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
 /* ---------- Small pieces ---------- */
+
+// Only real links render; with none, the row disappears.
+function LinkRow({ links, size, className }: { links?: LinkChip[]; size?: "sm"; className: string }) {
+  const real = (links ?? []).filter((link) => isLink(link.href));
+  if (real.length === 0) return null;
+  return (
+    <div className={`flex flex-wrap items-center ${className}`}>
+      {real.map((link) => (
+        <Chip key={link.label} size={size} {...link} />
+      ))}
+    </div>
+  );
+}
+
+// Dates and location, separated by a dot. Missing parts are skipped.
+function MetaLine({ parts }: { parts: (string | undefined)[] }) {
+  const items = parts.filter((part): part is string => Boolean(part) && !isPlaceholder(part));
+  if (items.length === 0) return null;
+  return (
+    <p className="text-sm text-ink/55">
+      {items.map((item, i) => (
+        <span key={item}>
+          {i > 0 && <Dot />}
+          {item}
+        </span>
+      ))}
+    </p>
+  );
+}
 
 function OrgName({ name, href }: { name: string; href?: string }) {
   if (!isLink(href)) return <>{name}</>;
@@ -193,10 +236,10 @@ function OrgName({ name, href }: { name: string; href?: string }) {
   );
 }
 
-function Bullets({ items }: { items?: string[] }) {
+function Bullets({ items, compact }: { items?: string[]; compact?: boolean }) {
   if (!items?.length) return null;
   return (
-    <ul className="mt-6 space-y-2.5 text-[15px] leading-relaxed text-ink/80 sm:text-base">
+    <ul className={`space-y-2 text-[15px] leading-relaxed text-ink/80 ${compact ? "mt-3" : "mt-6 space-y-2.5 sm:text-base"}`}>
       {items.map((item) => (
         <li key={item} className="relative pl-5 before:absolute before:top-[0.62em] before:left-0.5 before:size-2 before:rounded-full before:bg-tomato">
           <Rich text={item} />

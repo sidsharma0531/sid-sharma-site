@@ -1,9 +1,10 @@
+import LogoImage from "@/components/ui/LogoImage";
 import Rich from "@/components/ui/Rich";
 import SectionHeading from "@/components/ui/SectionHeading";
 import ShowMore from "@/components/ui/ShowMore";
 import ThumbRow from "@/components/ui/ThumbRow";
 import { recognition, type Award, type Tone } from "@/data/content";
-import { resolvePhotos } from "@/lib/images";
+import { getImage, resolvePhotos } from "@/lib/images";
 import { isLink, isPlaceholder } from "@/lib/text";
 
 // Highlighter swipe behind each category name.
@@ -39,11 +40,11 @@ export default function Recognition() {
 
 function AwardRow({ award }: { award: Award }) {
   const photos = resolvePhotos(award.photos, { onlyExisting: true });
+  const meta = [award.issuer, award.year].filter((part): part is string => Boolean(part) && !isPlaceholder(part));
+
   return (
-    <div className="flex gap-4 border-t border-dashed border-ink/25 py-4 sm:gap-6">
-      <span className="w-14 shrink-0 pt-0.5 font-hand text-[1.35rem] leading-none text-ink/60 sm:w-16">
-        <Rich text={award.year} />
-      </span>
+    <div className="flex gap-4 border-t border-dashed border-ink/25 py-4 sm:gap-5">
+      <IssuerTile award={award} />
       <div className="min-w-0">
         <p className="font-serif text-[1.15rem] leading-snug font-semibold sm:text-xl">
           {isLink(award.href) ? (
@@ -53,21 +54,16 @@ function AwardRow({ award }: { award: Award }) {
               rel="noopener noreferrer"
               className="underline decoration-ink/20 decoration-[0.06em] underline-offset-[0.18em] transition-colors hover:decoration-tomato"
             >
-              <Rich text={award.name} />
+              {award.name}
               <span aria-hidden className="ml-1 text-[0.8em] text-ink/50">
                 ↗
               </span>
             </a>
           ) : (
-            <Rich text={award.name} />
-          )}
-          {award.href && isPlaceholder(award.href) && (
-            <span className="fill-me ml-2 align-middle font-mono text-[11px] font-normal">{award.href}</span>
+            award.name
           )}
         </p>
-        <p className="mt-0.5 text-sm text-ink/60">
-          <Rich text={award.issuer} />
-        </p>
+        {meta.length > 0 && <p className="mt-0.5 text-sm text-ink/60">{meta.join(" · ")}</p>}
         {award.context && (
           <p className="mt-1 text-sm leading-snug text-ink/80">
             <Rich text={award.context} />
@@ -76,5 +72,28 @@ function AwardRow({ award }: { award: Award }) {
         <ThumbRow photos={photos} className="mt-3" />
       </div>
     </div>
+  );
+}
+
+// The issuer's logo on a small white tile, or its initials when no logo was found.
+function IssuerTile({ award }: { award: Award }) {
+  const logo = award.logo ? getImage(award.logo, "logos", [1, 1]) : null;
+  const initials = award.issuer
+    .split(/\s+/)
+    .filter((word) => /^[A-Z]/.test(word))
+    .map((word) => word[0])
+    .join("")
+    .slice(0, 2);
+
+  return (
+    <span aria-hidden className="relative grid size-11 shrink-0 place-items-center overflow-hidden rounded-xl bg-white ring-1 ring-ink/10 sm:size-12">
+      {logo?.exists ? (
+        <span className="absolute inset-[16%]">
+          <LogoImage image={logo} alt="" sizes="48px" />
+        </span>
+      ) : (
+        <span className="font-serif text-[13px] font-semibold text-ink/70">{initials}</span>
+      )}
+    </span>
   );
 }

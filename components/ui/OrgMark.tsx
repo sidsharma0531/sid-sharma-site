@@ -1,7 +1,7 @@
-import Image from "next/image";
 import Doodle from "@/components/doodles";
 import type { Mark } from "@/data/content";
 import { getImage } from "@/lib/images";
+import LogoImage from "./LogoImage";
 
 const tones = {
   tomato: "bg-tomato/15 text-tomato-deep",
@@ -15,9 +15,12 @@ export default function OrgMark({ mark, size = "md" }: { mark: Mark; size?: "md"
   const box = size === "lg" ? "size-14 rounded-2xl sm:size-16" : "size-11 rounded-xl sm:size-12";
 
   if (logo?.exists) {
+    const cover = mark.fit === "cover";
     return (
-      <span className={`relative block shrink-0 overflow-hidden border border-ink/10 bg-paper ${box}`}>
-        <Image src={logo.src} alt="" fill sizes="64px" className="object-cover" />
+      <span className={`relative block shrink-0 overflow-hidden border border-ink/10 bg-white ${box}`}>
+        <span className={`absolute ${cover ? "inset-0" : "inset-[14%]"}`}>
+          <LogoImage image={logo} alt="" sizes="64px" fit={cover ? "cover" : "contain"} />
+        </span>
       </span>
     );
   }

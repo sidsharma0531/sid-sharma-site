@@ -17,8 +17,8 @@ Everything the site says lives in `data/content.ts`: copy, stats, links, awards,
 names. Components only render from it.
 
 - `**bold**` makes text bold (use it for numbers).
-- `[anything in brackets]` shows on the page as a highlighted tag, so unfinished spots are easy to
-  find. Replace it with the real value and the tag disappears.
+- Optional fields hide themselves when left out: dates, award years, links, stats, store badges,
+  and contact buttons render nothing until they have a real value. Never fill one with a guess.
 - Leaving `press.items` empty hides the Press section and its nav icon.
 - Each award category shows 5 awards, then a "See X more" toggle (`recognition.showFirst`).
 
