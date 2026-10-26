@@ -6,11 +6,24 @@ import Photo from "@/components/ui/Photo";
 import type { ResolvedPhoto } from "@/lib/images";
 
 // Where each polaroid sits on wider screens: left and top as % of the table, width as %, tilt,
-// and stacking order. The top row sits above the bottom row, so overlaps only ever cover the
-// edge of a lower polaroid, never a caption. Slot 2 is sized for a wide photo.
+// and stacking order. Higher-up polaroids sit on top, so overlaps only ever cover the edge of
+// a lower polaroid, never a caption.
 // On phones they fall into two columns; "drop" nudges the right-hand ones down a little,
 // and a wide photo spans both columns.
-const spots = [
+
+// All square photos: two staggered rows.
+const squareSpots = [
+  { x: 1, y: 4, w: 23, r: -6, z: 4, tape: true },
+  { x: 17, y: 43, w: 22, r: 4, z: 1, drop: true },
+  { x: 33, y: 1, w: 24, r: -2, z: 6, tape: true },
+  { x: 51, y: 46, w: 21, r: 5, z: 2, drop: true },
+  { x: 64, y: 5, w: 22, r: -4, z: 5 },
+  { x: 77, y: 40, w: 22, r: 3, z: 3, tape: true, drop: true },
+  { x: 31, y: 58, w: 18, r: -7, z: 7 },
+];
+
+// One wide photo in the second slot: four across the top, three across the bottom.
+const wideSpots = [
   { x: 0, y: 3, w: 22, r: -5, z: 6, tape: true },
   { x: 9, y: 47, w: 33, r: 2, z: 3, tape: true },
   { x: 25, y: 1, w: 21, r: 4, z: 7, drop: true },
@@ -23,6 +36,7 @@ const spots = [
 // The scrapbook moment: 5 to 7 polaroids scattered on a picnic tablecloth. Click to enlarge.
 export default function Polaroids({ photos }: { photos: ResolvedPhoto[] }) {
   const [index, setIndex] = useState<number | null>(null);
+  const spots = photos.some((photo) => photo.wide) ? wideSpots : squareSpots;
   const shown = photos.slice(0, spots.length);
 
   return (

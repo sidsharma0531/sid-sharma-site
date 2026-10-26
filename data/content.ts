@@ -16,8 +16,11 @@
 export type Tone = "tomato" | "butter" | "leaf";
 export type DoodleName = "carrot" | "tomato" | "bread" | "whisk";
 
-/** wide: show the whole photo as a wide polaroid instead of a square crop (for group shots). */
-export type Photo = { src: string; alt: string; caption?: string; wide?: boolean };
+/**
+ * wide: show the whole photo as a wide polaroid instead of a square crop (for group shots).
+ * focus: which part to keep when the photo is cropped, like "20% 50%" for the left side.
+ */
+export type Photo = { src: string; alt: string; caption?: string; wide?: boolean; focus?: string };
 
 /** A link button. Set badge to show the official App Store or Google Play badge instead. */
 export type LinkChip = { label: string; href: string; badge?: "app-store" | "google-play" };
@@ -61,6 +64,8 @@ export type FeaturedEntry = Entry & {
 };
 
 export type Award = {
+  /** Used to attach photos to this award on /v2. */
+  id: string;
   name: string;
   /** Link to a page that names Sid, Waste2Taste, RescueLog, or Still Good. */
   href?: string;
@@ -401,6 +406,7 @@ export const recognition = {
       tone: "tomato",
       awards: [
         {
+          id: "anthem",
           name: "Anthem Award Finalist",
           issuer: "The Anthem Awards",
           year: "2026",
@@ -408,6 +414,7 @@ export const recognition = {
           logo: "anthem.png",
         },
         {
+          id: "points-of-light",
           name: "Daily Point of Light Award",
           issuer: "Points of Light",
           year: "2026",
@@ -415,6 +422,7 @@ export const recognition = {
           logo: "points-of-light-mark.svg",
         },
         {
+          id: "literary-titan",
           name: "Literary Titan Silver Book Award",
           href: "https://literarytitan.com/2026/08/23/still-good-a-cookbook-for-forgotten-food/",
           issuer: "Literary Titan",
@@ -423,6 +431,7 @@ export const recognition = {
           logo: "literary-titan.png",
         },
         {
+          id: "disha-usa",
           name: "Young Achiever Award, Runner-Up",
           issuer: "Disha USA",
           year: "2026",
@@ -435,15 +444,17 @@ export const recognition = {
       tone: "leaf",
       awards: [
         {
+          id: "nsda-academic-all-american",
           name: "Academic All American",
           issuer: "National Speech & Debate Association",
           year: "2026",
           context: "Top 1% of debaters",
           logo: "nsda-mark.png",
         },
-        { name: "AP Scholar with Distinction", issuer: "College Board", year: "2026", logo: "college-board-mark.svg" },
-        { name: "National Recognition Program", issuer: "College Board", year: "2026", logo: "college-board-mark.svg" },
+        { id: "ap-scholar", name: "AP Scholar with Distinction", issuer: "College Board", year: "2026", logo: "college-board-mark.svg" },
+        { id: "national-recognition", name: "National Recognition Program", issuer: "College Board", year: "2026", logo: "college-board-mark.svg" },
         {
+          id: "nyt-summer-reading",
           name: "Summer Reading Contest, Honorable Mention",
           issuer: "The New York Times",
           year: "2026",
@@ -488,5 +499,5 @@ export const press = {
 
 export const footer = {
   kicker: "let's connect",
-  line: "Questions about RescueLog, Waste2Taste, or Still Good? Say hi.",
+  line: "Want to reach out? Say hi.",
 };

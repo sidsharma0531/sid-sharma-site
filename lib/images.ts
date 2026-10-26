@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { imageSize } from "image-size";
 import type { Photo } from "@/data/content";
+import { photosV2, type Placement } from "@/data/photos-v2";
 
 export type ImageInfo = {
   file: string;
@@ -11,7 +12,9 @@ export type ImageInfo = {
   exists: boolean;
 };
 
-export type ResolvedPhoto = ImageInfo & { alt: string; caption?: string; wide?: boolean };
+export type ResolvedPhoto = ImageInfo & { alt: string; caption?: string; wide?: boolean; focus?: string };
+
+const DIVIDERS = ["before-recognition", "before-contact"];
 
 type Folder = "photos" | "logos";
 
@@ -59,6 +62,22 @@ export function resolvePhotos(
     alt: photo.alt,
     caption: photo.caption,
     wide: photo.wide,
+    focus: photo.focus,
   }));
   return onlyExisting ? list.filter((photo) => photo.exists) : list;
+}
+
+/**
+ * Photos for the /v2 layout (data/photos-v2.ts), for one placement, in list order. Hero ignores
+ * `at`. A divider photo whose `at` isn't a known strip goes in the first strip, so switching a
+ * photo to "divider" by changing one word still shows it.
+ */
+export function photosFor(placement: Placement, at?: string): ResolvedPhoto[] {
+  const matches = photosV2.filter((photo) => {
+    if (photo.placement !== placement) return false;
+    if (placement === "hero") return true;
+    if (placement === "divider" && !DIVIDERS.includes(photo.at ?? "")) return at === DIVIDERS[0];
+    return photo.at === at;
+  });
+  return resolvePhotos(matches, { fallback: placement === "hero" ? [4, 5] : [1, 1] });
 }
