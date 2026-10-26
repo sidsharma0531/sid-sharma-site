@@ -84,6 +84,15 @@ example "Points of Light · 2026"), to make room for the logo tiles on phones.
 - **RescueLog website:** added later from you. The RescueLog title now links to
   https://rescuelog-mu.vercel.app/.
 
+## Added after the content pass
+
+- **RescueLog website:** the RescueLog title links to https://rescuelog-mu.vercel.app/.
+- **Whole Foods photo:** a seventh polaroid, `photo-07.jpg`, captioned "pickup at Whole Foods". It's
+  marked `wide` so it shows uncropped; a square crop would have cut off your face at the left edge.
+- **Podcast:** the press item is back, now with its real link. "Food Waste to Food Recovery: Sid's
+  Waste2Taste Story" on Simple Acts, Big Impact (Apple Podcasts, released Sep 16, 2026; title and
+  date checked against Apple's listing).
+
 ## Please verify
 
 1. **App Store seller name.** The App Store listing's seller is "KUMARI SHIPRA", not you or

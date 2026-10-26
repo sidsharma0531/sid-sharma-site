@@ -11,7 +11,7 @@ export type ImageInfo = {
   exists: boolean;
 };
 
-export type ResolvedPhoto = ImageInfo & { alt: string; caption?: string };
+export type ResolvedPhoto = ImageInfo & { alt: string; caption?: string; wide?: boolean };
 
 type Folder = "photos" | "logos";
 
@@ -58,6 +58,7 @@ export function resolvePhotos(
     ...getImage(photo.src, "photos", fallback),
     alt: photo.alt,
     caption: photo.caption,
+    wide: photo.wide,
   }));
   return onlyExisting ? list.filter((photo) => photo.exists) : list;
 }

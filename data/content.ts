@@ -16,7 +16,8 @@
 export type Tone = "tomato" | "butter" | "leaf";
 export type DoodleName = "carrot" | "tomato" | "bread" | "whisk";
 
-export type Photo = { src: string; alt: string; caption?: string };
+/** wide: show the whole photo as a wide polaroid instead of a square crop (for group shots). */
+export type Photo = { src: string; alt: string; caption?: string; wide?: boolean };
 
 /** A link button. Set badge to show the official App Store or Google Play badge instead. */
 export type LinkChip = { label: string; href: string; badge?: "app-store" | "google-play" };
@@ -213,7 +214,8 @@ export const experience = {
         { label: "Instagram", href: "https://instagram.com/waste2taste.usa" },
         { label: "Partners", href: W2T_PARTNERS },
       ],
-      // 5 to 7 photos. The caption is handwritten under each polaroid.
+      // 5 to 7 photos. The caption is handwritten under each polaroid. Photos are cropped
+      // square unless marked wide; the second slot is sized for one wide photo.
       visual: {
         kind: "polaroids",
         photos: [
@@ -221,6 +223,12 @@ export const experience = {
             src: "photo-01.jpg",
             alt: "Sid Sharma and a Trader Joe's crew member holding two bags tagged as Waste2Taste donations",
             caption: "flagged at the grocer",
+          },
+          {
+            src: "photo-07.jpg",
+            alt: "Sid Sharma and a volunteer taking a Whole Foods bag from a Whole Foods team member in the store",
+            caption: "pickup at Whole Foods",
+            wide: true,
           },
           {
             src: "photo-02.jpg",
@@ -457,6 +465,13 @@ export const press = {
         "2 Helps You: 17-year-old Sugar Land teen making a positive impact by recycling food from local grocery stores",
       href: "https://www.click2houston.com/news/local/2026/08/29/2-helps-you-17-year-old-sugar-land-teen-making-a-positive-impact-by-recycling-food-from-local-grocery-stores/",
       date: "Aug 2026",
+    },
+    {
+      outlet: "Simple Acts, Big Impact",
+      kind: "Podcast",
+      headline: "Food Waste to Food Recovery: Sid's Waste2Taste Story",
+      href: "https://podcasts.apple.com/us/podcast/food-waste-to-food-recovery-sids-waste2taste-story/id1641520893?i=1000790005401",
+      date: "Sep 2026",
     },
   ] as PressItem[],
 };

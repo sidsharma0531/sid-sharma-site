@@ -6,16 +6,18 @@ import Photo from "@/components/ui/Photo";
 import type { ResolvedPhoto } from "@/lib/images";
 
 // Where each polaroid sits on wider screens: left and top as % of the table, width as %, tilt,
-// and stacking order. Higher-up polaroids sit on top, so overlaps cover photo corners, never captions.
-// On phones they fall into two staggered columns instead.
+// and stacking order. The top row sits above the bottom row, so overlaps only ever cover the
+// edge of a lower polaroid, never a caption. Slot 2 is sized for a wide photo.
+// On phones they fall into two columns; "drop" nudges the right-hand ones down a little,
+// and a wide photo spans both columns.
 const spots = [
-  { x: 1, y: 4, w: 23, r: -6, z: 4, tape: true },
-  { x: 17, y: 43, w: 22, r: 4, z: 1 },
-  { x: 33, y: 1, w: 24, r: -2, z: 6, tape: true },
-  { x: 51, y: 46, w: 21, r: 5, z: 2 },
-  { x: 64, y: 5, w: 22, r: -4, z: 5 },
-  { x: 77, y: 40, w: 22, r: 3, z: 3, tape: true },
-  { x: 31, y: 58, w: 18, r: -7, z: 7 },
+  { x: 0, y: 3, w: 22, r: -5, z: 6, tape: true },
+  { x: 9, y: 47, w: 33, r: 2, z: 3, tape: true },
+  { x: 25, y: 1, w: 21, r: 4, z: 7, drop: true },
+  { x: 46, y: 46, w: 21, r: -4, z: 2 },
+  { x: 50, y: 4, w: 21, r: -3, z: 5, tape: true, drop: true },
+  { x: 70, y: 47, w: 22, r: 4, z: 1 },
+  { x: 76, y: 2, w: 23, r: -4, z: 4, tape: true, drop: true },
 ];
 
 // The scrapbook moment: 5 to 7 polaroids scattered on a picnic tablecloth. Click to enlarge.
@@ -25,17 +27,21 @@ export default function Polaroids({ photos }: { photos: ResolvedPhoto[] }) {
 
   return (
     <>
-      <ul className="gingham relative grid grid-cols-2 gap-x-3 gap-y-5 rounded-[1.5rem] border border-ink/10 px-3 pt-6 pb-12 sm:gap-x-5 sm:px-6 md:block md:aspect-[1.75/1] md:p-0">
+      <ul className="gingham relative grid grid-flow-row-dense grid-cols-2 gap-x-3 gap-y-5 rounded-[1.5rem] border border-ink/10 px-3 pt-6 pb-12 sm:gap-x-5 sm:px-6 md:block md:aspect-[1.75/1] md:p-0">
         {shown.map((photo, i) => {
           const spot = spots[i];
+          const ratio = photo.width / photo.height;
+          const wide = Boolean(photo.wide);
+          // A square photo never takes more than a square slot's width.
+          const width = wide ? spot.w : Math.min(spot.w, 23);
           return (
             <li
               key={photo.file}
               style={
-                { "--x": `${spot.x}%`, "--y": `${spot.y}%`, "--w": `${spot.w}%`, "--r": `${spot.r}deg`, "--z": spot.z } as React.CSSProperties
+                { "--x": `${spot.x}%`, "--y": `${spot.y}%`, "--w": `${width}%`, "--r": `${spot.r}deg`, "--z": spot.z } as React.CSSProperties
               }
               className={`relative rotate-(--r) transition-[rotate,scale] duration-300 hover:z-30 hover:scale-[1.04] hover:rotate-0 md:absolute md:top-(--y) md:left-(--x) md:z-(--z) md:w-(--w) md:translate-y-0 md:hover:z-30 ${
-                i % 2 ? "translate-y-6" : ""
+                wide ? "col-span-2 mx-auto w-[92%] md:mx-0" : spot.drop ? "translate-y-6" : ""
               }`}
             >
               {spot.tape && (
@@ -52,9 +58,9 @@ export default function Polaroids({ photos }: { photos: ResolvedPhoto[] }) {
                 <Photo
                   photo={photo}
                   alt={photo.alt}
-                  ratio={1}
-                  hint="square crop"
-                  sizes="(min-width: 768px) 24vw, 46vw"
+                  ratio={wide ? ratio : 1}
+                  hint={wide ? "wide photo" : "square crop"}
+                  sizes={wide ? "(min-width: 768px) 34vw, 92vw" : "(min-width: 768px) 24vw, 46vw"}
                 />
                 <span className="flex min-h-[2.4em] items-center justify-center py-[0.3em] text-center font-hand text-[clamp(15px,9.5cqw,23px)] leading-tight text-ink/80">
                   {photo.caption}
