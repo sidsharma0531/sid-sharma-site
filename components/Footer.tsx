@@ -1,44 +1,26 @@
-import Fill from "@/components/ui/Fill";
-import { contact, hero, isPlaceholder } from "@/lib/content";
+import Doodle from "@/components/doodles";
+import ContactLinks from "@/components/ui/ContactLinks";
+import SectionHeading from "@/components/ui/SectionHeading";
+import { footer, site } from "@/data/content";
 
 export default function Footer() {
-  const linkClass =
-    "underline decoration-ink/25 underline-offset-[6px] transition-colors hover:text-accent hover:decoration-accent";
-
   return (
-    <footer id="contact" className="container-page pb-10">
-      <div data-reveal className="border-t border-ink/15 pt-5">
-        <p className="text-xs font-medium uppercase tracking-[0.18em] text-accent">Contact</p>
-        <h2 className="mt-6 font-serif text-[2.75rem] leading-[1.02] font-light tracking-[-0.025em] sm:text-7xl">
-          Get in touch
-        </h2>
+    <footer id="contact" className="mt-6">
+      <div aria-hidden className="gingham h-6 border-y border-ink/15" />
 
-        <div className="mt-8 flex flex-col items-start gap-4 sm:mt-10 sm:flex-row sm:items-baseline sm:gap-10">
-          <p className="font-serif text-2xl sm:text-3xl">
-            {isPlaceholder(contact.email) ? (
-              <Fill>{contact.email}</Fill>
-            ) : (
-              <a href={`mailto:${contact.email}`} className={linkClass}>
-                {contact.email}
-              </a>
-            )}
-          </p>
+      <div className="container-page relative pt-20 pb-10 sm:pt-28">
+        <SectionHeading kicker={footer.kicker} title={footer.line} />
 
-          <p className="text-base">
-            {isPlaceholder(contact.linkedin) ? (
-              <>
-                LinkedIn <Fill>{contact.linkedin}</Fill>
-              </>
-            ) : (
-              <a href={contact.linkedin} target="_blank" rel="noopener noreferrer" className={linkClass}>
-                LinkedIn <span aria-hidden>↗</span>
-              </a>
-            )}
-          </p>
+        <div data-reveal>
+          <ContactLinks variant="full" />
         </div>
-      </div>
 
-      <p className="mt-24 text-sm text-ink/50 sm:mt-32">© 2026 {hero.name}</p>
+        <div aria-hidden className="pointer-events-none absolute top-24 right-10 hidden rotate-12 lg:block">
+          <Doodle name="bread" className="size-28 text-ink" />
+        </div>
+
+        <p className="mt-24 text-sm text-ink/55 sm:mt-32">{site.copyright}</p>
+      </div>
     </footer>
   );
 }

@@ -1,17 +1,17 @@
 import Image from "next/image";
-import type { PhotoInfo } from "@/lib/photos";
+import type { ImageInfo } from "@/lib/images";
 
 type Props = {
-  photo: PhotoInfo;
+  photo: ImageInfo;
   alt: string;
   sizes: string;
-  /** Short note shown on the placeholder, like the ratio to crop to. */
+  /** Short note on the placeholder, like the ratio to crop to. */
   hint?: string;
   /** Aspect ratio of the box. Defaults to the photo's own ratio. "fill" stretches to the parent. */
   ratio?: number | "fill";
   className?: string;
   imgClassName?: string;
-  /** Background behind the image and placeholder. */
+  /** Background behind the image while it loads. */
   bg?: string;
   preload?: boolean;
   loading?: "lazy" | "eager";
@@ -45,6 +45,7 @@ export default function Photo({
           sizes={sizes}
           preload={preload}
           loading={preload ? undefined : loading}
+          unoptimized={photo.file.endsWith(".svg")}
           className={`object-cover ${imgClassName}`}
         />
       ) : (
@@ -54,22 +55,30 @@ export default function Photo({
   );
 }
 
+// Labeled stand-in until the real file lands in /public/photos.
 function Placeholder({ file, hint }: { file: string; hint?: string }) {
   return (
     <div
-      className="@container absolute inset-0 flex items-center justify-center p-3 text-center"
       role="img"
-      aria-label={`Placeholder for ${file}`}
+      aria-label={`Photo placeholder: ${file}`}
+      className="@container absolute inset-0 flex flex-col items-center justify-center gap-2 bg-butter/30 bg-[repeating-linear-gradient(45deg,transparent_0_10px,rgb(34_28_24/0.05)_10px_11px)] p-3 text-center"
     >
-      <div aria-hidden className="absolute inset-2 border border-dashed border-ink/20" />
-      <div aria-hidden className="relative">
-        <p className="font-mono text-[11px] text-ink/60 @[16rem]:text-xs @[30rem]:text-sm">{file}</p>
-        {hint && (
-          <p className="mt-1 text-[10px] uppercase tracking-[0.14em] text-ink/40 @[16rem]:text-[11px]">
-            {hint}
-          </p>
-        )}
-      </div>
+      <svg
+        aria-hidden
+        viewBox="0 0 48 40"
+        className="w-[22cqw] max-w-16 min-w-7 text-ink/40"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M5 8c0-2 1.5-3.5 3.5-3.5h31c2 0 3.5 1.5 3.5 3.5v24c0 2-1.5 3.5-3.5 3.5h-31C6.5 35.5 5 34 5 32z" />
+        <circle cx="32" cy="14" r="4" />
+        <path d="M6 31l11-11 8 8 5-5 12 12" />
+      </svg>
+      <p className="font-mono text-[clamp(9px,5.5cqw,14px)] leading-tight break-all text-ink/65">{file}</p>
+      {hint && <p className="font-hand text-[clamp(13px,7cqw,22px)] leading-none text-ink/50">{hint}</p>}
     </div>
   );
 }

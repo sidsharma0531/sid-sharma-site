@@ -1,20 +1,26 @@
+import Experience from "@/components/Experience";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
-import More from "@/components/More";
+import LogoWall from "@/components/LogoWall";
 import Nav from "@/components/Nav";
-import Photos from "@/components/Photos";
+import Press from "@/components/Press";
+import Recognition from "@/components/Recognition";
 import RevealObserver from "@/components/RevealObserver";
-import Work from "@/components/Work";
+import { nav, press, site } from "@/data/content";
 
 export default function Home() {
+  // The Press icon only shows when there is press to show.
+  const navItems = nav.filter((item) => item.href !== "#press" || press.items.length > 0);
+
   return (
     <>
-      <Nav />
+      <Nav name={site.name} items={navItems} />
       <main id="main">
         <Hero />
-        <Work />
-        <Photos />
-        <More />
+        <LogoWall />
+        <Experience />
+        <Recognition />
+        <Press />
       </main>
       <Footer />
       <RevealObserver />

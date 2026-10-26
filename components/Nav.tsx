@@ -1,103 +1,101 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { hero, nav } from "@/lib/content";
+import Doodle from "@/components/doodles";
+import type { NavItem } from "@/data/content";
 
-export default function Nav() {
-  const [open, setOpen] = useState(false);
+export default function Nav({ name, items }: { name: string; items: NavItem[] }) {
+  const [active, setActive] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 8);
+      // The footer is too short to reach the middle of the screen, so the very bottom counts as the last item.
+      const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+      if (atBottom && items.length > 0) setActive(items[items.length - 1].href);
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [items]);
 
+  // Highlight the icon for whichever section crosses the middle of the screen.
   useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
-    const onResize = () => window.innerWidth >= 640 && setOpen(false);
-    window.addEventListener("keydown", onKey);
-    window.addEventListener("resize", onResize);
-    return () => {
-      window.removeEventListener("keydown", onKey);
-      window.removeEventListener("resize", onResize);
-    };
-  }, [open]);
+    const targets = ["#top", ...items.map((item) => item.href)]
+      .map((href) => document.querySelector<HTMLElement>(href))
+      .filter((el): el is HTMLElement => el !== null);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActive(entry.target.id === "top" ? null : `#${entry.target.id}`);
+        }
+      },
+      { rootMargin: "-45% 0px -50% 0px" },
+    );
+
+    targets.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [items]);
 
   return (
     <header
-      className={`sticky top-0 z-40 border-b bg-paper transition-colors duration-300 ${
-        scrolled || open ? "border-ink/10" : "border-transparent"
+      className={`sticky top-0 z-40 border-b bg-cream transition-colors duration-300 ${
+        scrolled ? "border-dashed border-ink/20" : "border-transparent"
       }`}
     >
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:bg-paper focus:px-3 focus:py-2 focus:text-sm"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50 focus:bg-paper focus:px-3 focus:py-2 focus:text-sm"
       >
         Skip to content
       </a>
 
-      <div className="container-page flex h-16 items-center justify-between">
-        <a href="#top" className="font-serif text-xl tracking-[-0.01em]" onClick={() => setOpen(false)}>
-          {hero.name}
+      <div className="container-page flex h-16 items-center justify-between gap-3">
+        <a href="#top" className="font-serif text-[1.35rem] font-semibold tracking-[-0.02em] whitespace-nowrap">
+          {name}
+          <span className="text-tomato">.</span>
         </a>
 
-        <nav aria-label="Main" className="hidden sm:block">
-          <ul className="flex items-center gap-8 text-sm">
-            {nav.map((item) => (
-              <li key={item.href}>
-                <a
-                  href={item.href}
-                  className="text-ink/75 underline-offset-[6px] transition-colors hover:text-ink hover:underline hover:decoration-accent"
-                >
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        <button
-          type="button"
-          className="-mr-2 px-2 py-2 text-sm font-medium sm:hidden"
-          aria-expanded={open}
-          aria-controls="mobile-menu"
-          onClick={() => setOpen((v) => !v)}
-        >
-          {open ? "Close" : "Menu"}
-        </button>
-      </div>
-
-      {open && (
-        <>
-          <div
-            aria-hidden
-            className="fixed inset-x-0 top-16 bottom-0 bg-ink/10 sm:hidden"
-            onClick={() => setOpen(false)}
-          />
-          <nav
-            id="mobile-menu"
-            aria-label="Main"
-            className="absolute inset-x-0 top-full border-b border-ink/10 bg-paper sm:hidden"
-          >
-            <ul className="container-page pt-2 pb-6">
-              {nav.map((item) => (
-                <li key={item.href} className="border-b border-ink/10 last:border-0">
+        <nav aria-label="Main">
+          <ul className="flex items-center gap-0.5 sm:gap-1.5">
+            {items.map((item, i) => {
+              const isActive = active === item.href;
+              return (
+                <li key={item.href}>
                   <a
                     href={item.href}
-                    className="block py-4 font-serif text-3xl font-light"
-                    onClick={() => setOpen(false)}
+                    aria-label={item.label}
+                    aria-current={isActive ? "location" : undefined}
+                    className="group relative flex h-11 items-center gap-2 rounded-full px-2.5 text-sm font-medium text-ink/75 transition-colors hover:text-ink md:pr-3.5"
                   >
-                    {item.label}
+                    <span
+                      aria-hidden
+                      className={`absolute inset-0 rounded-full bg-butter/70 transition-[opacity,scale] duration-300 ${
+                        isActive ? "scale-100 opacity-100" : "scale-75 opacity-0"
+                      }`}
+                    />
+                    <Doodle
+                      name={item.icon}
+                      className="relative size-6 text-ink transition-transform duration-200 group-hover:scale-110 group-hover:-rotate-12"
+                    />
+                    <span className="relative hidden md:inline">{item.label}</span>
+                    <span
+                      aria-hidden
+                      className={`pointer-events-none absolute top-full mt-1.5 rounded-md bg-ink px-2 py-0.5 font-hand text-[17px] whitespace-nowrap text-cream opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100 md:hidden ${
+                        i === items.length - 1 ? "right-0" : "left-1/2 -translate-x-1/2"
+                      }`}
+                    >
+                      {item.label}
+                    </span>
                   </a>
                 </li>
-              ))}
-            </ul>
-          </nav>
-        </>
-      )}
+              );
+            })}
+          </ul>
+        </nav>
+      </div>
     </header>
   );
 }

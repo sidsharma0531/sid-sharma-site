@@ -6,3 +6,6 @@ out
 next-env.d.ts
 .DS_Store
 .env*.local
+
+# Raw photo drop folder (copies used by the site live in public/photos)
+/photos/

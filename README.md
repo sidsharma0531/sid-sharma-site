@@ -11,33 +11,33 @@ npm run dev
 
 Open http://localhost:3000.
 
-## Fill in the placeholders
+## Edit content
 
-All copy, numbers, and links are in `lib/content.ts`. Anything written like `"[X]"` or `"[link]"`
-shows up on the page as a green dashed tag. Replace it with the real value and the tag disappears.
+Everything the site says lives in `data/content.ts`: copy, stats, links, awards, press, and photo
+names. Components only render from it.
 
-## Add photos
+- `**bold**` makes text bold (use it for numbers).
+- `[anything in brackets]` shows on the page as a highlighted tag, so unfinished spots are easy to
+  find. Replace it with the real value and the tag disappears.
+- Leaving `press.items` empty hides the Press section and its nav icon.
+- Each award category shows 5 awards, then a "See X more" toggle (`recognition.showFirst`).
 
-Drop files into `public/photos/` with these exact names. Each placeholder box swaps to the real
-photo automatically, no code changes.
+## Add photos and logos
 
-| File | Where | Notes |
-| --- | --- | --- |
-| `photo-hero.jpg` | Hero portrait | Cropped to 4:5 |
-| `rescuelog.png` | RescueLog phone frame | Full phone screenshot, top-aligned |
-| `waste2taste.jpg` | Waste2Taste card | Cropped to fill |
-| `still-good-cover.jpg` | Book cover | Shown at its own ratio, uncropped |
-| `photo-01.jpg` to `photo-10.jpg` | "From the field" grid | Any ratio, shown uncropped |
-
-Export photos around 2000px on the long side. Next.js resizes and compresses them on deploy.
+Drop files into `public/photos/` or `public/logos/` using the names in `data/content.ts`. The site
+picks them up on the next build, with their real sizes. Nothing ever renders as an empty slot: a
+missing logo shows as a wordmark or initials, a missing app screenshot shows a name screen, and
+thumbnails only appear for files that exist.
 
 ## Deploy
 
-Push the folder to a GitHub repo, then import it at vercel.com/new. No settings to change.
+Pushing to GitHub deploys on Vercel. Pushes to `main` go to production; other branches get a
+preview URL.
 
 ## Layout
 
-- `app/page.tsx` puts the sections in order
-- `components/` has one file per section: `Nav`, `Hero`, `Work`, `Photos` (+ `Gallery` for the lightbox), `More`, `Footer`
-- `components/ui/` has the small shared pieces (photo/placeholder, buttons, section header)
-- `app/globals.css` holds the three colors and the scroll fade-in
+- `app/page.tsx` puts the sections in order; `app/opengraph-image.tsx` draws the link-preview card
+- `components/` has one file per section: `Nav`, `Hero`, `LogoWall`, `Experience`, `Recognition`,
+  `Press`, `Footer`, plus `PhoneMockup`, `Polaroids`, `BookMockup`, `Lightbox`, and `doodles`
+- `components/ui/` has the small shared pieces (photo, chips, badges, stats, headings)
+- `app/globals.css` holds the color and font tokens
