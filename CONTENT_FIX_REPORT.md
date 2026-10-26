@@ -92,6 +92,9 @@ example "Points of Light · 2026"), to make room for the logo tiles on phones.
 - **Podcast:** the press item is back, now with its real link. "Food Waste to Food Recovery: Sid's
   Waste2Taste Story" on Simple Acts, Big Impact (Apple Podcasts, released Sep 16, 2026; title and
   date checked against Apple's listing).
+- **Press logos:** each press card now has the outlet's logo on a white tile: the KPRC 2 logo and
+  the Simple Acts, Big Impact show art from Apple Podcasts. The show art was cropped above its
+  "Teen Changemakers" tagline, since "changemaker" is on the banned-word list.
 
 ## Please verify
 
