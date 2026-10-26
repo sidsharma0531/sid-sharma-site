@@ -127,6 +127,7 @@ export const hero = {
   // Cropped from photo-05.jpg for now.
   photo: { src: "photo-hero.jpg", alt: "Sid Sharma" } as Photo,
   note: "say hi!",
+  // Not shown on the page; only the link-preview image (app/opengraph-image.tsx) uses these.
   stats: [
     { value: "2M", unit: "lbs/yr", label: "tracked through RescueLog" },
     { value: "12", unit: "branches", label: "of Waste2Taste, across 7 states + UAE" },

@@ -1,7 +1,6 @@
 import { LoopArrow } from "@/components/doodles";
 import ContactLinks from "@/components/ui/ContactLinks";
 import Photo from "@/components/ui/Photo";
-import StatBlock from "@/components/ui/StatBlock";
 import { hero } from "@/data/content";
 import { getImage } from "@/lib/images";
 
@@ -9,7 +8,7 @@ export default function Hero() {
   const photo = getImage(hero.photo.src, "photos", [4, 5]);
 
   return (
-    <section id="top" className="container-page pt-8 pb-16 sm:pt-14 sm:pb-24">
+    <section id="top" className="container-page pt-8 pb-12 sm:pt-14 sm:pb-16">
       {/* Phone: name, line, photo, contact. Wider: text on the left, photo spanning the right. */}
       <div className="grid grid-cols-1 [grid-template-areas:'name'_'line'_'photo'_'contact'] md:grid-cols-[minmax(0,1fr)_minmax(0,18.5rem)] md:grid-rows-[1fr_auto_auto] md:gap-x-12 md:[grid-template-areas:'name_photo'_'line_photo'_'contact_photo'] lg:gap-x-16">
         <h1 className="font-serif text-[clamp(3.3rem,16.5vw,5rem)] leading-[0.9] font-semibold tracking-[-0.035em] [font-variation-settings:'SOFT'_100,'WONK'_1] [grid-area:name] md:self-end md:text-[clamp(4.5rem,8.6vw,7.6rem)]">
@@ -51,14 +50,6 @@ export default function Hero() {
           <ContactLinks variant="icons" />
         </div>
       </div>
-
-      <ul className="mt-14 grid gap-y-7 border-t border-dashed border-ink/25 pt-8 sm:mt-20 sm:grid-cols-3 sm:gap-x-8">
-        {hero.stats.map((stat, i) => (
-          <li key={stat.label} data-reveal style={{ "--reveal-delay": `${i * 90}ms` } as React.CSSProperties}>
-            <StatBlock stat={stat} size="xl" />
-          </li>
-        ))}
-      </ul>
     </section>
   );
 }
