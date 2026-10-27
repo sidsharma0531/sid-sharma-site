@@ -67,7 +67,10 @@ function FeaturedCard({ entry, side }: { entry: FeaturedEntry; side: Side }) {
     visualNode = <PhoneMockup screens={resolvePhotos(visual.screens, { fallback: [9, 19.5] })} name={entry.org} />;
   } else if (visual.kind === "book") {
     const cover = { ...getImage(visual.cover.src, "photos", [2, 3]), alt: visual.cover.alt };
-    visualNode = <BookMockup cover={cover} title={visual.title} subtitle={visual.subtitle} author={visual.author} />;
+    const [preview] = resolvePhotos(visual.preview && [visual.preview], { onlyExisting: true });
+    visualNode = (
+      <BookMockup cover={cover} title={visual.title} subtitle={visual.subtitle} author={visual.author} preview={preview} />
+    );
   } else {
     visualNode = <Polaroids photos={photosFor("entry", entry.id)} />;
   }

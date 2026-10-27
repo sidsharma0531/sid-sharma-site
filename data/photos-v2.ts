@@ -9,11 +9,11 @@
 //              a small strip inside that entry on phones. Keep these about a screen apart.
 //   "divider"  a swipeable strip between sections. `at` is "before-recognition" or "before-contact".
 //
-// Entry ids for `at`: rescuelog, waste2taste, still-good, uh-research, remax, debate, deca,
-// research-club, volunteer, guitar. Award ids are on each award in data/content.ts.
+// Entry ids for `at`: rescuelog, waste2taste, still-good, uh-research, remax, debate, volunteer,
+// guitar. Award ids are on each award in data/content.ts.
 //
 // A photo whose file isn't in /public/photos yet is skipped, and it appears on its own once the
-// file is there. The extension can differ: photo-deca-01.jpg also finds photo-deca-01.webp from
+// file is there. The extension can differ: photo-guitar-01.jpg also finds photo-guitar-01.webp from
 // `npm run photos`. Delete a line to drop that slot; a spot with no photos renders nothing.
 // See PHOTOS_NEEDED.md.
 
@@ -46,14 +46,14 @@ export const photosV2: SitePhoto[] = [
   {
     src: "photo-01.jpg",
     alt: "Sid Sharma and a Trader Joe's crew member holding two bags tagged as Waste2Taste donations",
-    caption: "flagged at the grocer",
+    caption: "at Trader Joe's",
     placement: "entry",
     at: "waste2taste",
   },
   {
     src: "photo-02.jpg",
     alt: "Twelve loaf pans of banana bread batter lined up on a kitchen counter",
-    caption: "twelve pans at a time",
+    caption: "ready to bake",
     placement: "entry",
     at: "waste2taste",
   },
@@ -86,20 +86,12 @@ export const photosV2: SitePhoto[] = [
     at: "waste2taste",
   },
 
-  // Still Good
-  {
-    src: "still-good-banana-bread.jpg",
-    alt: "Banana bread recipe page from Still Good showing ingredients, steps, and a sliced loaf",
-    caption: "banana bread, page 10",
-    placement: "entry",
-    at: "still-good",
-  },
+  // Still Good's page 10 is the preview page in its book visual, set in data/content.ts.
 
   // Waiting for a photo. Each appears once its file is in /public/photos; until then it's skipped.
   { src: "photo-rescuelog-01.jpg", alt: "Sid demoing RescueLog", placement: "margin", at: "rescuelog" },
   { src: "photo-book-01.jpg", alt: "Sid holding a copy of Still Good", placement: "margin", at: "still-good" },
   { src: "photo-debate-01.jpg", alt: "Elkins Speech & Debate trophies and team", placement: "margin", at: "debate" },
-  { src: "photo-deca-01.jpg", alt: "The DECA slushy machine", placement: "entry", at: "deca" },
   { src: "photo-guitar-01.jpg", alt: "Sid performing on guitar", placement: "entry", at: "guitar" },
   { src: "photo-misc-01.jpg", alt: "Photo 1 of the first photo strip", placement: "divider", at: "before-recognition" },
   { src: "photo-misc-02.jpg", alt: "Photo 2 of the first photo strip", placement: "divider", at: "before-recognition" },

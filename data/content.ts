@@ -60,7 +60,15 @@ export type FeaturedEntry = Entry & {
   visual:
     | { kind: "phone"; screens: Photo[] }
     | { kind: "polaroids"; photos: Photo[] }
-    | { kind: "book"; cover: Photo; title: string; subtitle: string; author: string };
+    | {
+        kind: "book";
+        cover: Photo;
+        title: string;
+        subtitle: string;
+        author: string;
+        /** One inside page, shown slipping out from behind the cover as a preview. Opens in the lightbox. */
+        preview?: Photo;
+      };
 };
 
 export type Award = {
@@ -246,7 +254,7 @@ export const experience = {
           {
             src: "photo-01.jpg",
             alt: "Sid Sharma and a Trader Joe's crew member holding two bags tagged as Waste2Taste donations",
-            caption: "flagged at the grocer",
+            caption: "at Trader Joe's",
           },
           {
             src: "photo-07.jpg",
@@ -257,17 +265,18 @@ export const experience = {
           {
             src: "photo-02.jpg",
             alt: "Twelve loaf pans of banana bread batter lined up on a kitchen counter",
-            caption: "twelve pans at a time",
+            caption: "ready to bake",
           },
           {
             src: "photo-03.jpg",
             alt: "Loaf pans of banana bread baking in an oven",
             caption: "into the oven",
           },
+          // Fort Bend sits between the two food-only photos in the top row.
           {
-            src: "photo-04.jpg",
-            alt: "Four foil pans of Waste2Taste banana bread with ingredient labels packed in a car trunk",
-            caption: "packed to donate",
+            src: "photo-06.jpg",
+            alt: "Sid Sharma and a volunteer holding Whole Foods bags of rescued groceries in the Fort Bend Family Promise pantry",
+            caption: "at Fort Bend Family Promise",
           },
           {
             src: "photo-05.jpg",
@@ -275,9 +284,9 @@ export const experience = {
             caption: "banana bread, delivered",
           },
           {
-            src: "photo-06.jpg",
-            alt: "Sid Sharma and a volunteer holding Whole Foods bags of rescued groceries in the Fort Bend Family Promise pantry",
-            caption: "at Fort Bend Family Promise",
+            src: "photo-04.jpg",
+            alt: "Four foil pans of Waste2Taste banana bread with ingredient labels packed in a car trunk",
+            caption: "packed to donate",
           },
         ],
       },
@@ -292,19 +301,12 @@ export const experience = {
       summary: "Recipes that use expiring food, built from my mom's homemade Indian recipes and my Waste2Taste work.",
       stats: [
         { value: "#1", unit: "new release", label: "in Indian Cookbooks on Amazon" },
-        { value: "#3", unit: "best seller", label: "in Indian Cookbooks on Amazon" },
+        { value: "Best", unit: "seller", label: "in Indian Cookbooks on Amazon" },
       ],
       bullets: ["Won the **Literary Titan Silver Book Award**", "**79 pages**. Proceeds fund food rescue"],
       links: [
         { label: "Get the book", href: "https://www.amazon.com/dp/B0H6S6H6C7" },
         { label: "About the book", href: "https://waste-2-taste.org/cookbook.html" },
-      ],
-      photos: [
-        {
-          src: "still-good-banana-bread.jpg",
-          alt: "Banana bread recipe page from Still Good showing ingredients, steps, and a sliced loaf",
-          caption: "banana bread, page 10",
-        },
       ],
       visual: {
         kind: "book",
@@ -312,6 +314,11 @@ export const experience = {
         title: "Still Good",
         subtitle: "A Cookbook for Forgotten Food",
         author: "Sid Sharma",
+        preview: {
+          src: "still-good-banana-bread.jpg",
+          alt: "Banana bread recipe page from Still Good showing ingredients, steps, and a sliced loaf",
+          caption: "banana bread, page 10",
+        },
       },
     },
   ] as FeaturedEntry[],
@@ -356,27 +363,6 @@ export const experience = {
         "Coached **15** novices to place at tournaments",
         "Ran the yearly school tournament with **400+** attendees",
       ],
-    },
-    {
-      id: "deca",
-      role: "Competitor & Mentor",
-      org: "Elkins DECA",
-      type: "Competition",
-      mark: { logo: "deca-mark.svg", initials: "DECA", tone: "tomato" },
-      summary: "International Qualifier in Personal Financial Literacy and **2x** State Qualifier.",
-      bullets: [
-        "Mentored **9** students to state qualification",
-        "Bought a commercial slushy machine and sold slushies, cookies, and coffee weekly to fund the club",
-      ],
-    },
-    {
-      id: "research-club",
-      role: "Program Director & Member",
-      org: "Elkins Research & Meta-Analysis Club",
-      type: "Club",
-      mark: { initials: "RC", tone: "butter" },
-      summary:
-        "Matched students to research topics by interest and gave them projects, connected them with expert mentors, and personally worked in the econ group.",
     },
     {
       id: "volunteer",
@@ -477,6 +463,20 @@ export const recognition = {
           context: "Of 8,000+ entries",
           logo: "nyt.svg",
         },
+      ],
+    },
+    {
+      name: "Business & Finance",
+      tone: "butter",
+      awards: [
+        {
+          id: "deca-international",
+          name: "International Qualifier",
+          issuer: "DECA",
+          context: "Personal Financial Literacy",
+          logo: "deca-mark.svg",
+        },
+        { id: "deca-state", name: "2x State Qualifier", issuer: "DECA", logo: "deca-mark.svg" },
       ],
     },
   ] as AwardCategory[],

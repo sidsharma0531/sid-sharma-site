@@ -46,15 +46,16 @@ Every other photo on /v2 lives in one list: `photosV2` in `data/photos-v2.ts`. E
 **To move a photo**, change its `placement` (and `at` if it should sit next to something else).
 
 **`at` ids:**
-- **Entries:** `rescuelog`, `waste2taste`, `still-good`, `uh-research`, `remax`, `debate`, `deca`,
-  `research-club`, `volunteer`, `guitar`.
+- **Entries:** `rescuelog`, `waste2taste`, `still-good`, `uh-research`, `remax`, `debate`,
+  `volunteer`, `guitar`.
 - **Awards:** `anthem`, `points-of-light`, `literary-titan`, `disha-usa`,
-  `nsda-academic-all-american`, `ap-scholar`, `national-recognition`, `nyt-summer-reading`.
+  `nsda-academic-all-american`, `ap-scholar`, `national-recognition`, `nyt-summer-reading`,
+  `deca-international`, `deca-state`.
 
 **To add a photo**, drop the file into `/public/photos` with the file name below and run
 `npm run photos`. It appears on the next build. Until its file is there, a slot is simply left
-out, with no placeholder. The extension doesn't need to match: `photo-deca-01.jpg` also finds
-`photo-deca-01.webp`.
+out, with no placeholder. The extension doesn't need to match: `photo-guitar-01.jpg` also finds
+`photo-guitar-01.webp`.
 
 **To remove a slot**, delete its line. A spot with no photos renders nothing.
 
@@ -68,7 +69,6 @@ desktop, so they never pile up.
 | `photo-rescuelog-01.jpg` | `margin`, `rescuelog` | Left margin beside the RescueLog card | You demoing RescueLog, or at a partner org using it |
 | `photo-book-01.jpg` | `margin`, `still-good` | Right margin beside the Still Good card | You holding a copy of Still Good |
 | `photo-debate-01.jpg` | `margin`, `debate` | Left margin beside Elkins Speech & Debate | Trophies, or the debate team |
-| `photo-deca-01.jpg` | `entry`, `deca` | Thumbnail inside the DECA row | The slushy machine |
 | `photo-guitar-01.jpg` | `entry`, `guitar` | Thumbnail inside the Guitarist row | You performing |
 | `photo-misc-01.jpg` | `divider`, `before-recognition` | Strip between Experience and Recognition | A real moment that doesn't belong to one entry, like volunteering at one of the 7 hunger-relief orgs |
 | `photo-misc-02.jpg` | `divider`, `before-recognition` | Same strip | Another candid moment, like a Waste2Taste branch event |
@@ -91,8 +91,8 @@ for now, so update it to describe the real photo.
 | --- | --- | --- |
 | `photo-hero.webp` | `hero` (top) | You, cropped from `photo-05` |
 | `photo-07.webp` | `margin`, `waste2taste` | Pickup at Whole Foods, beside the Waste2Taste card |
-| `photo-01.webp` to `photo-06.webp` | `entry`, `waste2taste` | The banana bread run, in order: grocer, 12 pans, oven, packed, delivered, Fort Bend Family Promise |
-| `still-good-banana-bread.webp` | `entry`, `still-good` | Banana bread recipe, page 10 |
+| `photo-01.webp` to `photo-06.webp` | `entry`, `waste2taste` | The banana bread run, in order: Trader Joe's, ready to bake, oven, packed, delivered, Fort Bend Family Promise |
+| `still-good-banana-bread.webp` | Still Good's book visual, set in `data/content.ts` | Banana bread recipe, page 10, as the "peek inside" page beside the book (on both pages) |
 
 ## If you pick v2 for the homepage
 

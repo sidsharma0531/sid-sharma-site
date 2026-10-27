@@ -1,23 +1,29 @@
+import BookPage from "@/components/BookPage";
 import Doodle from "@/components/doodles";
 import Photo from "@/components/ui/Photo";
 import type { ResolvedPhoto } from "@/lib/images";
 
-type Props = { cover: ResolvedPhoto; title: string; subtitle: string; author: string };
+type Props = { cover: ResolvedPhoto; title: string; subtitle: string; author: string; preview?: ResolvedPhoto };
 
 // A 3D book built from the flat cover: the cover turned slightly away, page edges on the right,
-// a hinge shadow near the spine, and a soft shadow on the table.
-export default function BookMockup({ cover, title, subtitle, author }: Props) {
+// a hinge shadow near the spine, and a soft shadow on the table. With a preview page, the book
+// moves up and left to make room for it.
+export default function BookMockup({ cover, title, subtitle, author, preview }: Props) {
   const ratio = cover.exists ? cover.width / cover.height : 2 / 3;
+  const shift = preview ? "-translate-x-[26%] -translate-y-[7%]" : "";
 
   return (
     <div
       className="@container relative grid aspect-square place-items-center overflow-hidden rounded-[1.5rem] bg-butter/45 md:aspect-[4/5]"
       style={{ perspective: "1600px" }}
     >
-      <span aria-hidden className="absolute bottom-[14%] left-1/2 h-[6%] w-[48%] -translate-x-[44%] rounded-[50%] bg-ink/30 blur-lg" />
+      <span
+        aria-hidden
+        className={`absolute bottom-[14%] left-1/2 h-[6%] w-[48%] -translate-x-[44%] rounded-[50%] bg-ink/30 blur-lg ${shift}`}
+      />
 
       <div
-        className="relative h-[66%] [transform-style:preserve-3d] [transform:rotateY(-24deg)_rotateX(5deg)]"
+        className={`relative h-[66%] [transform-style:preserve-3d] [transform:rotateY(-24deg)_rotateX(5deg)] ${shift}`}
         style={{ aspectRatio: ratio, "--t": "6.5cqw" } as React.CSSProperties}
       >
         {/* Page edges, standing out of the right side. */}
@@ -39,12 +45,14 @@ export default function BookMockup({ cover, title, subtitle, author }: Props) {
           />
         </div>
       </div>
+
+      {preview && <BookPage page={preview} />}
     </div>
   );
 }
 
 // Stand-in cover until still-good-cover.jpg exists.
-function TypeCover({ title, subtitle, author }: Omit<Props, "cover">) {
+function TypeCover({ title, subtitle, author }: Omit<Props, "cover" | "preview">) {
   return (
     <div className="@container absolute inset-0 flex flex-col items-center justify-between bg-leaf-deep px-[10%] py-[14%] text-center text-cream">
       <div>
