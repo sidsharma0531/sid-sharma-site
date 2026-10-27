@@ -44,7 +44,7 @@ export default function Hero() {
               <Arrow />
             </Link>
             <Link
-              href="/v2/projects/rescuelog"
+              href="/casestudyversion/projects/rescuelog"
               className="inline-flex items-center gap-2 rounded-full border border-ink/20 px-5 py-3 text-sm font-medium transition-colors hover:border-ink/60"
             >
               How RescueLog works
@@ -87,7 +87,7 @@ export default function Hero() {
           {projects.map((project) => (
             <li key={project.slug} className="bg-cream">
               <Link
-                href={`/v2/projects/${project.slug}`}
+                href={`/casestudyversion/projects/${project.slug}`}
                 className="group flex h-full flex-col gap-1.5 py-5 transition-colors sm:px-5 sm:py-6 lg:first:pl-0"
               >
                 <span className="v2-label flex items-center gap-2">

@@ -16,8 +16,8 @@ const description =
 export const metadata: Metadata = {
   title: { absolute: "Sid Sharma · Portfolio" },
   description,
-  alternates: { canonical: "/v2" },
-  openGraph: { title: "Sid Sharma · Portfolio", description, url: "/v2", type: "website" },
+  alternates: { canonical: "/casestudyversion" },
+  openGraph: { title: "Sid Sharma · Portfolio", description, url: "/casestudyversion", type: "website" },
   twitter: { title: "Sid Sharma · Portfolio", description },
 };
 

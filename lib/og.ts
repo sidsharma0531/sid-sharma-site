@@ -2,7 +2,7 @@ import path from "node:path";
 import sharp from "sharp";
 import { getImage } from "@/lib/images";
 
-// Helpers for the /v2 link-preview cards (app/v2/**/opengraph-image.tsx).
+// Helpers for the case-study version's link-preview cards (app/casestudyversion/**/opengraph-image.tsx).
 
 /** Just the glyphs needed from Google Fonts. Null (default font) if the fetch fails. */
 export async function googleFont(family: string, text: string) {

@@ -26,8 +26,8 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   return {
     title: study.title,
     description: study.subtitle,
-    alternates: { canonical: `/v2/projects/${slug}` },
-    openGraph: { title, description: study.subtitle, url: `/v2/projects/${slug}`, type: "article" },
+    alternates: { canonical: `/casestudyversion/projects/${slug}` },
+    openGraph: { title, description: study.subtitle, url: `/casestudyversion/projects/${slug}`, type: "article" },
     twitter: { title, description: study.subtitle },
   };
 }
@@ -42,7 +42,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
   return (
     <article aria-labelledby="case-title">
       <header className="v2-wrap pt-8 sm:pt-12">
-        <Link href="/v2#work" className="group inline-flex items-center gap-2 text-sm text-ink/60 transition-colors hover:text-ink">
+        <Link href="/casestudyversion#work" className="group inline-flex items-center gap-2 text-sm text-ink/60 transition-colors hover:text-ink">
           <Arrow direction="left" className="transition-transform group-hover:-translate-x-0.5" />
           All work
         </Link>
@@ -133,11 +133,11 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
 
       <nav aria-label="More case studies" className="border-t border-ink/10 bg-paper/60">
         <div className="v2-wrap flex flex-col-reverse gap-8 py-14 sm:flex-row sm:items-end sm:justify-between">
-          <Link href="/v2#work" className="group inline-flex items-center gap-2 text-sm text-ink/60 transition-colors hover:text-ink">
+          <Link href="/casestudyversion#work" className="group inline-flex items-center gap-2 text-sm text-ink/60 transition-colors hover:text-ink">
             <Arrow direction="left" className="transition-transform group-hover:-translate-x-0.5" />
             All work
           </Link>
-          <Link href={`/v2/projects/${next.slug}`} className="group sm:text-right">
+          <Link href={`/casestudyversion/projects/${next.slug}`} className="group sm:text-right">
             <span className="v2-label block">Next case study</span>
             <span className="mt-2 flex items-center gap-3 font-serif text-[clamp(2rem,4vw,3rem)] leading-none font-semibold tracking-[-0.03em] group-hover:text-tomato-deep sm:justify-end">
               {next.name}

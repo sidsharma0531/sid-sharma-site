@@ -5,12 +5,12 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const items = [
-  { label: "Work", href: "/v2#work" },
-  { label: "Recognition", href: "/v2#recognition" },
-  { label: "Press", href: "/v2#press" },
-  { label: "Gallery", href: "/v2#gallery" },
-  { label: "About", href: "/v2#about" },
-  { label: "Contact", href: "/v2#contact" },
+  { label: "Work", href: "/casestudyversion#work" },
+  { label: "Recognition", href: "/casestudyversion#recognition" },
+  { label: "Press", href: "/casestudyversion#press" },
+  { label: "Gallery", href: "/casestudyversion#gallery" },
+  { label: "About", href: "/casestudyversion#about" },
+  { label: "Contact", href: "/casestudyversion#contact" },
 ];
 
 // Sticky top bar. On phones the links fold into a menu that closes after a choice.
@@ -30,7 +30,7 @@ export default function Nav() {
   return (
     <header className="sticky top-0 z-40 border-b border-ink/10 bg-cream/90 backdrop-blur-md">
       <div className="v2-wrap flex h-16 items-center justify-between gap-6">
-        <Link href="/v2" className="font-serif text-xl font-semibold tracking-[-0.02em]">
+        <Link href="/casestudyversion" className="font-serif text-xl font-semibold tracking-[-0.02em]">
           Sid Sharma<span className="text-tomato">.</span>
         </Link>
 

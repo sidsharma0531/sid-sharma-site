@@ -43,8 +43,8 @@ and thumbnails only appear for files that exist.
 
 ## Deploy
 
-Pushing `main` to GitHub deploys sidsharma.xyz on Vercel. `main` is the only branch. Old `/v2` links
-and `*.vercel.app` addresses redirect to the homepage on www.sidsharma.xyz (`next.config.ts`).
+Pushing `main` to GitHub deploys sidsharma.xyz on Vercel. `main` is the only branch. `*.vercel.app`
+addresses redirect to www.sidsharma.xyz, and old `/v2` links to `/casestudyversion` (`next.config.ts`).
 
 ## Layout
 
@@ -53,4 +53,6 @@ and `*.vercel.app` addresses redirect to the homepage on www.sidsharma.xyz (`nex
   `Press`, `Footer`, plus `PhoneMockup`, `Polaroids`, `BookMockup`, `Lightbox`, and `doodles`
 - `components/ui/` has the small shared pieces (photo, chips, badges, stats, headings)
 - `app/globals.css` holds the color and font tokens
+- `app/casestudyversion/` is a second, case-study version of the site (not in search results); its
+  content is in `data/v2.ts` and its sections in `components/v2/`
 - `scripts/photos.mjs` is `npm run photos`

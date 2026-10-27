@@ -25,7 +25,7 @@ export default function Work() {
 }
 
 function Feature({ project, flip }: { project: Project; flip: boolean }) {
-  const href = `/v2/projects/${project.slug}`;
+  const href = `/casestudyversion/projects/${project.slug}`;
   return (
     <article
       data-reveal

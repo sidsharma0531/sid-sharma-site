@@ -21,7 +21,7 @@ export default function Milestones() {
                   <p className="max-w-[62ch] leading-relaxed text-ink/75">{item.text}</p>
                   {project && (
                     <Link
-                      href={`/v2/projects/${project.slug}`}
+                      href={`/casestudyversion/projects/${project.slug}`}
                       className="group inline-flex shrink-0 items-center gap-1.5 text-sm text-ink/60 transition-colors hover:text-ink"
                     >
                       <span aria-hidden className={`size-1.5 rounded-full ${toneDot[project.tone]}`} />

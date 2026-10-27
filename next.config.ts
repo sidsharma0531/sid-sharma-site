@@ -5,9 +5,12 @@ const nextConfig: NextConfig = {
     formats: ["image/avif", "image/webp"],
   },
   // www.sidsharma.xyz is the only address for the site: Vercel's *.vercel.app addresses
-  // (production and previews) go to the real domain.
+  // (production and previews) go to the real domain. The case-study version moved from /v2 to
+  // /casestudyversion, so old links follow it.
   async redirects() {
     return [
+      { source: "/v2", destination: "/casestudyversion", permanent: true },
+      { source: "/v2/:path*", destination: "/casestudyversion/:path*", permanent: true },
       {
         source: "/:path*",
         has: [{ type: "host", value: ".*\\.vercel\\.app" }],
