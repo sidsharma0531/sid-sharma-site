@@ -115,7 +115,7 @@ function EntryStats({ entry }: { entry: FeaturedEntry }) {
   return (
     <ul className={`mt-8 grid grid-cols-2 gap-x-6 gap-y-6 border-t border-dashed border-ink/25 pt-6 [grid-area:stats] ${columns}`}>
       {stats.map((stat) => (
-        <li key={stat.label}>
+        <li key={`${stat.value} ${stat.label}`}>
           <StatBlock stat={stat} tone={entry.mark.tone} size={wide ? "lg" : "md"} />
         </li>
       ))}

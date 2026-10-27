@@ -22,10 +22,14 @@ export type DoodleName = "carrot" | "tomato" | "bread" | "whisk";
  */
 export type Photo = { src: string; alt: string; caption?: string; wide?: boolean; focus?: string };
 
+/** A phrase in the hero line that opens a photo. tone picks the accent for its squiggle. */
+export type LinePhoto = { phrase: string; tone: Tone; photo: Photo };
+
 /** A link button. Set badge to show the official App Store or Google Play badge instead. */
 export type LinkChip = { label: string; href: string; badge?: "app-store" | "google-play" };
 
-export type Stat = { value: string; unit?: string; label: string };
+/** proof: a screenshot that backs the stat up. Clicking the stat opens it. */
+export type Stat = { value: string; unit?: string; label: string; proof?: Photo };
 
 /**
  * Square tile beside an entry: the logo file if it exists, otherwise the doodle or initials.
@@ -127,8 +131,8 @@ export const contact = {
 // Press hides itself here too whenever the press list is empty.
 export const nav: NavItem[] = [
   { label: "Experience", href: "#experience", icon: "whisk" },
-  { label: "Recognition", href: "#recognition", icon: "carrot" },
   { label: "Press", href: "#press", icon: "tomato" },
+  { label: "Recognition", href: "#recognition", icon: "carrot" },
   { label: "Contact", href: "#contact", icon: "bread" },
 ];
 
@@ -136,7 +140,41 @@ export const nav: NavItem[] = [
 
 export const hero = {
   name: "Sid Sharma",
-  line: "Hi, I'm Sid, a founder, debater, and author building ways to get good food to people instead of landfills.",
+  line: "Hi, I'm Sid Sharma, an app developer, published author, and food security advocate working on practical fixes for food waste and hunger through economics.",
+  // Phrases in the line that open a photo. One whose file isn't in /public/photos stays plain text.
+  // focus is the crop for the small square preview on desktop.
+  linePhotos: [
+    {
+      phrase: "app developer",
+      tone: "leaf",
+      photo: {
+        src: "rescuelog-2.png",
+        alt: "RescueLog home screen with a new pop-up log button and recent logs",
+        caption: "RescueLog",
+        focus: "50% 0%",
+      },
+    },
+    {
+      phrase: "published author",
+      tone: "butter",
+      photo: {
+        src: "still-good-cover.jpg",
+        alt: "Cover of Still Good: A Cookbook for Forgotten Food",
+        caption: "Still Good",
+        focus: "50% 0%",
+      },
+    },
+    {
+      phrase: "food security advocate",
+      tone: "tomato",
+      photo: {
+        src: "photo-06.jpg",
+        alt: "Sid Sharma and a volunteer holding Whole Foods bags of rescued groceries in the Fort Bend Family Promise pantry",
+        caption: "at Fort Bend Family Promise",
+        focus: "50% 25%",
+      },
+    },
+  ] as LinePhoto[],
   // Cropped from photo-05.jpg for now.
   photo: { src: "photo-hero.jpg", alt: "Sid Sharma" } as Photo,
   note: "say hi!",
@@ -151,6 +189,8 @@ export const hero = {
 /* ---------- Logo wall ---------- */
 
 const W2T_PARTNERS = "https://waste-2-taste.org/partners.html";
+const NYT_PROOF =
+  "https://www.nytimes.com/2026/07/29/learning/on-national-parks-and-brainrot-the-winners-of-week-6-of-our-summer-reading-contest.html";
 
 // Real working relationships, press, and the organizations behind your awards, mixed so no two
 // of a kind sit together. A logo links when there's a page that proves the connection.
@@ -163,7 +203,7 @@ export const logoWall = {
       logo: "kprc2.svg",
     },
     { name: "Trader Joe's", href: W2T_PARTNERS, logo: "trader-joes.png" },
-    { name: "The New York Times", logo: "nyt-wordmark.svg" },
+    { name: "The New York Times", href: NYT_PROOF, logo: "nyt-wordmark.svg" },
     { name: "Whole Foods Market", href: W2T_PARTNERS, logo: "whole-foods.png" },
     { name: "Points of Light", logo: "points-of-light.svg" },
     { name: "H-E-B", href: W2T_PARTNERS, logo: "heb.png" },
@@ -173,8 +213,10 @@ export const logoWall = {
       logo: "simple-acts-big-impact.jpg",
     },
     { name: "Anthem Awards", logo: "anthem-awards.svg" },
+    { name: "Second Servings", logo: "second-servings.jpg" },
     { name: "University of Houston", href: "https://www.uh.edu", logo: "uh.svg" },
     { name: "National Speech & Debate Association", logo: "nsda.png" },
+    { name: "Second Mile Mission Center", logo: "second-mile.png" },
     { name: "RE/MAX Commercial", href: "https://www.remaxcommercial.com", logo: "remax-commercial.png" },
     {
       name: "Literary Titan",
@@ -300,8 +342,26 @@ export const experience = {
       mark: { doodle: "bread", tone: "butter" },
       summary: "Recipes that use expiring food, built from my mom's homemade Indian recipes and my Waste2Taste work.",
       stats: [
-        { value: "#1", unit: "new release", label: "in Indian Cookbooks on Amazon" },
-        { value: "Best seller", label: "in Indian Cookbooks on Amazon" },
+        // Each opens its Amazon screenshot, the same ones waste-2-taste.org/cookbook.html shows.
+        {
+          value: "#1",
+          unit: "new release",
+          label: "in Indian Cookbooks on Amazon",
+          proof: {
+            src: "proof-indian-new-release.jpg",
+            alt: "Amazon Hot New Releases in Indian Cooking, Food & Wine, with Still Good at number 1",
+            caption: "Amazon Hot New Releases, Indian Cooking",
+          },
+        },
+        {
+          value: "Best seller",
+          label: "in Indian Cookbooks on Amazon",
+          proof: {
+            src: "proof-indian-bestseller.jpg",
+            alt: "Amazon Best Sellers in Indian Cooking, Food & Wine, with Still Good on the list",
+            caption: "Amazon Best Sellers, Indian Cooking",
+          },
+        },
       ],
       bullets: ["Won the **Literary Titan Silver Book Award**", "**79 pages**. Proceeds fund food rescue"],
       links: [
@@ -351,7 +411,7 @@ export const experience = {
     },
     {
       id: "debate",
-      role: "LD Captain (grades 11 to 12) and Policy Team Manager (grade 12)",
+      role: "Lincoln-Douglas Captain",
       org: "Elkins Speech & Debate",
       type: "Debate",
       mark: { logo: "nsda-mark.png", initials: "LD", tone: "leaf" },
@@ -375,11 +435,11 @@ export const experience = {
       logos: [
         { name: "Second Servings", href: "https://secondservingshouston.org", logo: "second-servings.jpg" },
         { name: "Target Hunger", href: "https://www.targethunger.org", logo: "target-hunger.png" },
-        { name: "Second Mile" },
+        { name: "Second Mile", href: "https://secondmile.org", logo: "second-mile.png" },
         { name: "Urban Harvest", href: "https://www.urbanharvest.org", logo: "urban-harvest.png" },
         { name: "Kids' Meals", href: "https://kidsmealsinc.org", logo: "kids-meals.png" },
-        { name: "WOW Project" },
-        { name: "County Care Center" },
+        { name: "WOW Project", href: "https://www.thewowproject.org", logo: "wow-project.png" },
+        { name: "Houston Food Bank", href: "https://www.houstonfoodbank.org", logo: "houston-food-bank.svg" },
       ],
     },
     {
@@ -442,32 +502,8 @@ export const recognition = {
       ],
     },
     {
-      name: "Debate & Academics",
+      name: "Academics",
       tone: "leaf",
-      awards: [
-        {
-          id: "nsda-academic-all-american",
-          name: "Academic All American",
-          issuer: "National Speech & Debate Association",
-          year: "2026",
-          context: "Top 1% of debaters",
-          logo: "nsda-mark.png",
-        },
-        { id: "ap-scholar", name: "AP Scholar with Distinction", issuer: "College Board", year: "2026", logo: "college-board-mark.svg" },
-        { id: "national-recognition", name: "National Recognition Program", issuer: "College Board", year: "2026", logo: "college-board-mark.svg" },
-        {
-          id: "nyt-summer-reading",
-          name: "Summer Reading Contest, Honorable Mention",
-          issuer: "The New York Times",
-          year: "2026",
-          context: "Of 8,000+ entries",
-          logo: "nyt.svg",
-        },
-      ],
-    },
-    {
-      name: "Business & Finance",
-      tone: "butter",
       awards: [
         {
           id: "deca-international",
@@ -476,7 +512,25 @@ export const recognition = {
           context: "Personal Financial Literacy",
           logo: "deca-mark.svg",
         },
-        { id: "deca-state", name: "2x State Qualifier", issuer: "DECA", logo: "deca-mark.svg" },
+        {
+          id: "nsda-academic-all-american",
+          name: "Academic All American",
+          issuer: "National Speech & Debate Association",
+          year: "2026",
+          context: "Top 1% of debaters",
+          logo: "nsda-mark.png",
+        },
+        {
+          id: "nyt-summer-reading",
+          name: "Summer Reading Contest, Honorable Mention",
+          href: NYT_PROOF,
+          issuer: "The New York Times",
+          year: "2026",
+          context: "Of 8,000+ entries",
+          logo: "nyt.svg",
+        },
+        { id: "ap-scholar", name: "AP Scholar with Distinction", issuer: "College Board", year: "2026", logo: "college-board-mark.svg" },
+        { id: "national-recognition", name: "National Recognition Program", issuer: "College Board", year: "2026", logo: "college-board-mark.svg" },
       ],
     },
   ] as AwardCategory[],

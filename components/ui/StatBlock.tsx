@@ -1,4 +1,6 @@
 import type { Stat, Tone } from "@/data/content";
+import { resolvePhotos } from "@/lib/images";
+import PhotoButton from "./PhotoButton";
 import Rich from "./Rich";
 
 const unitColor: Record<Tone, string> = {
@@ -18,6 +20,7 @@ const sizes = {
 // Big Fraunces number with its unit, and a plain label under it.
 // A value with no number, like "Best seller", is one phrase: it stays on one line and shrinks to
 // fit a narrow column (about 0.45em a letter), keeping the line height so labels still line up.
+// A stat with a proof screenshot is a button that opens it; its label gets a dotted underline.
 export default function StatBlock({
   stat,
   size = "md",
@@ -28,9 +31,13 @@ export default function StatBlock({
   tone?: Tone;
 }) {
   const phrase = !/\d/.test(stat.value);
-  return (
-    <div className="@container min-w-0">
-      <p className={`font-serif leading-none font-semibold tracking-[-0.03em] tabular-nums ${sizes[size]}`}>
+  const [proof] = resolvePhotos(stat.proof && [stat.proof], { onlyExisting: true });
+  // A button can only hold phrasing content, so inside one the two lines are spans.
+  const Line = proof ? "span" : "p";
+
+  const body = (
+    <>
+      <Line className={`block font-serif leading-none font-semibold tracking-[-0.03em] tabular-nums ${sizes[size]}`}>
         {phrase ? (
           <span
             className="whitespace-nowrap"
@@ -46,10 +53,24 @@ export default function StatBlock({
             {stat.unit}
           </span>
         )}
-      </p>
-      <p className="mt-2 text-sm leading-snug text-ink/65">
-        <Rich text={stat.label} />
-      </p>
-    </div>
+      </Line>
+      <Line className="mt-2 block text-sm leading-snug text-ink/65">
+        {proof ? (
+          <span className="underline decoration-ink/35 decoration-dotted underline-offset-[3px] transition-colors group-hover:text-ink group-hover:decoration-tomato">
+            <Rich text={stat.label} />
+          </span>
+        ) : (
+          <Rich text={stat.label} />
+        )}
+      </Line>
+    </>
+  );
+
+  if (!proof) return <div className="@container min-w-0">{body}</div>;
+  const name = [stat.value, stat.unit, stat.label].filter(Boolean).join(" ").replaceAll("**", "");
+  return (
+    <PhotoButton photo={proof} label={`See proof: ${name}`} className="group @container block w-full min-w-0 text-left">
+      {body}
+    </PhotoButton>
   );
 }

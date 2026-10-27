@@ -19,8 +19,8 @@ export default function Home() {
         <Hero />
         <LogoWall />
         <Experience />
-        <Recognition />
         <Press />
+        <Recognition />
       </main>
       <Footer />
       <RevealObserver />

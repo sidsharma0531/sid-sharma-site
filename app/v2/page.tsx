@@ -31,9 +31,9 @@ export default function V2() {
         <LogoWall />
         <PhotoWall />
         <Experience />
+        <Press />
         <DividerStrip photos={photosFor("divider", "before-recognition")} />
         <Recognition />
-        <Press />
         <DividerStrip photos={photosFor("divider", "before-contact")} />
       </main>
       <Footer />

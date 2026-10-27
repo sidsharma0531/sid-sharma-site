@@ -65,8 +65,9 @@ example "Points of Light · 2026"), to make room for the logo tiles on phones.
 
 - **Disha USA:** dishausa.org exists, but nothing on it mentions the Young Achiever Award, so I
   couldn't confirm it's the same organization. It keeps the "DU" initials tile.
-- **Second Mile, WOW Project, County Care Center:** no official site found in one quick attempt.
-  They show as names in the volunteer row.
+- **Second Mile, WOW Project:** found later, from secondmile.org and thewowproject.org. County Care
+  Center was replaced with the Houston Food Bank, whose logo is the black-and-green version from its
+  brand guide (its site only serves a white one).
 - **Literary Titan:** its site only offers a small 97px icon, so it's slightly soft up close.
 - **NSDA:** the Wikimedia logo is an older version (it still says "National Forensic League"). Only
   the figure is shown, so the old text never appears.

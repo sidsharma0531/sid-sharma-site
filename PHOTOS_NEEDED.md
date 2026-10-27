@@ -49,8 +49,8 @@ Every other photo on /v2 lives in one list: `photosV2` in `data/photos-v2.ts`. E
 - **Entries:** `rescuelog`, `waste2taste`, `still-good`, `uh-research`, `remax`, `debate`,
   `volunteer`, `guitar`.
 - **Awards:** `anthem`, `points-of-light`, `literary-titan`, `disha-usa`,
-  `nsda-academic-all-american`, `ap-scholar`, `national-recognition`, `nyt-summer-reading`,
-  `deca-international`, `deca-state`.
+  `deca-international`, `nsda-academic-all-american`, `nyt-summer-reading`, `ap-scholar`,
+  `national-recognition`.
 
 **To add a photo**, drop the file into `/public/photos` with the file name below and run
 `npm run photos`. It appears on the next build. Until its file is there, a slot is simply left

@@ -1,4 +1,5 @@
 import { LoopArrow } from "@/components/doodles";
+import HeroLine from "@/components/HeroLine";
 import ContactLinks from "@/components/ui/ContactLinks";
 import Photo from "@/components/ui/Photo";
 import { hero } from "@/data/content";
@@ -17,7 +18,7 @@ export default function Hero() {
         </h1>
 
         <p className="mt-5 max-w-[30ch] text-xl leading-snug text-ink/80 [grid-area:line] sm:mt-7 sm:text-2xl sm:leading-snug">
-          {hero.line}
+          <HeroLine />
         </p>
 
         <div className="relative mt-10 [grid-area:photo] md:mt-2">
