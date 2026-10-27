@@ -31,7 +31,7 @@ shrink the photos:
 npm run photos
 ```
 
-That resizes every photo in `public/photos/` and `public/photos/wall/` to at most 1600px wide,
+That resizes every photo in `public/photos/` to at most 1600px wide,
 saves it as WebP at quality 80, and strips its metadata, including the GPS location phones save.
 A photo straight off a phone drops from several MB to about 200 KB. Each file is replaced by a
 .webp with the same name, and the extension in `data/content.ts` doesn't need to change:
@@ -41,13 +41,10 @@ The site picks files up on the next build, with their real sizes. Nothing ever r
 slot: a missing logo shows as a wordmark or initials, a missing app screenshot shows a name screen,
 and thumbnails only appear for files that exist.
 
-The camera roll wall on `/v2` shows every photo in `public/photos/wall/`, sorted by file name, once
-there are at least 8. Adding photos is just dropping files there. See `PHOTOS_NEEDED.md`.
-
 ## Deploy
 
-Pushing to GitHub deploys on Vercel. Pushes to `main` go to production; other branches get a
-preview URL.
+Pushing `main` to GitHub deploys sidsharma.xyz on Vercel. `main` is the only branch. Old `/v2` links
+and `*.vercel.app` addresses redirect to the homepage on www.sidsharma.xyz (`next.config.ts`).
 
 ## Layout
 
@@ -56,6 +53,4 @@ preview URL.
   `Press`, `Footer`, plus `PhoneMockup`, `Polaroids`, `BookMockup`, `Lightbox`, and `doodles`
 - `components/ui/` has the small shared pieces (photo, chips, badges, stats, headings)
 - `app/globals.css` holds the color and font tokens
-- `app/v2/page.tsx` is the experimental photo layout at `/v2`; its photo slots are in
-  `data/photos-v2.ts`
 - `scripts/photos.mjs` is `npm run photos`

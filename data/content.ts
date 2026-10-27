@@ -76,7 +76,7 @@ export type FeaturedEntry = Entry & {
 };
 
 export type Award = {
-  /** Used to attach photos to this award on /v2. */
+  /** A short, unique name for this award. */
   id: string;
   name: string;
   /** Link to a page that names Sid, Waste2Taste, RescueLog, or Still Good. */
@@ -137,7 +137,7 @@ export const nav: NavItem[] = [
 
 export const hero = {
   name: "Sid Sharma",
-  line: "Hi, I'm Sid Sharma, an app developer, food security advocate, and bestselling author working on practical fixes for food waste and hunger through economics.",
+  line: "Hi, I'm Sid Sharma, an app developer, food security advocate, and bestselling author working on practical fixes for food waste and hunger through economics and technology.",
   // Phrases in the line that open a photo when clicked. One whose file isn't in /public/photos stays
   // plain text.
   linePhotos: [

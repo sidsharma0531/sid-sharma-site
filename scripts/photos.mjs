@@ -1,4 +1,4 @@
-// Shrinks every photo in public/photos and public/photos/wall for the web: at most 1600px wide,
+// Shrinks every photo in public/photos for the web: at most 1600px wide,
 // WebP at quality 80, and no metadata (GPS location, camera, dates). Run it after adding photos:
 //
 //   npm run photos
@@ -13,7 +13,7 @@ import os from "node:os";
 import path from "node:path";
 import sharp from "sharp";
 
-const FOLDERS = ["public/photos", "public/photos/wall"];
+const FOLDERS = ["public/photos"];
 const MAX_WIDTH = 1600;
 const QUALITY = 80;
 const TYPES = [".jpg", ".jpeg", ".png", ".webp", ".avif", ".gif", ".tif", ".tiff", ".heic", ".heif"];

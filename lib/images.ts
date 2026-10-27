@@ -2,7 +2,6 @@ import fs from "node:fs";
 import path from "node:path";
 import { imageSize } from "image-size";
 import type { Photo } from "@/data/content";
-import { photosV2, type Placement } from "@/data/photos-v2";
 
 export type ImageInfo = {
   file: string;
@@ -14,9 +13,7 @@ export type ImageInfo = {
 
 export type ResolvedPhoto = ImageInfo & { alt: string; caption?: string; wide?: boolean; focus?: string };
 
-const DIVIDERS = ["before-recognition", "before-contact"];
-
-type Folder = "photos" | "photos/wall" | "logos";
+type Folder = "photos" | "logos";
 
 // Image types a browser can show, in the order a name is retried with another extension.
 // `npm run photos` turns photo-01.jpg into photo-01.webp, so content can keep the old name.
@@ -94,40 +91,4 @@ export function resolvePhotos(
     focus: photo.focus,
   }));
   return onlyExisting ? list.filter((photo) => photo.exists) : list;
-}
-
-/**
- * Photos for the /v2 layout (data/photos-v2.ts), for one placement, in list order. Only photos
- * whose file exists come back, so a slot appears on its own once its file is added. Hero ignores
- * `at`. A divider photo whose `at` isn't a known strip goes in the first strip, so switching a
- * photo to "divider" by changing one word still shows it.
- */
-export function photosFor(placement: Placement, at?: string): ResolvedPhoto[] {
-  const matches = photosV2.filter((photo) => {
-    if (photo.placement !== placement) return false;
-    if (placement === "hero") return true;
-    if (placement === "divider" && !DIVIDERS.includes(photo.at ?? "")) return at === DIVIDERS[0];
-    return photo.at === at;
-  });
-  return resolvePhotos(matches, { onlyExisting: true, fallback: placement === "hero" ? [4, 5] : [1, 1] });
-}
-
-// What the camera roll wall shows. Anything else in the folder, like a .heic that
-// `npm run photos` hasn't converted yet, is left out.
-const WALL_TYPES = [".webp", ".jpg", ".jpeg", ".png", ".avif", ".gif"];
-
-/** Every photo in /public/photos/wall, sorted by file name with numbers in order (IMG_2 before IMG_10). */
-export function wallPhotos(): ResolvedPhoto[] {
-  let files: string[];
-  try {
-    files = fs.readdirSync(path.join(process.cwd(), "public", "photos", "wall"));
-  } catch {
-    return [];
-  }
-  const found = files
-    .filter((file) => !file.startsWith(".") && WALL_TYPES.includes(path.extname(file).toLowerCase()))
-    .sort((a, b) => a.localeCompare(b, "en", { numeric: true }))
-    .map((file) => getImage(file, "photos/wall", [1, 1]))
-    .filter((image) => image.exists);
-  return found.map((image, i) => ({ ...image, alt: `Camera roll photo ${i + 1} of ${found.length}` }));
 }
