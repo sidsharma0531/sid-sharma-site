@@ -140,26 +140,18 @@ export const nav: NavItem[] = [
 
 export const hero = {
   name: "Sid Sharma",
-  line: "Hi, I'm Sid Sharma, an app developer, published author, and food security advocate working on practical fixes for food waste and hunger through economics.",
+  line: "Hi, I'm Sid Sharma, an app developer, food security advocate, and bestselling author working on practical fixes for food waste and hunger through economics.",
   // Phrases in the line that open a photo when clicked. One whose file isn't in /public/photos stays
   // plain text.
   linePhotos: [
     {
       phrase: "app developer",
       tone: "leaf",
+      // Rendered from the RescueLog card's own phone mockup on this page.
       photo: {
-        src: "rescuelog-2.png",
-        alt: "RescueLog home screen with a new pop-up log button and recent logs",
+        src: "rescuelog-mockup.png",
+        alt: "RescueLog's new pop-up log screen and home screen on two phones",
         caption: "RescueLog",
-      },
-    },
-    {
-      phrase: "published author",
-      tone: "butter",
-      photo: {
-        src: "still-good-cover.jpg",
-        alt: "Cover of Still Good: A Cookbook for Forgotten Food",
-        caption: "Still Good",
       },
     },
     {
@@ -169,6 +161,15 @@ export const hero = {
         src: "photo-06.jpg",
         alt: "Sid Sharma and a volunteer holding Whole Foods bags of rescued groceries in the Fort Bend Family Promise pantry",
         caption: "at Fort Bend Family Promise",
+      },
+    },
+    {
+      phrase: "bestselling author",
+      tone: "butter",
+      photo: {
+        src: "still-good-cover.jpg",
+        alt: "Cover of Still Good: A Cookbook for Forgotten Food",
+        caption: "Still Good",
       },
     },
   ] as LinePhoto[],
