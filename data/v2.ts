@@ -230,7 +230,7 @@ export const projects: Project[] = [
       "A student-founded 501(c)(3). Grocers flag food near its sell-by date, volunteers pick it up and cook it, often into banana bread, and deliver it to shelters and community centers.",
     proofs: [
       { value: "5,100+ lbs", label: "of food rescued", note: "Whole organization" },
-      { value: "12 branches", label: "in 7 states and the UAE" },
+      { value: "13 branches", label: "in 7 states and the UAE" },
       { value: "30+", label: "grocer and community partners" },
     ],
     links: [
@@ -479,12 +479,12 @@ export const caseStudies: Record<ProjectSlug, CaseStudy> = {
     meta: [
       { label: "Role", value: "Founder & president" },
       { label: "When", value: "Since 2023" },
-      { label: "Where", value: "Founded in Houston; 12 branches" },
+      { label: "Where", value: "Founded in Houston; 13 branches" },
       { label: "Status", value: "501(c)(3) nonprofit" },
     ],
     glance: [
       { value: "5,100+ lbs", label: "of food rescued", note: "Whole organization" },
-      { value: "12", label: "branches in 7 states and the UAE" },
+      { value: "13", label: "branches in 7 states and the UAE" },
       { value: "30+", label: "grocer and community partners" },
       { value: "NFRA", label: "member, National Food Recovery Association" },
     ],
@@ -889,7 +889,7 @@ export const about = {
 
 export const milestones: { date: string; text: string; slug?: ProjectSlug }[] = [
   { date: "Four years", text: "Volunteering with seven Houston hunger-relief organizations: sorting, packing, and handing out food." },
-  { date: "2023", text: "Waste2Taste starts at a family kitchen table, then grows to 12 branches.", slug: "waste2taste" },
+  { date: "2023", text: "Waste2Taste starts at a family kitchen table, then grows to 13 branches.", slug: "waste2taste" },
   { date: "May 2026", text: "First build of RescueLog, and its App Store review the same month.", slug: "rescuelog" },
   { date: "Jun 2026", text: "RescueLog's AI checked against a hand tally; retail value and Cart Mode added.", slug: "rescuelog" },
   { date: "Jul 2026", text: "Honorable mention in The New York Times Summer Reading Contest. Gleaning mode ships in RescueLog." },
