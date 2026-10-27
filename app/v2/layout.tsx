@@ -6,6 +6,8 @@ import Reveal from "@/components/v2/Reveal";
 // The /v2 portfolio. It shares the root layout's fonts and colors but none of the homepage's
 // sections, so changes here never touch "/".
 export const metadata: Metadata = {
+  // Absolute canonical and preview URLs on the real domain (the homepage relies on Vercel's default).
+  metadataBase: new URL("https://www.sidsharma.xyz"),
   title: { default: "Sid Sharma · Portfolio", template: "%s · Sid Sharma" },
 };
 
