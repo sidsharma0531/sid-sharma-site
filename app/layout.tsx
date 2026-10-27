@@ -48,7 +48,8 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${inter.variable} ${caveat.variable}`}>
+    // data-scroll-behavior keeps in-page anchors smooth but lets route changes (in /v2) jump to the top.
+    <html lang="en" data-scroll-behavior="smooth" className={`${fraunces.variable} ${inter.variable} ${caveat.variable}`}>
       <body>{children}</body>
     </html>
   );
