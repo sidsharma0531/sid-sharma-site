@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Caveat, Fraunces, Inter } from "next/font/google";
-import { site } from "@/data/content";
+import { hero, site } from "@/data/content";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -27,10 +27,10 @@ export const metadata: Metadata = {
   // Without a URL, Vercel's deployment URL is used to build absolute share-image links.
   ...(site.url ? { metadataBase: new URL(site.url) } : {}),
   title: site.name,
-  description: site.description,
+  description: hero.line,
   openGraph: {
     title: site.name,
-    description: site.description,
+    description: hero.line,
     siteName: site.name,
     type: "website",
     locale: "en_US",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: site.name,
-    description: site.description,
+    description: hero.line,
   },
 };
 

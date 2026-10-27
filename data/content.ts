@@ -114,9 +114,6 @@ export const site = {
   // Set to the live domain once DNS is ready, like "https://example.com".
   // Until then, Vercel supplies the deployment URL for link previews.
   url: undefined as string | undefined,
-  description:
-    "High school senior in Houston. Founder of RescueLog and Waste2Taste, author of Still Good, building ways to get good food to people instead of landfills.",
-  shareLine: "Founder of RescueLog and Waste2Taste · Author of Still Good",
   copyright: "© 2026 Sid Sharma",
 };
 
@@ -176,12 +173,6 @@ export const hero = {
   // Cropped from photo-05.jpg for now.
   photo: { src: "photo-hero.jpg", alt: "Sid Sharma" } as Photo,
   note: "say hi!",
-  // Not shown on the page; only the link-preview image (app/opengraph-image.tsx) uses these.
-  stats: [
-    { value: "2M", unit: "lbs/yr", label: "tracked through RescueLog" },
-    { value: "12", unit: "branches", label: "of Waste2Taste, across 7 states + UAE" },
-    { value: "30+", unit: "partners", label: "Waste2Taste grocers and community orgs" },
-  ] as Stat[],
 };
 
 /* ---------- Logo wall ---------- */
