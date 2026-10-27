@@ -1,7 +1,6 @@
-import Image from "next/image";
 import PhotoButton from "@/components/ui/PhotoButton";
 import { hero, type Tone } from "@/data/content";
-import { resolvePhotos, type ResolvedPhoto } from "@/lib/images";
+import { resolvePhotos } from "@/lib/images";
 
 const squiggleColor: Record<Tone, string> = {
   tomato: "text-tomato",
@@ -9,33 +8,29 @@ const squiggleColor: Record<Tone, string> = {
   butter: "text-butter",
 };
 
-const tilts = ["-rotate-3", "rotate-2", "-rotate-2"];
-
 // The hero line. Each phrase in hero.linePhotos gets a squiggle and opens its photo in the
-// lightbox; with a mouse, hovering it (or focusing it from the keyboard) pops up a small tilted
-// polaroid of the photo. A phrase whose file is missing stays plain text.
+// lightbox when clicked; nothing pops up on hover. A phrase whose file is missing stays plain text.
 export default function HeroLine() {
   const parts: React.ReactNode[] = [];
   let rest = hero.line;
-  hero.linePhotos.forEach(({ phrase, tone, photo }, i) => {
+  for (const { phrase, tone, photo } of hero.linePhotos) {
     const at = rest.indexOf(phrase);
     const [found] = resolvePhotos([photo], { onlyExisting: true });
-    if (at === -1 || !found) return;
+    if (at === -1 || !found) continue;
     parts.push(
       rest.slice(0, at),
       <PhotoButton
         key={phrase}
         photo={found}
         label={`Open photo: ${phrase}`}
-        className="group relative rounded-sm transition-colors hover:text-ink"
+        className="relative rounded-sm transition-colors hover:text-ink"
       >
         {phrase}
         <Squiggle className={squiggleColor[tone]} />
-        <Peek photo={found} tilt={tilts[i % tilts.length]} />
       </PhotoButton>,
     );
     rest = rest.slice(at + phrase.length);
-  });
+  }
   parts.push(rest);
   return <>{parts}</>;
 }
@@ -59,30 +54,5 @@ function Squiggle({ className }: { className: string }) {
         vectorEffect="non-scaling-stroke"
       />
     </svg>
-  );
-}
-
-// The small polaroid above the phrase. Only devices with a mouse show it; it never takes clicks.
-function Peek({ photo, tilt }: { photo: ResolvedPhoto; tilt: string }) {
-  return (
-    <span
-      aria-hidden
-      className="pointer-events-none absolute bottom-full left-1/2 z-20 mb-2 hidden w-32 -translate-x-1/2 pointer-fine:block"
-    >
-      <span
-        className={`block origin-bottom scale-90 bg-white p-1.5 pb-5 opacity-0 shadow-[0_18px_30px_-14px_rgba(34,28,24,0.55)] ring-1 ring-ink/10 transition-[opacity,scale] duration-200 ease-out group-hover:scale-100 group-hover:opacity-100 group-focus-visible:scale-100 group-focus-visible:opacity-100 motion-reduce:scale-100 motion-reduce:transition-none ${tilt}`}
-      >
-        <span className="relative block aspect-square overflow-hidden bg-ink/[0.06]">
-          <Image
-            src={photo.src}
-            alt=""
-            fill
-            sizes="116px"
-            className="object-cover"
-            style={photo.focus ? { objectPosition: photo.focus } : undefined}
-          />
-        </span>
-      </span>
-    </span>
   );
 }

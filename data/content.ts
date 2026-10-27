@@ -141,8 +141,8 @@ export const nav: NavItem[] = [
 export const hero = {
   name: "Sid Sharma",
   line: "Hi, I'm Sid Sharma, an app developer, published author, and food security advocate working on practical fixes for food waste and hunger through economics.",
-  // Phrases in the line that open a photo. One whose file isn't in /public/photos stays plain text.
-  // focus is the crop for the small square preview on desktop.
+  // Phrases in the line that open a photo when clicked. One whose file isn't in /public/photos stays
+  // plain text.
   linePhotos: [
     {
       phrase: "app developer",
@@ -151,7 +151,6 @@ export const hero = {
         src: "rescuelog-2.png",
         alt: "RescueLog home screen with a new pop-up log button and recent logs",
         caption: "RescueLog",
-        focus: "50% 0%",
       },
     },
     {
@@ -161,7 +160,6 @@ export const hero = {
         src: "still-good-cover.jpg",
         alt: "Cover of Still Good: A Cookbook for Forgotten Food",
         caption: "Still Good",
-        focus: "50% 0%",
       },
     },
     {
@@ -171,7 +169,6 @@ export const hero = {
         src: "photo-06.jpg",
         alt: "Sid Sharma and a volunteer holding Whole Foods bags of rescued groceries in the Fort Bend Family Promise pantry",
         caption: "at Fort Bend Family Promise",
-        focus: "50% 25%",
       },
     },
   ] as LinePhoto[],
@@ -206,7 +203,7 @@ export const logoWall = {
     { name: "The New York Times", href: NYT_PROOF, logo: "nyt-wordmark.svg" },
     { name: "Whole Foods Market", href: W2T_PARTNERS, logo: "whole-foods.png" },
     { name: "Points of Light", logo: "points-of-light.svg" },
-    { name: "H-E-B", href: W2T_PARTNERS, logo: "heb.png" },
+    { name: "H-E-B", href: W2T_PARTNERS, logo: "heb.svg" },
     {
       name: "Simple Acts, Big Impact",
       href: "https://podcasts.apple.com/us/podcast/food-waste-to-food-recovery-sids-waste2taste-story/id1641520893?i=1000790005401",
