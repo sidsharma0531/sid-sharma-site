@@ -301,7 +301,7 @@ export const experience = {
       summary: "Recipes that use expiring food, built from my mom's homemade Indian recipes and my Waste2Taste work.",
       stats: [
         { value: "#1", unit: "new release", label: "in Indian Cookbooks on Amazon" },
-        { value: "Best", unit: "seller", label: "in Indian Cookbooks on Amazon" },
+        { value: "Best seller", label: "in Indian Cookbooks on Amazon" },
       ],
       bullets: ["Won the **Literary Titan Silver Book Award**", "**79 pages**. Proceeds fund food rescue"],
       links: [
