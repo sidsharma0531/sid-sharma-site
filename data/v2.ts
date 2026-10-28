@@ -567,6 +567,7 @@ export const caseStudies: Record<ProjectSlug, CaseStudy> = {
               { city: "Tacoma", region: "WA" },
               { city: "Boston", region: "MA" },
               { city: "United Arab Emirates", region: "International" },
+              { city: "Dubai", region: "UAE" },
             ],
           },
         ],
