@@ -172,6 +172,11 @@ export const hero = {
   ] as LinePhoto[],
   // Cropped from photo-05.jpg for now.
   photo: { src: "photo-hero.jpg", alt: "Sid Sharma" } as Photo,
+  // Stacked behind the main photo, taking turns in front. One whose file is missing is left out.
+  morePhotos: [
+    { src: "photo-hero-sunset.jpg", alt: "Sid Sharma in a blazer in front of a city skyline at sunset" },
+    { src: "photo-hero-field.jpg", alt: "Sid Sharma smiling and holding a small microphone outdoors" },
+  ] as Photo[],
   note: "say hi!",
 };
 

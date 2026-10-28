@@ -147,6 +147,18 @@
   }
 }
 
+/* Hero photo stack. Cards glide between spots; the one leaving the front fades out fast, so it can
+   slip behind the others unseen. HeroPhotos never turns by itself for reduced-motion users. */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-card {
+    transition:
+      translate 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+      rotate 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+      scale 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+      opacity 0.3s ease-out;
+  }
+}
+
 /* ---------- /v2 only. Everything below is prefixed v2- so the homepage never picks it up. ---------- */
 
 @utility v2-wrap {
