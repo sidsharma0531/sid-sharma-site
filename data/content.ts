@@ -431,15 +431,6 @@ export const experience = {
         { name: "Houston Food Bank", href: "https://www.houstonfoodbank.org", logo: "houston-food-bank.svg" },
       ],
     },
-    {
-      id: "guitar",
-      role: "Guitarist",
-      type: "Music",
-      dates: "Since age 12",
-      mark: { initials: "♪", tone: "leaf" },
-      summary:
-        "Trained weekly with a teacher in India in traditional music. Performed with groups at **30+** community events, celebrations, and religious gatherings.",
-    },
   ] as Entry[],
 };
 

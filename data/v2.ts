@@ -881,7 +881,6 @@ export const about = {
     "I grew up in a kitchen where overripe bananas meant banana bread, never the trash. I've always loved to bake, and that habit of using what you have runs through Waste2Taste and Still Good, whose recipes start from my mom's homemade Indian cooking.",
     "For four years I've sorted, packed, and handed out food with seven Houston hunger-relief organizations. What I saw there led to RescueLog, and I still build it with the people who use it.",
     "Away from food rescue, I'm a quantitative research assistant in UH's economics department, and I captain my school's Lincoln-Douglas debate team: I've coached 15 novices who went on to place at tournaments and ran our yearly tournament for 400+ attendees.",
-    "I've played guitar since I was 12, training weekly with a teacher in India in traditional music, and I've performed with groups at 30+ community events, celebrations, and religious gatherings.",
   ],
   photo: photos.pantry,
 };
