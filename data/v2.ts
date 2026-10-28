@@ -267,7 +267,7 @@ export const projects: Project[] = [
     short: "The CBO's potential-GDP model, in Python",
     tagline: "Rebuilding the CBO's potential-GDP model in Python, so students can run it.",
     summary:
-      "In UH's Department of Economics, under Professor Vollrath, I translated the Congressional Budget Office's potential-GDP model from EViews to Python, built a forecasting framework on top of it, and published it with explanations for undergraduate courses.",
+      "In UH's Department of Economics, I translated the Congressional Budget Office's potential-GDP model from EViews to Python, built a forecasting framework on top of it, and published it with explanations for undergraduate courses.",
     proofs: [
       { value: "Python", label: "the CBO's potential-GDP model, translated from EViews" },
       { value: "Forecasting", label: "a custom framework built on the model" },
@@ -720,7 +720,6 @@ export const caseStudies: Record<ProjectSlug, CaseStudy> = {
     meta: [
       { label: "Role", value: "Quantitative research assistant" },
       { label: "Where", value: "University of Houston, Department of Economics" },
-      { label: "With", value: "Professor Vollrath" },
       { label: "Tools", value: "EViews, Python" },
     ],
     glance: [

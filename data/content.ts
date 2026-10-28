@@ -174,8 +174,8 @@ export const hero = {
   photo: { src: "photo-hero.jpg", alt: "Sid Sharma" } as Photo,
   // Stacked behind the main photo, taking turns in front. One whose file is missing is left out.
   morePhotos: [
-    { src: "photo-hero-sunset.jpg", alt: "Sid Sharma in a blazer in front of a city skyline at sunset" },
     { src: "photo-hero-field.jpg", alt: "Sid Sharma smiling and holding a small microphone outdoors" },
+    { src: "photo-hero-sunset.jpg", alt: "Sid Sharma in a blazer in front of a city skyline at sunset" },
   ] as Photo[],
   note: "say hi!",
 };
@@ -388,7 +388,7 @@ export const experience = {
       type: "Department of Economics",
       mark: { logo: "uh.svg", initials: "UH", tone: "tomato" },
       summary:
-        "Under Professor Vollrath, translated the Congressional Budget Office's potential-GDP model from EViews to Python, built a custom forecasting framework, and published the model online with explanations for use in UH undergraduate courses.",
+        "Translated the Congressional Budget Office's potential-GDP model from EViews to Python, built a custom forecasting framework, and published the model online with explanations for use in UH undergraduate courses.",
     },
     {
       id: "remax",
