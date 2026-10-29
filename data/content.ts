@@ -234,10 +234,10 @@ export const experience = {
       role: "Founder & Developer",
       org: "RescueLog",
       orgHref: "https://rescuelog-mu.vercel.app/",
-      type: "App",
+      type: "Tool for nonprofits",
       mark: { logo: "rescuelog.png", fit: "cover", doodle: "carrot", tone: "leaf" },
       summary:
-        "AI food logging for nonprofits, live on iOS and Android: food banks snap photos and AI estimates the amount of food, replacing manual estimates.",
+        "Built a tool for logging food for nonprofits. Their volunteers snap photos of rescued food, and AI estimates the amount, replacing manual estimates. It's on iOS and Android so they can log from their phones.",
       stats: [
         { value: "2M", unit: "lbs/yr", label: "of food tracked" },
         { value: "1.7M", unit: "meals", label: "about, each year" },
@@ -266,7 +266,7 @@ export const experience = {
       location: "13 branches across 7 states and the UAE",
       mark: { logo: "waste2taste.png", fit: "cover", doodle: "tomato", tone: "tomato" },
       summary:
-        "Recovers near-expired food from local grocers and cooks it into meals that safely repurpose it, distributed to people experiencing homelessness.",
+        "Founded a nonprofit that recovers near-expired food from local grocers and cooks it into meals that safely repurpose it, distributed to people experiencing homelessness.",
       stats: [
         { value: "5,100+", unit: "lbs", label: "of food rescued" },
         { value: "13", unit: "branches", label: "across 7 states and the UAE" },
@@ -333,7 +333,7 @@ export const experience = {
       orgHref: "https://waste-2-taste.org/cookbook.html",
       type: "Self-published book",
       mark: { doodle: "bread", tone: "butter" },
-      summary: "Recipes that use expiring food, built from my mom's homemade Indian recipes and my Waste2Taste work.",
+      summary: "Published a cookbook of recipes that use expiring food, built from my mom's homemade Indian recipes and my Waste2Taste work.",
       stats: [
         // Each opens its Amazon screenshot, the same ones waste-2-taste.org/cookbook.html shows.
         {
