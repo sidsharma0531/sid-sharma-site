@@ -513,7 +513,7 @@ export const recognition = {
           context: "Of 8,000+ entries",
           logo: "nyt.svg",
         },
-        { id: "ap-scholar", name: "AP Scholar with Distinction", issuer: "College Board", year: "2026", logo: "college-board-mark.svg" },
+        { id: "ap-scholar", name: "2x AP Scholar with Distinction", issuer: "College Board", year: "2026", logo: "college-board-mark.svg" },
         { id: "national-recognition", name: "National Recognition Program", issuer: "College Board", year: "2026", logo: "college-board-mark.svg" },
       ],
     },
