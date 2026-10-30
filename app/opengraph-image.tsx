@@ -78,17 +78,15 @@ function lineWords(): Word[] {
 export default async function OpengraphImage() {
   const words = lineWords();
 
-  const [serif, sans, hand, photo] = await Promise.all([
+  const [serif, sans, photo] = await Promise.all([
     googleFont("Fraunces:wght@600", `${site.name}.`),
     googleFont("Inter:wght@500", hero.line),
-    googleFont("Caveat:wght@600", "say hi!"),
     heroPhoto(),
   ]);
 
   const fonts = [
     serif && { name: "Fraunces", data: serif, weight: 600 as const, style: "normal" as const },
     sans && { name: "Inter", data: sans, weight: 500 as const, style: "normal" as const },
-    hand && { name: "Caveat", data: hand, weight: 600 as const, style: "normal" as const },
   ].filter((font): font is NonNullable<typeof font> => font !== null);
 
   return new ImageResponse(
@@ -174,18 +172,6 @@ export default async function OpengraphImage() {
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={photo} width={292} height={365} alt="" style={{ objectFit: "cover", borderRadius: 14 }} />
-            </div>
-            <div
-              style={{
-                display: "flex",
-                marginTop: 18,
-                fontFamily: hand ? "Caveat" : undefined,
-                fontSize: 42,
-                color: "#b3391f",
-                transform: "rotate(-6deg)",
-              }}
-            >
-              say hi!
             </div>
           </div>
         )}

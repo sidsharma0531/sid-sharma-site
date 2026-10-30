@@ -247,7 +247,7 @@ export const projects: Project[] = [
     short: "A cookbook for forgotten food",
     tagline: "A cookbook for the food you almost threw away.",
     summary:
-      "79 pages of recipes for black bananas, stale bread, and the leftovers at the back of the fridge, starting from my mom's homemade Indian cooking. Net proceeds fund Waste2Taste's food rescue.",
+      "79 pages of recipes for black bananas, stale bread, and the leftovers at the back of the fridge. Net proceeds fund Waste2Taste's food rescue.",
     proofs: [
       { value: "#1", label: "New Release in Indian Cooking on Amazon", photo: photos.proofIndian },
       { value: "Silver", label: "Literary Titan Book Award", photo: photos.certificate },
@@ -650,7 +650,7 @@ export const caseStudies: Record<ProjectSlug, CaseStudy> = {
           {
             kind: "text",
             paragraphs: [
-              "Still Good is 79 pages of recipes for the food you almost threw away: black bananas, stale bread, the leftovers at the back of the fridge. It cooks the way Indian-American kitchens do, resourceful and unfussy, and it starts from my mom's homemade Indian recipes and what I learned cooking surplus food with Waste2Taste.",
+              "Still Good is 79 pages of recipes for the food you almost threw away: black bananas, stale bread, the leftovers at the back of the fridge. It cooks the way Indian-American kitchens do, resourceful and unfussy, and it starts from what I learned cooking surplus food with Waste2Taste.",
             ],
           },
         ],
@@ -877,7 +877,6 @@ export const gallery: (Photo & { tag: GalleryTag })[] = [
 export const about = {
   title: "A little more about me.",
   paragraphs: [
-    "I grew up in a kitchen where overripe bananas meant banana bread, never the trash. I've always loved to bake, and that habit of using what you have runs through Waste2Taste and Still Good, whose recipes start from my mom's homemade Indian cooking.",
     "For four years I've sorted, packed, and handed out food with seven Houston hunger-relief organizations. What I saw there led to RescueLog, and I still build it with the people who use it.",
     "Away from food rescue, I'm a quantitative research assistant in UH's economics department, and I captain my school's Lincoln-Douglas debate team: I've coached 15 novices who went on to place at tournaments and ran our yearly tournament for 400+ attendees.",
   ],

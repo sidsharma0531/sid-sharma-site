@@ -176,7 +176,6 @@ export const hero = {
   morePhotos: [
     { src: "photo-hero-field.jpg", alt: "Sid Sharma smiling and holding a small microphone outdoors" },
   ] as Photo[],
-  note: "say hi!",
 };
 
 /* ---------- Logo wall ---------- */
@@ -237,7 +236,7 @@ export const experience = {
       type: "Tool for nonprofits",
       mark: { logo: "rescuelog.png", fit: "cover", doodle: "carrot", tone: "leaf" },
       summary:
-        "Built a tool for logging food for nonprofits. Their volunteers snap photos of rescued food, and AI estimates the amount, replacing manual estimates. It's on iOS and Android so they can log from their phones.",
+        "Built a tool for logging food for nonprofits. Their volunteers snap photos of rescued food, and AI estimates the amount, replacing manual estimates. It's on iOS and Android so they can log from organization devices.",
       stats: [
         { value: "2M", unit: "lbs/yr", label: "of food tracked" },
         { value: "1.7M", unit: "meals", label: "about, each year" },
@@ -333,7 +332,7 @@ export const experience = {
       orgHref: "https://waste-2-taste.org/cookbook.html",
       type: "Self-published book",
       mark: { doodle: "bread", tone: "butter" },
-      summary: "Published a cookbook of recipes that use expiring food, built from my mom's homemade Indian recipes and my Waste2Taste work.",
+      summary: "Published a cookbook of recipes that use expiring food, built from my Waste2Taste work.",
       stats: [
         // Each opens its Amazon screenshot, the same ones waste-2-taste.org/cookbook.html shows.
         {

@@ -1,4 +1,3 @@
-import { LoopArrow } from "@/components/doodles";
 import HeroLine from "@/components/HeroLine";
 import HeroPhotos from "@/components/HeroPhotos";
 import ContactLinks from "@/components/ui/ContactLinks";
@@ -26,13 +25,8 @@ export default function Hero() {
           <HeroLine />
         </p>
 
-        <div className="relative mt-10 [grid-area:photo] md:mt-2">
+        <div className="mt-10 [grid-area:photo] md:mt-2">
           <HeroPhotos photos={photos} />
-
-          <p className="absolute top-[40%] left-[63%] flex w-[36%] flex-col items-start md:top-auto md:right-[calc(100%+0.75rem)] md:bottom-1 md:left-auto md:w-32 md:items-end">
-            <span className="-rotate-6 font-hand text-[1.9rem] leading-none text-tomato-deep">{hero.note}</span>
-            <LoopArrow className="mt-1 w-16 text-tomato-deep md:w-20" />
-          </p>
         </div>
 
         <div className="mt-7 [grid-area:contact] md:mt-8 md:self-end">
