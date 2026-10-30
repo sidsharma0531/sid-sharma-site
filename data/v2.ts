@@ -309,22 +309,8 @@ export type CaseStudy = {
   sources: { label: string; href: string }[];
 };
 
-// The St. Peter Claver pop-up, as published on rescuelog-mu.vercel.app from the live dashboard.
-export const rescueEvent = {
-  name: "Pop-Up Distribution · St. Peter Claver",
-  org: "Second Servings Houston",
-  photos: 20,
-  pounds: "1,580",
-  value: "$4,804",
-  categories: [
-    { label: "Produce", pct: 32 },
-    { label: "Bakery & Bread", pct: 21 },
-    { label: "Shelf-Stable", pct: 20 },
-    { label: "Grab-n-Go", pct: 9 },
-    { label: "Meat & Poultry", pct: 6 },
-    { label: "Other", pct: 12 },
-  ],
-};
+// The St. Peter Claver pop-up. It lives in content.ts, since the homepage shows it too.
+export { rescueEvent } from "@/data/content";
 
 export const caseStudies: Record<ProjectSlug, CaseStudy> = {
   rescuelog: {

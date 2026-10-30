@@ -1,6 +1,7 @@
 import BookMockup from "@/components/BookMockup";
 import PhoneMockup from "@/components/PhoneMockup";
 import Polaroids from "@/components/Polaroids";
+import UnderTheHood from "@/components/UnderTheHood";
 import Chip from "@/components/ui/Chip";
 import LogoImage from "@/components/ui/LogoImage";
 import OrgMark from "@/components/ui/OrgMark";
@@ -72,6 +73,8 @@ function FeaturedCard({ entry }: { entry: FeaturedEntry }) {
       <div className="mt-8 [grid-area:visual] md:mt-0">{visualNode}</div>
       <EntryStats entry={entry} />
       <EntryDetails entry={entry} />
+      {/* Spans the full width in a row of its own, below everything else. */}
+      {entry.hood && <UnderTheHood hood={entry.hood} />}
     </article>
   );
 }

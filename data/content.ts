@@ -61,6 +61,8 @@ export type Entry = {
 export type FeaturedEntry = Entry & {
   org: string;
   stats?: Stat[];
+  /** Technical details, folded away behind an "Under the hood" button at the bottom of the card. */
+  hood?: Hood;
   visual:
     | { kind: "phone"; screens: Photo[] }
     | { kind: "polaroids"; photos: Photo[] }
@@ -73,6 +75,17 @@ export type FeaturedEntry = Entry & {
         /** One inside page, shown slipping out from behind the cover as a preview. Opens in the lightbox. */
         preview?: Photo;
       };
+};
+
+/**
+ * The technical side of a project. steps: the pipeline in order, with what runs each step.
+ * sample: one real run through it, as numbers. notes: the engineering decisions worth knowing.
+ */
+export type Hood = {
+  title: string;
+  steps: { title: string; body: string; tech: string }[];
+  sample?: { label: string; source: string; flow: string[]; note: string };
+  notes: { title: string; body: string }[];
 };
 
 export type Award = {
@@ -221,6 +234,26 @@ export const logoWall = {
   ] as Logo[],
 };
 
+/* ---------- RescueLog sample event ---------- */
+
+// The St. Peter Claver pop-up, as published on rescuelog-mu.vercel.app from the live dashboard.
+// RescueLog's "Under the hood" panel and the case-study version both show it.
+export const rescueEvent = {
+  name: "Pop-Up Distribution · St. Peter Claver",
+  org: "Second Servings Houston",
+  photos: 20,
+  pounds: "1,580",
+  value: "$4,804",
+  categories: [
+    { label: "Produce", pct: 32 },
+    { label: "Bakery & Bread", pct: 21 },
+    { label: "Shelf-Stable", pct: 20 },
+    { label: "Grab-n-Go", pct: 9 },
+    { label: "Meat & Poultry", pct: 6 },
+    { label: "Other", pct: 12 },
+  ],
+};
+
 /* ---------- Experience ---------- */
 
 export const experience = {
@@ -253,6 +286,57 @@ export const experience = {
         screens: [
           { src: "rescuelog.png", alt: "RescueLog screen for logging a pop-up: take a photo of the food and submit" },
           { src: "rescuelog-2.png", alt: "RescueLog home screen with a new pop-up log button and recent logs" },
+        ],
+      },
+      // The technical side, behind an "Under the hood" button. From the RescueLog repo and its
+      // commit history; the prompt numbers are from its June 11, 2026 calibration commit.
+      hood: {
+        title: "From a volunteer's photo to an analyzed log in about a minute.",
+        steps: [
+          {
+            title: "Capture",
+            body: "A volunteer photographs rescued food in the app. Pop-ups, pantry carts, and gleaning trips each have their own capture mode.",
+            tech: "Expo · React Native",
+          },
+          {
+            title: "Estimate",
+            body: "Claude's vision model identifies the food, estimates each category's weight, and prices it at retail for the store it came from.",
+            tech: "Claude vision · JSON",
+          },
+          {
+            title: "Record",
+            body: "Weights, categories, the dollar estimate, and photos land on the staff dashboard. Nobody types anything.",
+            tech: "Supabase · Next.js",
+          },
+          {
+            title: "Report",
+            body: "One click exports a CSV shaped for grant workbooks, by date, site, and category.",
+            tech: "CSV export",
+          },
+        ],
+        sample: {
+          label: "One real event",
+          source: `${rescueEvent.org} · ${rescueEvent.name}`,
+          flow: [`${rescueEvent.photos} photos`, `${rescueEvent.pounds} lbs`, `${rescueEvent.value} retail value`],
+          note: "AI estimates, from the live dashboard",
+        },
+        notes: [
+          {
+            title: "A strict prompt, not a guess",
+            body: "Each photo goes to the model with a weight reference table, rules for food that's hidden, stacked, or boxed, and a fixed JSON format: one weight per category plus a confidence score. Temperature 0 cuts run-to-run variance.",
+          },
+          {
+            title: "Nothing gets lost",
+            body: "Photos run three at a time in small background batches, with retries when the API is busy and a daily backstop job. One failed photo never stops the rest, and every log ends complete, partial, or failed.",
+          },
+          {
+            title: "Checked against a hand count",
+            body: "For one pop-up, the organization hand-counted **1,499 lbs**. An early prompt estimated about **2,131**; recalibrating it brought that to about **1,630**, 8.7% over. In Cart Mode the total comes from a scale, and the AI only splits it by category.",
+          },
+          {
+            title: "Scoped to each organization",
+            body: "API checks fail closed, and each organization's data is scoped to it. An admin view rolls every organization up, with drill-down into each one.",
+          },
         ],
       },
     },

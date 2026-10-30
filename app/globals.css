@@ -42,6 +42,15 @@
   background-size: 28px 28px;
 }
 
+/* Faint graph paper behind technical panels. */
+@utility graph-paper {
+  background-color: var(--color-cream);
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--color-ink) 5%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--color-ink) 5%, transparent) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
 @layer base {
   html {
     scroll-padding-top: 5rem;
