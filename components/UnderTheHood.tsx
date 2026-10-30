@@ -1,10 +1,9 @@
 import { Fragment } from "react";
 import Disclosure from "@/components/ui/Disclosure";
-import Rich from "@/components/ui/Rich";
 import type { Hood } from "@/data/content";
 
 // The technical side of a project, folded away behind an "Under the hood" button so the card
-// reads simply first: the pipeline step by step, one real run through it, and engineering notes.
+// reads simply first: the pipeline step by step, then one real run through it.
 export default function UnderTheHood({ hood }: { hood: Hood }) {
   return (
     <Disclosure label="Under the hood" icon={<CodeIcon />} className="col-span-full mt-8 sm:mt-10">
@@ -33,18 +32,6 @@ export default function UnderTheHood({ hood }: { hood: Hood }) {
           </ol>
 
           {hood.sample && <Sample sample={hood.sample} />}
-
-          <Label className="mt-8">Engineering notes</Label>
-          <ul className="mt-3 grid gap-3 sm:grid-cols-2">
-            {hood.notes.map((note) => (
-              <li key={note.title} className="rounded-2xl border border-ink/10 bg-paper p-4 sm:p-5">
-                <p className="text-[15px] font-semibold">{note.title}</p>
-                <p className="mt-1.5 text-[14px] leading-relaxed text-ink/70 [&_strong]:whitespace-nowrap">
-                  <Rich text={note.body} />
-                </p>
-              </li>
-            ))}
-          </ul>
         </div>
       </div>
     </Disclosure>
@@ -87,8 +74,8 @@ function Connector() {
   );
 }
 
-function Label({ children, className = "" }: { children: string; className?: string }) {
-  return <p className={`font-mono text-[11.5px] tracking-[0.08em] text-ink/50 uppercase ${className}`}>{children}</p>;
+function Label({ children }: { children: string }) {
+  return <p className="font-mono text-[11.5px] tracking-[0.08em] text-ink/50 uppercase">{children}</p>;
 }
 
 function CodeIcon() {

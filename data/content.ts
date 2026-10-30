@@ -79,13 +79,12 @@ export type FeaturedEntry = Entry & {
 
 /**
  * The technical side of a project. steps: the pipeline in order, with what runs each step.
- * sample: one real run through it, as numbers. notes: the engineering decisions worth knowing.
+ * sample: one real run through it, as numbers.
  */
 export type Hood = {
   title: string;
   steps: { title: string; body: string; tech: string }[];
   sample?: { label: string; source: string; flow: string[]; note: string };
-  notes: { title: string; body: string }[];
 };
 
 export type Award = {
@@ -186,8 +185,11 @@ export const hero = {
   // Cropped from photo-05.jpg for now.
   photo: { src: "photo-hero.jpg", alt: "Sid Sharma" } as Photo,
   // Stacked behind the main photo, taking turns in front. One whose file is missing is left out.
+  // The pantry and Trader Joe's photos are cropped from photo-06 and photo-01, centered on Sid's face.
   morePhotos: [
     { src: "photo-hero-field.jpg", alt: "Sid Sharma smiling and holding a small microphone outdoors" },
+    { src: "photo-hero-pantry.jpg", alt: "Sid Sharma in the Fort Bend Family Promise pantry" },
+    { src: "photo-hero-trader-joes.jpg", alt: "Sid Sharma at Trader Joe's, picking up a Waste2Taste donation" },
   ] as Photo[],
 };
 
@@ -288,8 +290,7 @@ export const experience = {
           { src: "rescuelog-2.png", alt: "RescueLog home screen with a new pop-up log button and recent logs" },
         ],
       },
-      // The technical side, behind an "Under the hood" button. From the RescueLog repo and its
-      // commit history; the prompt numbers are from its June 11, 2026 calibration commit.
+      // The technical side, behind an "Under the hood" button. From the RescueLog repo.
       hood: {
         title: "From a volunteer's photo to an analyzed log in about a minute.",
         steps: [
@@ -320,24 +321,6 @@ export const experience = {
           flow: [`${rescueEvent.photos} photos`, `${rescueEvent.pounds} lbs`, `${rescueEvent.value} retail value`],
           note: "AI estimates, from the live dashboard",
         },
-        notes: [
-          {
-            title: "A strict prompt, not a guess",
-            body: "Each photo goes to the model with a weight reference table, rules for food that's hidden, stacked, or boxed, and a fixed JSON format: one weight per category plus a confidence score. Temperature 0 cuts run-to-run variance.",
-          },
-          {
-            title: "Nothing gets lost",
-            body: "Photos run three at a time in small background batches, with retries when the API is busy and a daily backstop job. One failed photo never stops the rest, and every log ends complete, partial, or failed.",
-          },
-          {
-            title: "Checked against a hand count",
-            body: "For one pop-up, the organization hand-counted **1,499 lbs**. An early prompt estimated about **2,131**; recalibrating it brought that to about **1,630**, 8.7% over. In Cart Mode the total comes from a scale, and the AI only splits it by category.",
-          },
-          {
-            title: "Scoped to each organization",
-            body: "API checks fail closed, and each organization's data is scoped to it. An admin view rolls every organization up, with drill-down into each one.",
-          },
-        ],
       },
     },
     {
