@@ -329,13 +329,13 @@ export const experience = {
       org: "Waste2Taste",
       orgHref: "https://waste-2-taste.org",
       type: "501(c)(3) nonprofit",
-      location: "13 branches across 7 states and the UAE",
+      location: "14 branches across 7 states and the UAE",
       mark: { logo: "waste2taste.png", fit: "cover", doodle: "tomato", tone: "tomato" },
       summary:
         "Founded a nonprofit that recovers near-expired food from local grocers and cooks it into meals that safely repurpose it, distributed to people experiencing homelessness.",
       stats: [
         { value: "5,100+", unit: "lbs", label: "of food rescued" },
-        { value: "13", unit: "branches", label: "across 7 states and the UAE" },
+        { value: "14", unit: "branches", label: "across 7 states and the UAE" },
         { value: "30+", unit: "partners", label: "grocers and community orgs" },
       ],
       bullets: [
