@@ -149,7 +149,7 @@ export const credibility: { label: string; logos: StripLogo[] }[] = [
   {
     label: "Recognized by",
     logos: [
-      { name: "The Anthem Awards", logo: "anthem-awards.svg", note: "finalist" },
+      { name: "The Anthem Awards", logo: "anthem-awards.svg" },
       { name: "Points of Light", logo: "points-of-light.svg" },
       { name: "Literary Titan", logo: "literary-titan.png", href: links.literaryTitan },
       { name: "The New York Times", logo: "nyt-wordmark.svg", href: links.nyt },
@@ -230,7 +230,7 @@ export const projects: Project[] = [
       "A student-founded 501(c)(3). Grocers flag food near its sell-by date, volunteers pick it up and cook it, often into banana bread, and deliver it to shelters and community centers.",
     proofs: [
       { value: "5,100+ lbs", label: "of food rescued", note: "Whole organization" },
-      { value: "14 branches", label: "in 7 states and the UAE" },
+      { value: "15 branches", label: "in 7 states, Canada, and the UAE" },
       { value: "30+", label: "grocer and community partners" },
     ],
     links: [
@@ -465,12 +465,12 @@ export const caseStudies: Record<ProjectSlug, CaseStudy> = {
     meta: [
       { label: "Role", value: "Founder & president" },
       { label: "When", value: "Since 2023" },
-      { label: "Where", value: "Founded in Houston; 14 branches" },
+      { label: "Where", value: "Founded in Houston; 15 branches" },
       { label: "Status", value: "501(c)(3) nonprofit" },
     ],
     glance: [
       { value: "5,100+ lbs", label: "of food rescued", note: "Whole organization" },
-      { value: "14", label: "branches in 7 states and the UAE" },
+      { value: "15", label: "branches in 7 states, Canada, and the UAE" },
       { value: "30+", label: "grocer and community partners" },
       { value: "NFRA", label: "member, National Food Recovery Association" },
     ],
@@ -555,6 +555,7 @@ export const caseStudies: Record<ProjectSlug, CaseStudy> = {
               { city: "Boston", region: "MA" },
               { city: "United Arab Emirates", region: "International" },
               { city: "Dubai", region: "UAE" },
+              { city: "Markham", region: "Ontario, Canada" },
             ],
           },
         ],
@@ -591,7 +592,7 @@ export const caseStudies: Record<ProjectSlug, CaseStudy> = {
             kind: "list",
             items: [
               "**Daily Point of Light Award**, Points of Light, 2026, for service work with Waste2Taste.",
-              "**Anthem Awards finalist**, Young Leader in Humanitarian Action & Services, 2026. Results are announced Nov 5, 2026.",
+              "**Anthem Community Voice Award**, Young Leader in Humanitarian Action & Services, 2026, from 2,500+ entries.",
               "**Young Achiever Award, Runner-Up**, Disha USA, 2026, for Social Impact and Community Service.",
               "**Featured on KPRC 2 Houston** (NBC), Aug 29, 2026, and on the **Simple Acts, Big Impact** podcast, Sep 16, 2026.",
             ],
@@ -786,9 +787,7 @@ export const awards: { name: string; tone: ProjectTone; awards: V2Award[] }[] = 
     awards: [
       {
         ...v1Award("anthem"),
-        name: "Anthem Award",
-        status: "Finalist",
-        description: "Young Leader in Humanitarian Action & Services, from 2,500+ entries. Results are announced Nov 5, 2026.",
+        description: "Young Leader in Humanitarian Action & Services, from 2,500+ entries.",
       },
       { ...v1Award("points-of-light"), description: "For service work with Waste2Taste." },
       {
@@ -874,13 +873,13 @@ export const about = {
 
 export const milestones: { date: string; text: string; slug?: ProjectSlug }[] = [
   { date: "Four years", text: "Volunteering with seven Houston hunger-relief organizations: sorting, packing, and handing out food." },
-  { date: "2023", text: "Waste2Taste starts at a family kitchen table, then grows to 14 branches.", slug: "waste2taste" },
+  { date: "2023", text: "Waste2Taste starts at a family kitchen table, then grows to 15 branches.", slug: "waste2taste" },
   { date: "May 2026", text: "First build of RescueLog, and its App Store review the same month.", slug: "rescuelog" },
   { date: "Jun 2026", text: "RescueLog's AI checked against a hand tally; retail value and Cart Mode added.", slug: "rescuelog" },
   { date: "Jul 2026", text: "Honorable mention in The New York Times Summer Reading Contest. Gleaning mode ships in RescueLog." },
   { date: "Aug 2026", text: "Literary Titan reviews Still Good; KPRC 2 features Waste2Taste.", slug: "still-good" },
   { date: "Sep 2026", text: "Simple Acts, Big Impact podcast episode on Waste2Taste." },
-  { date: "Next", text: "Anthem Awards results, announced Nov 5, 2026. I'm a finalist for Young Leader in Humanitarian Action & Services." },
+  { date: "Nov 2026", text: "Anthem Community Voice Award in Young Leader in Humanitarian Action & Services, from 2,500+ entries." },
 ];
 
 /* ---------- Other experience ---------- */

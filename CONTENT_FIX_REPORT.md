@@ -110,7 +110,7 @@ example "Points of Light · 2026"), to make room for the logo tiles on phones.
 3. **Literary Titan link.** It goes to Literary Titan's page for Still Good (Aug 23, 2026). The
    page names you and the book, but its text doesn't mention the Silver award, so it may be the
    review page and not the award announcement. Swap in the award page if you have it.
-4. **Anthem Award.** It says "results Nov 5". Update it after that date.
+4. **Anthem Award.** Done on Nov 5, 2026: it now shows the result, the Anthem Community Voice Award.
 5. **Wording I chose:**
    - RescueLog's "1.7M meals, about, each year" (from "about 1.7M meals").
    - The debate role "(grade 12)" (from "(12)").

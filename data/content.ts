@@ -329,13 +329,13 @@ export const experience = {
       org: "Waste2Taste",
       orgHref: "https://waste-2-taste.org",
       type: "501(c)(3) nonprofit",
-      location: "14 branches across 7 states and the UAE",
+      location: "15 branches across 7 states, Canada, and the UAE",
       mark: { logo: "waste2taste.png", fit: "cover", doodle: "tomato", tone: "tomato" },
       summary:
         "Founded a nonprofit that recovers near-expired food from local grocers and cooks it into meals that safely repurpose it, distributed to people experiencing homelessness.",
       stats: [
         { value: "5,100+", unit: "lbs", label: "of food rescued" },
-        { value: "14", unit: "branches", label: "across 7 states and the UAE" },
+        { value: "15", unit: "branches", label: "across 7 states, Canada, and the UAE" },
         { value: "30+", unit: "partners", label: "grocers and community orgs" },
       ],
       bullets: [
@@ -518,10 +518,10 @@ export const recognition = {
       awards: [
         {
           id: "anthem",
-          name: "Anthem Award Finalist",
+          name: "Anthem Community Voice Award",
           issuer: "The Anthem Awards",
           year: "2026",
-          context: "Young Leader in Humanitarian Action & Services · 2,500+ entries · results Nov 5",
+          context: "Young Leader in Humanitarian Action & Services · 2,500+ entries",
           logo: "anthem.png",
         },
         {

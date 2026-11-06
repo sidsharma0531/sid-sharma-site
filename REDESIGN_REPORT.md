@@ -157,7 +157,7 @@ block the clipboard; if copying fails, the button opens the mail app instead.
 - [ ] Proof links for Anthem, Daily Point of Light, Literary Titan, Disha USA, NSDA, and NYT
 - [ ] Which College Board National Recognition Program award it is (optional detail)
 - [ ] Fill or delete the two "Just for Fun" slots
-- [ ] Update Anthem after Nov 5
+- [x] Update Anthem after Nov 5
 
 **Press**
 - [ ] Simple Acts, Big Impact episode title, link, and date
