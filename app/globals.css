@@ -12,8 +12,8 @@
   --color-butter: #f6d36f;
   --color-leaf: #5c9a48;
   --color-leaf-deep: #3a6f2e;
-  /* Leaf at 15% over paper, made solid for the sticky top bar (a see-through tint would show the
-     page scrolling under it). app/layout.tsx uses the same hex for the browser's theme color. */
+  /* Leaf at 15% over paper, made solid for the top bar on phones (a see-through tint would show the
+     page scrolling under it). app/layout.tsx uses the same hex for phones' browser theme color. */
   --color-sage: #e7eddb;
 
   --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;

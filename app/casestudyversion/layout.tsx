@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: true },
 };
 
-// This version's top bar stays cream, so its browser bar does too (the homepage's is sage).
+// This version's top bar stays cream, so its browser bar does too (the homepage's is sage on phones).
 export const viewport: Viewport = {
   themeColor: "#fbf4e6",
 };

@@ -6,9 +6,11 @@ import type { NavItem } from "@/data/content";
 
 export default function Nav({ name, items }: { name: string; items: NavItem[] }) {
   const [active, setActive] = useState<string | null>(null);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const onScroll = () => {
+      setScrolled(window.scrollY > 8);
       // The footer is too short to reach the middle of the screen, so the very bottom counts as the last item.
       const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
       if (atBottom && items.length > 0) setActive(items[items.length - 1].href);
@@ -38,8 +40,13 @@ export default function Nav({ name, items }: { name: string; items: NavItem[] })
   }, [items]);
 
   return (
-    // A sage bar over the cream page, with a hairline under it.
-    <header className="sticky top-0 z-40 border-b border-ink/10 bg-sage">
+    // Phones: a sage bar with a hairline under it. From md up: cream like the page, with a dashed
+    // line that shows once the page scrolls.
+    <header
+      className={`sticky top-0 z-40 border-b border-ink/10 bg-sage transition-colors duration-300 md:bg-cream ${
+        scrolled ? "md:border-dashed md:border-ink/20" : "md:border-transparent"
+      }`}
+    >
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50 focus:bg-paper focus:px-3 focus:py-2 focus:text-sm"

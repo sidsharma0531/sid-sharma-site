@@ -42,9 +42,13 @@ export const metadata: Metadata = {
   },
 };
 
-// Matches the top bar (--color-sage), so a phone's browser bar runs straight into it.
+// Matches the top bar: sage on phones (--color-sage), so a phone's browser bar runs straight into
+// it, and cream from md up (--color-cream). The widths are Tailwind's md breakpoint.
 export const viewport: Viewport = {
-  themeColor: "#e7eddb",
+  themeColor: [
+    { media: "(width < 48rem)", color: "#e7eddb" },
+    { media: "(width >= 48rem)", color: "#fbf4e6" },
+  ],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
