@@ -25,7 +25,7 @@ export default function PhoneMockup({ screens, name }: { screens: ResolvedPhoto[
   );
 }
 
-function Phone({ screen, name = "", className }: { screen?: ResolvedPhoto; name?: string; className: string }) {
+export function Phone({ screen, name = "", className }: { screen?: ResolvedPhoto; name?: string; className: string }) {
   return (
     <div
       className={`aspect-[9/19.5] bg-ink shadow-[0_28px_50px_-24px_rgba(34,28,24,0.6)] ${className}`}
