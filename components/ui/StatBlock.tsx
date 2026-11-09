@@ -11,7 +11,9 @@ const unitColor: Record<Tone, string> = {
 
 // Sizes step up with the column width they sit in, so "5,100+ lbs" never overflows. md waits for
 // a 10rem column too, so "#1 new release" stays on one line in the narrow tablet column.
+// sm is for three across a narrow card (V3's Experience row).
 const sizes = {
+  sm: "text-[1.65rem]",
   md: "text-[2rem] sm:@[10rem]:text-[2.6rem]",
   lg: "text-[2rem] sm:text-[2.6rem] lg:text-6xl",
   xl: "text-[2.6rem] sm:text-[2.75rem] md:text-5xl lg:text-[4.25rem]",

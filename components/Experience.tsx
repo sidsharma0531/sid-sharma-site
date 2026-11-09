@@ -174,10 +174,11 @@ function CompactRow({ entry }: { entry: Entry }) {
 }
 
 // Small white cards for a group of organizations. Names stand in for logos not found.
-function LogoRow({ logos }: { logos?: Logo[] }) {
+// fluid: three to a row at every width, for a narrow card.
+export function LogoRow({ logos, fluid }: { logos?: Logo[]; fluid?: boolean }) {
   if (!logos?.length) return null;
   return (
-    <ul className="mt-4 grid grid-cols-3 gap-2 sm:flex sm:flex-wrap">
+    <ul className={`mt-4 grid grid-cols-3 gap-2 ${fluid ? "" : "sm:flex sm:flex-wrap"}`}>
       {logos.map((logo) => {
         const image = logo.logo ? getImage(logo.logo, "logos", [3, 1]) : null;
         const body = image?.exists ? (
@@ -187,7 +188,7 @@ function LogoRow({ logos }: { logos?: Logo[] }) {
         ) : (
           <span className="text-center text-[11px] leading-tight font-semibold text-ink/75">{logo.name}</span>
         );
-        const tile = "flex h-11 w-full items-center justify-center rounded-lg bg-white px-2 ring-1 ring-ink/10 sm:w-24";
+        const tile = `flex h-11 w-full items-center justify-center rounded-lg bg-white px-2 ring-1 ring-ink/10 ${fluid ? "" : "sm:w-24"}`;
         return (
           <li key={logo.name}>
             {isLink(logo.href) ? (
@@ -207,7 +208,7 @@ function LogoRow({ logos }: { logos?: Logo[] }) {
 /* ---------- Small pieces ---------- */
 
 // Only real links render; with none, the row disappears.
-function LinkRow({ links, size, className }: { links?: LinkChip[]; size?: "sm"; className: string }) {
+export function LinkRow({ links, size, className }: { links?: LinkChip[]; size?: "sm"; className: string }) {
   const real = (links ?? []).filter((link) => isLink(link.href));
   if (real.length === 0) return null;
   return (
@@ -220,7 +221,7 @@ function LinkRow({ links, size, className }: { links?: LinkChip[]; size?: "sm"; 
 }
 
 // Dates and location, separated by a dot. Missing parts are skipped.
-function MetaLine({ parts }: { parts: (string | undefined)[] }) {
+export function MetaLine({ parts }: { parts: (string | undefined)[] }) {
   const items = parts.filter((part): part is string => Boolean(part) && !isPlaceholder(part));
   if (items.length === 0) return null;
   return (
@@ -235,7 +236,7 @@ function MetaLine({ parts }: { parts: (string | undefined)[] }) {
   );
 }
 
-function OrgName({ name, href }: { name: string; href?: string }) {
+export function OrgName({ name, href }: { name: string; href?: string }) {
   if (!isLink(href)) return <>{name}</>;
   return (
     <a
@@ -249,7 +250,7 @@ function OrgName({ name, href }: { name: string; href?: string }) {
   );
 }
 
-function Bullets({ items, compact }: { items?: string[]; compact?: boolean }) {
+export function Bullets({ items, compact }: { items?: string[]; compact?: boolean }) {
   if (!items?.length) return null;
   return (
     <ul className={`space-y-2 text-[15px] leading-relaxed text-ink/80 ${compact ? "mt-3" : "mt-6 space-y-2.5 sm:text-base"}`}>
@@ -262,7 +263,7 @@ function Bullets({ items, compact }: { items?: string[]; compact?: boolean }) {
   );
 }
 
-function Dot({ className = "" }: { className?: string }) {
+export function Dot({ className = "" }: { className?: string }) {
   return (
     <span aria-hidden className={`mx-1.5 text-ink/35 ${className}`}>
       ·

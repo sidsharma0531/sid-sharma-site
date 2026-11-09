@@ -36,6 +36,18 @@
   }
 }
 
+/* A row that scrolls sideways across the full page width (V3's Experience). Its first card lines
+   up with container-page's content edge, and cards snap to that edge. */
+@utility edge-row {
+  --edge: calc(max(0px, (100% - 64rem) / 2) + 1.25rem);
+  padding-inline: var(--edge);
+  scroll-padding-inline: var(--edge);
+
+  @variant sm {
+    --edge: calc(max(0px, (100% - 64rem) / 2) + 2rem);
+  }
+}
+
 /* Red-and-white picnic check, kept faint. */
 @utility gingham {
   background-color: var(--color-paper);
