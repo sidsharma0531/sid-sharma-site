@@ -12,7 +12,7 @@ export default function Press() {
   if (press.items.length === 0) return null;
 
   return (
-    <section id="press" className="container-page py-20 sm:py-28">
+    <section id="press" className="container-page py-12 sm:py-28">
       <SectionHeading kicker={press.kicker} title={press.title} />
       <ul className={`grid gap-5 ${press.items.length > 1 ? "md:grid-cols-2" : "max-w-2xl"}`}>
         {press.items.map((item) => (

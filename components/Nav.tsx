@@ -6,11 +6,9 @@ import type { NavItem } from "@/data/content";
 
 export default function Nav({ name, items }: { name: string; items: NavItem[] }) {
   const [active, setActive] = useState<string | null>(null);
-  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const onScroll = () => {
-      setScrolled(window.scrollY > 8);
       // The footer is too short to reach the middle of the screen, so the very bottom counts as the last item.
       const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
       if (atBottom && items.length > 0) setActive(items[items.length - 1].href);
@@ -40,11 +38,8 @@ export default function Nav({ name, items }: { name: string; items: NavItem[] })
   }, [items]);
 
   return (
-    <header
-      className={`sticky top-0 z-40 border-b bg-cream transition-colors duration-300 ${
-        scrolled ? "border-dashed border-ink/20" : "border-transparent"
-      }`}
-    >
+    // A sage bar over the cream page, with a hairline under it.
+    <header className="sticky top-0 z-40 border-b border-ink/10 bg-sage">
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50 focus:bg-paper focus:px-3 focus:py-2 focus:text-sm"
@@ -53,7 +48,8 @@ export default function Nav({ name, items }: { name: string; items: NavItem[] })
       </a>
 
       <div className="container-page flex h-16 items-center justify-between gap-3">
-        <a href="#top" className="font-serif text-[1.35rem] font-semibold tracking-[-0.02em] whitespace-nowrap">
+        {/* Under 22rem (the smallest phones) the name and icons tighten up so the bar fits without a sideways scroll. */}
+        <a href="#top" className="font-serif text-[1.35rem] font-semibold tracking-[-0.02em] whitespace-nowrap max-[22rem]:text-[1.2rem]">
           {name}
           <span className="text-tomato">.</span>
         </a>
@@ -68,7 +64,7 @@ export default function Nav({ name, items }: { name: string; items: NavItem[] })
                     href={item.href}
                     aria-label={item.label}
                     aria-current={isActive ? "location" : undefined}
-                    className="group relative flex h-11 items-center gap-2 rounded-full px-2.5 text-sm font-medium text-ink/75 transition-colors hover:text-ink md:pr-3.5"
+                    className="group relative flex h-11 items-center gap-2 rounded-full px-2.5 text-sm font-medium text-ink/75 transition-colors hover:text-ink max-[22rem]:px-1.5 md:pr-3.5"
                   >
                     <span
                       aria-hidden

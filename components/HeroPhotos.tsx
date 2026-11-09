@@ -81,7 +81,7 @@ export default function HeroPhotos({ photos }: { photos: ResolvedPhoto[] }) {
       onMouseLeave={() => setHovered(false)}
       onFocus={() => setFocused(true)}
       onBlur={() => setFocused(false)}
-      className="group relative w-[58%] max-w-[15rem] -rotate-2 md:w-full md:max-w-none md:rotate-2"
+      className="group relative mx-auto w-[58%] max-w-[15rem] -rotate-2 md:mx-0 md:w-full md:max-w-none md:rotate-2"
     >
       <span
         aria-hidden

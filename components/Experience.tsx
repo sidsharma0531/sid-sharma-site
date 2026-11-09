@@ -15,7 +15,7 @@ import { isLink, isPlaceholder } from "@/lib/text";
 
 export default function Experience() {
   return (
-    <section id="experience" className="container-page py-20 sm:py-28">
+    <section id="experience" className="container-page py-12 sm:py-28">
       <SectionHeading kicker={experience.kicker} title={experience.title} />
 
       <div className="space-y-8 sm:space-y-10">
@@ -24,7 +24,7 @@ export default function Experience() {
         ))}
       </div>
 
-      <p data-reveal className="mt-16 font-hand text-[1.65rem] leading-none text-tomato-deep sm:mt-20">
+      <p data-reveal className="mt-12 font-hand text-[1.65rem] leading-none text-tomato-deep sm:mt-20">
         {experience.moreLabel}
       </p>
       <ul className="mt-5 grid md:grid-cols-2 md:gap-x-12">
@@ -90,12 +90,13 @@ function EntryHead({ entry }: { entry: FeaturedEntry }) {
             <OrgName name={title} href={entry.orgHref} />
           </h3>
           {subtitle && <p className="mt-1 font-serif text-lg leading-snug text-ink/70 italic">{subtitle}</p>}
+          {/* On phones the type gets a line of its own, so "501(c)(3) nonprofit" never splits. */}
           <p className="mt-1.5 text-[15px]">
             <span className="font-semibold">{entry.role}</span>
             {entry.type && (
               <>
-                <Dot />
-                <span className="text-ink/70">{entry.type}</span>
+                <Dot className="hidden sm:inline" />
+                <span className="block text-ink/70 sm:inline">{entry.type}</span>
               </>
             )}
           </p>
@@ -139,21 +140,27 @@ function EntryDetails({ entry }: { entry: FeaturedEntry }) {
 
 /* ---------- Compact LinkedIn-style rows ---------- */
 
+// Logo beside the title. On phones the rest runs the full width under them; from sm up it stays
+// in the column beside the logo.
 function CompactRow({ entry }: { entry: Entry }) {
   const photos = resolvePhotos(entry.photos, { onlyExisting: true });
   return (
-    <li data-reveal className="flex gap-4 border-t border-dashed border-ink/25 py-6 sm:gap-5">
-      <OrgMark mark={entry.mark} />
-      <div className="min-w-0 flex-1">
+    <li data-reveal className="grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 border-t border-dashed border-ink/25 py-6 sm:gap-x-5">
+      <span className="sm:row-span-2">
+        <OrgMark mark={entry.mark} />
+      </span>
+      <div className="min-w-0">
         <h4 className="text-[1.05rem] leading-snug font-semibold">{entry.role}</h4>
         {(entry.org || entry.type) && (
           <p className="text-[15px]">
             {entry.org && <OrgName name={entry.org} href={entry.orgHref} />}
-            {entry.org && entry.type && <Dot />}
-            {entry.type && <span className="text-ink/65">{entry.type}</span>}
+            {entry.org && entry.type && <Dot className="hidden sm:inline" />}
+            {entry.type && <span className={`text-ink/65 ${entry.org ? "block sm:inline" : ""}`}>{entry.type}</span>}
           </p>
         )}
         <MetaLine parts={[entry.dates, entry.location]} />
+      </div>
+      <div className="col-span-2 min-w-0 sm:col-span-1 sm:col-start-2">
         <p className="mt-2.5 text-[15px] leading-relaxed text-ink/80">
           <Rich text={entry.summary} />
         </p>
@@ -170,7 +177,7 @@ function CompactRow({ entry }: { entry: Entry }) {
 function LogoRow({ logos }: { logos?: Logo[] }) {
   if (!logos?.length) return null;
   return (
-    <ul className="mt-4 flex flex-wrap gap-2">
+    <ul className="mt-4 grid grid-cols-3 gap-2 sm:flex sm:flex-wrap">
       {logos.map((logo) => {
         const image = logo.logo ? getImage(logo.logo, "logos", [3, 1]) : null;
         const body = image?.exists ? (
@@ -180,7 +187,7 @@ function LogoRow({ logos }: { logos?: Logo[] }) {
         ) : (
           <span className="text-center text-[11px] leading-tight font-semibold text-ink/75">{logo.name}</span>
         );
-        const tile = "flex h-11 w-24 items-center justify-center rounded-lg bg-white px-2 ring-1 ring-ink/10";
+        const tile = "flex h-11 w-full items-center justify-center rounded-lg bg-white px-2 ring-1 ring-ink/10 sm:w-24";
         return (
           <li key={logo.name}>
             {isLink(logo.href) ? (
@@ -255,9 +262,9 @@ function Bullets({ items, compact }: { items?: string[]; compact?: boolean }) {
   );
 }
 
-function Dot() {
+function Dot({ className = "" }: { className?: string }) {
   return (
-    <span aria-hidden className="mx-1.5 text-ink/35">
+    <span aria-hidden className={`mx-1.5 text-ink/35 ${className}`}>
       ·
     </span>
   );

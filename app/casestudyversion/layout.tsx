@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Footer from "@/components/v2/Footer";
 import Nav from "@/components/v2/Nav";
 import Reveal from "@/components/v2/Reveal";
@@ -11,6 +11,11 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://www.sidsharma.xyz"),
   title: { default: "Sid Sharma · Portfolio", template: "%s · Sid Sharma" },
   robots: { index: false, follow: true },
+};
+
+// This version's top bar stays cream, so its browser bar does too (the homepage's is sage).
+export const viewport: Viewport = {
+  themeColor: "#fbf4e6",
 };
 
 export default function V2Layout({ children }: { children: React.ReactNode }) {

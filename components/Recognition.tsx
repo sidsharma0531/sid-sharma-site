@@ -16,7 +16,7 @@ const highlight: Record<Tone, string> = {
 
 export default function Recognition() {
   return (
-    <section id="recognition" className="container-page py-20 sm:py-28">
+    <section id="recognition" className="container-page py-12 sm:py-28">
       <SectionHeading kicker={recognition.kicker} title={recognition.title} />
 
       <div className="space-y-12 sm:space-y-16">

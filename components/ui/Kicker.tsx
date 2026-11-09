@@ -1,9 +1,9 @@
 import type { ReactNode } from "react";
 
 // Handwritten kicker with a little arrow, above a section heading or on its own.
-export default function Kicker({ children, id }: { children: ReactNode; id?: string }) {
+export default function Kicker({ children, id, className = "" }: { children: ReactNode; id?: string; className?: string }) {
   return (
-    <p id={id} className="flex items-end gap-1 font-hand text-[1.65rem] leading-none text-tomato-deep">
+    <p id={id} className={`flex items-end gap-1 font-hand text-[1.65rem] leading-none text-tomato-deep ${className}`}>
       <span className="inline-block -rotate-2">{children}</span>
       <svg
         aria-hidden

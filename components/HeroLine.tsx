@@ -17,17 +17,23 @@ export default function HeroLine() {
     const at = rest.indexOf(phrase);
     const [found] = resolvePhotos([photo], { onlyExisting: true });
     if (at === -1 || !found) continue;
+    // Below md the word just before a phrase stays with it ("an app developer"), so a centered line
+    // on a phone never ends on a lone "an".
+    const before = rest.slice(0, at);
+    const lead = before.match(/\p{L}+\s+$/u)?.[0] ?? "";
     parts.push(
-      rest.slice(0, at),
-      <PhotoButton
-        key={phrase}
-        photo={found}
-        label={`Open photo: ${phrase}`}
-        className="relative rounded-sm transition-colors hover:text-ink"
-      >
-        {phrase}
-        <Squiggle className={squiggleColor[tone]} />
-      </PhotoButton>,
+      before.slice(0, before.length - lead.length),
+      <span key={phrase} className="max-md:whitespace-nowrap">
+        {lead}
+        <PhotoButton
+          photo={found}
+          label={`Open photo: ${phrase}`}
+          className="relative rounded-sm transition-colors hover:text-ink"
+        >
+          {phrase}
+          <Squiggle className={squiggleColor[tone]} />
+        </PhotoButton>
+      </span>,
     );
     rest = rest.slice(at + phrase.length);
   }

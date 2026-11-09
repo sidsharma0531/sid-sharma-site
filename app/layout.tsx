@@ -42,8 +42,9 @@ export const metadata: Metadata = {
   },
 };
 
+// Matches the top bar (--color-sage), so a phone's browser bar runs straight into it.
 export const viewport: Viewport = {
-  themeColor: "#fbf4e6",
+  themeColor: "#e7eddb",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

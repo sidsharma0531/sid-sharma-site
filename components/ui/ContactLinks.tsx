@@ -5,7 +5,7 @@ import EmailButton from "./EmailButton";
 
 // "icons": round buttons (hero). "full": the email spelled out, then the icons (footer).
 // Anything without a real value is left out.
-export default function ContactLinks({ variant }: { variant: "icons" | "full" }) {
+export default function ContactLinks({ variant, className = "" }: { variant: "icons" | "full"; className?: string }) {
   const at = contact.email.indexOf("@");
   const email =
     !isPlaceholder(contact.email) && at > 0
@@ -13,7 +13,7 @@ export default function ContactLinks({ variant }: { variant: "icons" | "full" })
       : null;
 
   return (
-    <div className="flex flex-wrap items-center gap-3">
+    <div className={`flex flex-wrap items-center gap-3 ${className}`}>
       {email && <EmailButton {...email} variant={variant === "full" ? "text" : "icon"} />}
       <Social href={contact.linkedin} icon="linkedin" label="LinkedIn" />
       <Social href={contact.instagram} icon="instagram" label="Instagram" />
