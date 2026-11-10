@@ -23,15 +23,20 @@ export default function ExperienceRow() {
   const count = Math.ceil(more.length / 2);
   const columns = Array.from({ length: count }, (_, i) => [more[i], more[i + count]].filter(Boolean));
 
+  // On wide screens the section sits close under the logo wall, and the cards are short enough that
+  // a laptop screen holds the logos, the heading, and the cards at once.
   return (
-    <section id="experience" className="py-12 sm:py-28">
-      <SideScroller heading={<SectionHeading kicker={experience.kicker} title={experience.title} />} label={experience.title}>
+    <section id="experience" className="py-12 sm:py-28 lg:pt-10">
+      <SideScroller
+        heading={<SectionHeading kicker={experience.kicker} title={experience.title} className="lg:mb-6" />}
+        label={experience.title}
+      >
         {experience.featured.map((entry) => (
           <FeaturedCard key={entry.id} entry={entry} />
         ))}
         <MoreLabel text={experience.moreLabel} />
         {columns.map((column) => (
-          <div key={column[0].id} data-card className="flex w-[min(76vw,21rem)] shrink-0 snap-start flex-col gap-4 sm:gap-5">
+          <div key={column[0].id} data-card className="flex w-[min(76vw,21rem)] shrink-0 snap-start flex-col gap-4 sm:gap-5 lg:w-[31rem]">
             {column.map((entry) => (
               <SmallCard key={entry.id} entry={entry} />
             ))}
@@ -45,8 +50,9 @@ export default function ExperienceRow() {
 const shell =
   "flex flex-col rounded-[1.75rem] border border-ink/10 bg-paper shadow-[0_18px_36px_-28px_rgba(34,28,24,0.45)]";
 
-// The picture up top, inset in the card. Then name, role, summary, and numbers; the bullets wait
-// behind "see more". Links sit at the bottom.
+// The picture inset in the card: up top on phones and tablets, down the left side on wide screens,
+// where the card turns sideways so it's short. Then name, role, summary, and numbers; the bullets
+// wait behind "see more". Links sit at the bottom.
 function FeaturedCard({ entry }: { entry: FeaturedEntry }) {
   const [title, subtitle] = entry.org.split(": ");
   // A stat without a real number never renders.
@@ -56,11 +62,11 @@ function FeaturedCard({ entry }: { entry: FeaturedEntry }) {
     <article
       data-card
       aria-labelledby={`${entry.id}-title`}
-      className={`${shell} w-[min(84vw,30rem)] shrink-0 snap-start p-2.5 sm:p-3`}
+      className={`${shell} w-[min(84vw,30rem)] shrink-0 snap-start p-2.5 sm:p-3 lg:grid lg:w-[57rem] lg:grid-cols-[26.25rem_minmax(0,1fr)]`}
     >
       <CardVisual entry={entry} />
 
-      <div className="flex flex-1 flex-col px-2.5 pt-5 pb-2.5 sm:px-4 sm:pt-6 sm:pb-4">
+      <div className="flex flex-1 flex-col px-2.5 pt-5 pb-2.5 sm:px-4 sm:pt-6 sm:pb-4 lg:px-7 lg:pt-5 lg:pb-3">
         <div className="flex items-start gap-4">
           <OrgMark mark={entry.mark} size="lg" />
           <div className="min-w-0 pt-0.5">
@@ -144,10 +150,10 @@ function SmallCard({ entry }: { entry: Entry }) {
 }
 
 // The handwritten break between the big three and the rest, with an arrow on to the next card. It
-// sits level with the middle of the big cards' pictures rather than the middle of the row.
+// sits level with the middle of the big cards' pictures (on wide screens, the middle of the row).
 function MoreLabel({ text }: { text: string }) {
   return (
-    <p className="mt-16 flex w-28 shrink-0 flex-col items-center gap-2 self-start text-center font-hand text-[1.65rem] leading-[0.95] text-tomato-deep sm:mt-32 sm:w-32">
+    <p className="mt-16 flex w-28 shrink-0 flex-col items-center gap-2 self-start text-center font-hand text-[1.65rem] leading-[0.95] text-tomato-deep sm:mt-32 sm:w-32 lg:mt-0 lg:self-center">
       <span className="-rotate-3">{text}</span>
       <svg
         aria-hidden

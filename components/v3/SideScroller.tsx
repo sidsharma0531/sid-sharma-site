@@ -55,7 +55,7 @@ export default function SideScroller({
       {/* Under 22rem the heading and arrows don't both fit, so the arrows step aside: swiping works. */}
       <div className="container-page flex items-end justify-between gap-4">
         {heading}
-        <div className="mb-10 flex shrink-0 gap-2.5 max-[22rem]:hidden sm:mb-14">
+        <div className="mb-10 flex shrink-0 gap-2.5 max-[22rem]:hidden sm:mb-14 lg:mb-6">
           <Arrow direction={-1} off={atStart} controls={id} onClick={() => go(-1)} />
           <Arrow direction={1} off={atEnd} controls={id} onClick={() => go(1)} />
         </div>

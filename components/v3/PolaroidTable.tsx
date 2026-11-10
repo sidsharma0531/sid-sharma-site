@@ -6,20 +6,22 @@ import Photo from "@/components/ui/Photo";
 import type { ResolvedPhoto } from "@/lib/images";
 
 // Where each polaroid sits: left and top as % of the panel, width as % of its width, tilt, and
-// stacking order. Four across the top and three across the bottom, in the homepage table's order,
-// with the second slot sized for one wide photo. The rows never overlap, so no caption is covered.
+// stacking order. x, y, w are for the wide panel above the text: four across the top and three
+// across the bottom, in the homepage table's order, the second slot sized for one wide photo.
+// lx, ly, lw are for the tall panel beside the text on wide screens: three rows of two, two, and
+// three. Rows never overlap, so no caption is covered.
 const spots = [
-  { x: 1, y: 3, w: 26, r: -5, z: 6, tape: true },
-  { x: 4, y: 53, w: 39, r: 2, z: 3, tape: true },
-  { x: 25, y: 1.5, w: 25, r: 4, z: 7 },
-  { x: 45, y: 51, w: 25, r: -4, z: 2 },
-  { x: 49, y: 4, w: 25, r: -3, z: 5, tape: true },
-  { x: 70.5, y: 52, w: 26, r: 4, z: 1 },
-  { x: 73, y: 2, w: 26, r: -4, z: 4, tape: true },
+  { x: 1, y: 3, w: 26, lx: 7, ly: 2.5, lw: 38, r: -5, z: 6, tape: true },
+  { x: 4, y: 53, w: 39, lx: 4, ly: 38, lw: 54, r: 2, z: 3, tape: true },
+  { x: 25, y: 1.5, w: 25, lx: 54, ly: 3.5, lw: 38, r: 4, z: 7 },
+  { x: 45, y: 51, w: 25, lx: 3, ly: 70.5, lw: 30, r: -4, z: 2 },
+  { x: 49, y: 4, w: 25, lx: 61, ly: 37, lw: 34, r: -3, z: 5, tape: true },
+  { x: 70.5, y: 52, w: 26, lx: 35, ly: 71.5, lw: 30, r: 4, z: 1 },
+  { x: 73, y: 2, w: 26, lx: 67, ly: 70, lw: 30, r: -4, z: 4, tape: true },
 ];
 
-// The homepage's polaroid table, scaled into a V3 card's picture panel. Captions show once the
-// panel is wide enough to read them (the lightbox always shows them). Click one to see them all large.
+// The homepage's polaroid table, set into a V3 card's picture panel. Captions show once the panel
+// is wide enough to read them (the lightbox always shows them). Click one to see them all large.
 export default function PolaroidTable({ photos }: { photos: ResolvedPhoto[] }) {
   const [index, setIndex] = useState<number | null>(null);
   const shown = photos.slice(0, spots.length);
@@ -32,13 +34,23 @@ export default function PolaroidTable({ photos }: { photos: ResolvedPhoto[] }) {
           const wide = Boolean(photo.wide);
           // A square photo never takes more than a square slot's width.
           const width = wide ? spot.w : Math.min(spot.w, 26);
+          const lgWidth = wide ? spot.lw : Math.min(spot.lw, 38);
           return (
             <li
               key={photo.file}
               style={
-                { "--x": `${spot.x}%`, "--y": `${spot.y}%`, "--w": `${width}%`, "--r": `${spot.r}deg`, "--z": spot.z } as React.CSSProperties
+                {
+                  "--x": `${spot.x}%`,
+                  "--y": `${spot.y}%`,
+                  "--w": `${width}%`,
+                  "--lx": `${spot.lx}%`,
+                  "--ly": `${spot.ly}%`,
+                  "--lw": `${lgWidth}%`,
+                  "--r": `${spot.r}deg`,
+                  "--z": spot.z,
+                } as React.CSSProperties
               }
-              className="absolute top-(--y) left-(--x) z-(--z) w-(--w) rotate-(--r) transition-[rotate,scale] duration-300 hover:z-30 hover:scale-[1.05] hover:rotate-0"
+              className="absolute top-(--y) left-(--x) z-(--z) w-(--w) rotate-(--r) transition-[rotate,scale] duration-300 hover:z-30 hover:scale-[1.05] hover:rotate-0 lg:top-(--ly) lg:left-(--lx) lg:w-(--lw)"
             >
               {spot.tape && (
                 <span
@@ -56,7 +68,7 @@ export default function PolaroidTable({ photos }: { photos: ResolvedPhoto[] }) {
                   alt={photo.alt}
                   ratio={wide ? photo.width / photo.height : 1}
                   position={photo.focus}
-                  sizes="(min-width: 640px) 180px, 120px"
+                  sizes="(min-width: 1024px) 230px, (min-width: 640px) 180px, 120px"
                 />
                 <span className="flex h-[8.5cqw] items-center justify-center text-center font-hand text-[3.1cqw] leading-[1.05] text-ink/80">
                   <span className="hidden @[24rem]:inline">{photo.caption}</span>

@@ -174,11 +174,11 @@ function CompactRow({ entry }: { entry: Entry }) {
 }
 
 // Small white cards for a group of organizations. Names stand in for logos not found.
-// fluid: three to a row at every width, for a narrow card.
+// fluid: a grid filling a V3 card's width, three to a row (four on wide screens, where the card is wider).
 export function LogoRow({ logos, fluid }: { logos?: Logo[]; fluid?: boolean }) {
   if (!logos?.length) return null;
   return (
-    <ul className={`mt-4 grid grid-cols-3 gap-2 ${fluid ? "" : "sm:flex sm:flex-wrap"}`}>
+    <ul className={`mt-4 grid grid-cols-3 gap-2 ${fluid ? "lg:grid-cols-4" : "sm:flex sm:flex-wrap"}`}>
       {logos.map((logo) => {
         const image = logo.logo ? getImage(logo.logo, "logos", [3, 1]) : null;
         const body = image?.exists ? (
