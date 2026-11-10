@@ -471,7 +471,7 @@ export const experience = {
     {
       id: "debate",
       role: "Lincoln-Douglas Captain",
-      org: "Elkins Speech & Debate",
+      org: "Debate Team",
       type: "Debate",
       mark: { logo: "nsda-mark.png", initials: "LD", tone: "leaf" },
       summary: "National Lincoln-Douglas competitor.",
