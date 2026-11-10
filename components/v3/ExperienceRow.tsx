@@ -22,6 +22,12 @@ export default function ExperienceRow() {
   const { more } = experience;
   const count = Math.ceil(more.length / 2);
   const columns = Array.from({ length: count }, (_, i) => [more[i], more[i + count]].filter(Boolean));
+  // V3 opens with Waste2Taste for its photos; the rest keep the homepage's order (which starts
+  // with RescueLog).
+  const featured = [
+    ...experience.featured.filter((entry) => entry.id === "waste2taste"),
+    ...experience.featured.filter((entry) => entry.id !== "waste2taste"),
+  ];
 
   // On wide screens the section sits close under the logo wall, and the cards are short enough that
   // a laptop screen holds the logos, the heading, and the cards at once.
@@ -31,7 +37,7 @@ export default function ExperienceRow() {
         heading={<SectionHeading kicker={experience.kicker} title={experience.title} className="lg:mb-6" />}
         label={experience.title}
       >
-        {experience.featured.map((entry) => (
+        {featured.map((entry) => (
           <FeaturedCard key={entry.id} entry={entry} />
         ))}
         <MoreLabel text={experience.moreLabel} />
