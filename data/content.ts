@@ -271,7 +271,7 @@ export const experience = {
       type: "Tool for nonprofits",
       mark: { logo: "rescuelog.png", fit: "cover", doodle: "carrot", tone: "leaf" },
       summary:
-        "Built a tool for logging food for nonprofits. Their volunteers snap photos of rescued food, and AI estimates the amount, replacing manual estimates. It's on iOS and Android so they can log from organization devices.",
+        "Built a tool for logging food for nonprofits. Their volunteers snap photos of rescued food, and AI estimates the amount, replacing manual estimates. It's on iOS and Android so they can log from organization devices. RescueLog is free, and it isn't run for profit.",
       stats: [
         { value: "2M", unit: "lbs/yr", label: "of food tracked" },
         { value: "1.7M", unit: "meals", label: "about, each year" },
